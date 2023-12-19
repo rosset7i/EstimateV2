@@ -1,8 +1,7 @@
 ﻿using System.Text.RegularExpressions;
-using Estimate.Application.Authentication.Dtos;
 using FluentValidation;
 
-namespace Estimate.Application.Authentication.Validators;
+namespace Estimate.Application.Authentication.Register;
 
 public class RegisterRequestValidator : AbstractValidator<RegisterRequest>
 {

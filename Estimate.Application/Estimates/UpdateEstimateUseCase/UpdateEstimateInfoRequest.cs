@@ -1,6 +1,6 @@
 using Estimate.Domain.Entities;
 
-namespace Estimate.Application.Estimates.Dtos;
+namespace Estimate.Application.Estimates.UpdateEstimateUseCase;
 
 public class UpdateEstimateInfoRequest
 {

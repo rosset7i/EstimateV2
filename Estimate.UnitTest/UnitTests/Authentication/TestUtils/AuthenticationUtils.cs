@@ -1,4 +1,5 @@
-using Estimate.Application.Authentication.Dtos;
+using Estimate.Application.Authentication.Login;
+using Estimate.Application.Authentication.Register;
 using Estimate.Domain.Entities;
 using Estimate.UnitTest.TestUtils;
 

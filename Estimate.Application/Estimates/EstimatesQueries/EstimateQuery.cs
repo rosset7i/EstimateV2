@@ -1,5 +1,4 @@
 ﻿using Estimate.Application.Estimates.Dtos;
-using Estimate.Application.Estimates.Services.Interfaces;
 using Estimate.Domain.Common;
 using Estimate.Domain.Entities;
 using Estimate.Infra.AppDbContext;
@@ -9,7 +8,7 @@ using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Estimates.Services;
 
-public class EstimateQuery : IEstimateQuery
+public class EstimateQuery
 {
     private readonly EstimateDbContext _dbContext;
 

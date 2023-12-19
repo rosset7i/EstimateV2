@@ -1,4 +1,7 @@
-namespace Estimate.Application.Estimates.Dtos;
+using Estimate.Application.Estimates.Dtos;
+using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
+
+namespace Estimate.Application.Estimates.CreateEstimateUseCase;
 
 public class CreateEstimateRequest
 {

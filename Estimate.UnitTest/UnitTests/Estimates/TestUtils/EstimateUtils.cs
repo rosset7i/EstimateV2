@@ -1,5 +1,8 @@
 using AutoFixture;
+using Estimate.Application.Estimates.CreateEstimateUseCase;
 using Estimate.Application.Estimates.Dtos;
+using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
+using Estimate.Application.Estimates.UpdateEstimateUseCase;
 using Estimate.Domain.Entities;
 using Estimate.UnitTest.TestUtils;
 

@@ -1,7 +1,6 @@
-﻿using Estimate.Application.Authentication.Dtos;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace Estimate.Application.Authentication.Validators;
+namespace Estimate.Application.Authentication.Login;
 
 public class LoginRequestValidator : AbstractValidator<LoginRequest>
 {

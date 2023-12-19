@@ -1,7 +1,7 @@
-﻿using Estimate.Application.Estimates.Dtos;
+﻿using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 using FluentValidation;
 
-namespace Estimate.Application.Estimates.Validators;
+namespace Estimate.Application.Estimates.CreateEstimateUseCase;
 
 public class CreateEstimateValidator : AbstractValidator<CreateEstimateRequest>
 {

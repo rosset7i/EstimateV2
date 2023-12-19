@@ -1,4 +1,4 @@
-﻿namespace Estimate.Application.Authentication.Dtos;
+﻿namespace Estimate.Application.Authentication.Register;
 
 public class RegisterRequest
 {

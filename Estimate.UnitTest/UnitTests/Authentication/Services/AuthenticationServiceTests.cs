@@ -1,5 +1,6 @@
-using Estimate.Application.Authentication.Dtos;
-using Estimate.Application.Authentication.Services;
+using Estimate.Application.Authentication.Login;
+using Estimate.Application.Authentication.Register;
+using Estimate.Application.Authentication.RegisterUseCase;
 using Estimate.Domain.Common;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
@@ -14,7 +15,7 @@ using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.UnitTest.UnitTests.Authentication.Services;
 
-public class AuthenticationServiceTests : IUnitTestBase<AuthenticationService, AuthenticationServiceMocks>
+public class AuthenticationServiceTests : IUnitTestBase<RegisterHandler, AuthenticationServiceMocks>
 {
     [Fact]
     public async Task Register_WhenEmailDoesntExist_ShouldSaveNewUser()
@@ -164,9 +165,9 @@ public class AuthenticationServiceTests : IUnitTestBase<AuthenticationService, A
             new Mock<IJwtTokenGeneratorService>());
     }
 
-    public AuthenticationService GetClass(AuthenticationServiceMocks mocks)
+    public RegisterHandler GetClass(AuthenticationServiceMocks mocks)
     {
-        return new AuthenticationService(
+        return new RegisterHandler(
             mocks.JtwTokenGeneratorService.Object,
             mocks.UserRepository.Object);
     }

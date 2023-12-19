@@ -1,6 +1,7 @@
 ﻿using System.Text;
-using Estimate.Application.Authentication.Services;
-using Estimate.Application.Authentication.Validators;
+using Estimate.Application.Authentication.Register;
+using Estimate.Application.Authentication.Register.Interface;
+using Estimate.Application.Authentication.RegisterUseCase;
 using Estimate.Application.Estimates.Services;
 using Estimate.Application.Estimates.Services.Interfaces;
 using Estimate.Application.Products.Services;
@@ -79,7 +80,7 @@ public static class StartupIoC
     public static void AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IJwtTokenGeneratorService, JwtTokenGeneratorService>();
-        services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<IRegisterService, RegisterHandler>();
         services.AddScoped<ISupplierRepository, SupplierRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IEstimateRepository, EstimateRepository>();
