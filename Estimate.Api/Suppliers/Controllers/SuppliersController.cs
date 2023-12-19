@@ -1,9 +1,11 @@
 using Estimate.Api.ErrorHandling;
-using Estimate.Application.Suppliers.Dtos;
+using Estimate.Application.Infrastructure.Models.PagingAndSorting;
+using Estimate.Application.Suppliers.CreateSupplierUseCase;
+using Estimate.Application.Suppliers.FetchPagedSuppliersUseCase;
 using Estimate.Application.Suppliers.Services.Interfaces;
+using Estimate.Application.Suppliers.UpdateSupplierUseCase;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
-using Estimate.Infra.Repositories.Base.Models.PagingAndSorting;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

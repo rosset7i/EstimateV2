@@ -1,11 +1,12 @@
-﻿using Estimate.Domain.Entities;
+﻿using Estimate.Application.Infrastructure;
+using Estimate.Domain.Entities;
 using Estimate.Infra.Mappings;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Estimate.Infra.AppDbContext;
 
-public class EstimateDbContext : IdentityDbContext
+public class EstimateDbContext : IdentityDbContext, IDatabaseContext
 {
     public DbSet<EstimateEn> Estimate { get; set; }
     public DbSet<Product> Product { get; set; }

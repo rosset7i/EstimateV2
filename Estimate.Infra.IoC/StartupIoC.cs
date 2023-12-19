@@ -1,20 +1,12 @@
 ﻿using System.Text;
-using Estimate.Application.Authentication.Register;
-using Estimate.Application.Authentication.Register.Interface;
 using Estimate.Application.Authentication.RegisterUseCase;
-using Estimate.Application.Estimates.Services;
-using Estimate.Application.Estimates.Services.Interfaces;
-using Estimate.Application.Products.Services;
-using Estimate.Application.Products.Services.Interfaces;
-using Estimate.Application.Suppliers.Services;
-using Estimate.Application.Suppliers.Services.Interfaces;
+using Estimate.Application.Infrastructure;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
 using Estimate.Domain.Interface.Base;
 using Estimate.Infra.AppDbContext;
 using Estimate.Infra.Repositories;
 using Estimate.Infra.Repositories.Base;
-using Estimate.Infra.TokenFactory;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -65,22 +57,15 @@ public static class StartupIoC
 
     public static void AddQueries(this IServiceCollection services)
     {
-        services.AddScoped<ISupplierQuery, SupplierQuery>();
-        services.AddScoped<IEstimateQuery, EstimateQuery>();
-        services.AddScoped<IProductQuery, ProductQuery>();
     }
 
     public static void AddStores(this IServiceCollection services)
     {
-        services.AddScoped<ISupplierStore, SupplierStore>();
-        services.AddScoped<IEstimateStore, EstimateStore>();
-        services.AddScoped<IProductStore, ProductStore>();
     }
 
     public static void AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IJwtTokenGeneratorService, JwtTokenGeneratorService>();
-        services.AddScoped<IRegisterService, RegisterHandler>();
+        services.AddScoped<IDatabaseContext, EstimateDbContext>();
         services.AddScoped<ISupplierRepository, SupplierRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IEstimateRepository, EstimateRepository>();
@@ -90,7 +75,7 @@ public static class StartupIoC
 
     public static void AddValidators(this IServiceCollection services)
     {
-        services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>();
+        services.AddValidatorsFromAssemblyContaining<RegisterValidator>();
         services.AddFluentValidationAutoValidation();
         services.AddFluentValidationClientsideAdapters();
         ValidatorOptions.Global.LanguageManager.Enabled = false;

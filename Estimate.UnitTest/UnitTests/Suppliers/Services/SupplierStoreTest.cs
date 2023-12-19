@@ -1,4 +1,4 @@
-﻿using Estimate.Application.Suppliers.Services;
+﻿using Estimate.Application.Suppliers.UpdateSupplierUseCase;
 using Estimate.Domain.Common;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
@@ -11,7 +11,7 @@ using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.UnitTest.UnitTests.Suppliers.Services;
 
-public class SupplierStoreTest : IUnitTestBase<SupplierStore, SupplierStoreMock>
+public class SupplierStoreTest : IUnitTestBase<UpdateSupplierHandler, SupplierStoreMock>
 {
     [Fact]
     public async Task CriarNovoFornecedor_QuandoCriarTemSucesso_DeveNaoRetornarErro()
@@ -127,9 +127,9 @@ public class SupplierStoreTest : IUnitTestBase<SupplierStore, SupplierStoreMock>
             new Mock<IUnitOfWork>());
     }
 
-    public SupplierStore GetClass(SupplierStoreMock mocks)
+    public UpdateSupplierHandler GetClass(SupplierStoreMock mocks)
     {
-        return new SupplierStore(
+        return new UpdateSupplierHandler(
             mocks.SupplierRepository.Object,
             mocks.UnitOfWork.Object);
     }

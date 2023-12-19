@@ -1,4 +1,5 @@
-using Estimate.Application.Suppliers.Dtos;
+using Estimate.Application.Suppliers.CreateSupplierUseCase;
+using Estimate.Application.Suppliers.UpdateSupplierUseCase;
 using Estimate.Domain.Entities;
 using Estimate.UnitTest.TestUtils;
 

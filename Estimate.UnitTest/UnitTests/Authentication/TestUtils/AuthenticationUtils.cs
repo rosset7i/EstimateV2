@@ -1,5 +1,5 @@
-using Estimate.Application.Authentication.Login;
-using Estimate.Application.Authentication.Register;
+using Estimate.Application.Authentication.LoginUseCase;
+using Estimate.Application.Authentication.RegisterUseCase;
 using Estimate.Domain.Entities;
 using Estimate.UnitTest.TestUtils;
 
@@ -7,17 +7,17 @@ namespace Estimate.UnitTest.UnitTests.Authentication.TestUtils;
 
 public static class AuthenticationUtils
 {
-    public static RegisterRequest CreateRegisterRequest() =>
+    public static RegisterCommand CreateRegisterRequest() =>
         new(Constants.User.Name,
             Constants.User.Email,
             Constants.User.Password,
             Constants.User.Phone);
     
-    public static LoginRequest CreateLoginRequest() =>
+    public static LoginCommand CreateLoginRequest() =>
         new(Constants.User.Email,
             Constants.User.Password);
     
-    public static LoginResponse CreateLoginResponse() =>
+    public static LoginResult CreateLoginResponse() =>
         new(Constants.User.Email,
             Constants.User.Token);
 

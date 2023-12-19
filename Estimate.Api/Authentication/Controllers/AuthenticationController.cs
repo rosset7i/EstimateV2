@@ -1,8 +1,7 @@
 ﻿using Estimate.Api.ErrorHandling;
-using Estimate.Application.Authentication.Login;
-using Estimate.Application.Authentication.Register;
-using Estimate.Application.Authentication.Register.Interface;
-using Microsoft.AspNetCore.Identity;
+using Estimate.Application.Authentication.LoginUseCase;
+using Estimate.Application.Authentication.RegisterUseCase;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Estimate.Api.Authentication.Controllers;
@@ -10,18 +9,16 @@ namespace Estimate.Api.Authentication.Controllers;
 [Route("api/v1/authentication")]
 public class AuthenticationController : ApiController
 {
-    private readonly IRegisterService _registerService;
+    private readonly IMediator _mediator;
 
-    public AuthenticationController(IRegisterService registerService)
-    {
-        _registerService = registerService;
-    }
+    public AuthenticationController(IMediator mediator) =>
+        _mediator = mediator;
 
     [HttpPost("register")]
-    public async Task<IdentityResult> RegisterAsync([FromBody]RegisterRequest request) =>
-        await _registerService.RegisterAsync(request);
+    public async Task<RegisterResult> RegisterAsync([FromBody]RegisterCommand command) =>
+        await _mediator.Send(command);
 
     [HttpPost("login")]
-    public async Task<LoginResponse> LoginAsync([FromBody] LoginRequest request) =>
-        await _registerService.LoginAsync(request);
+    public async Task<LoginResult> LoginAsync([FromBody]LoginCommand command) =>
+        await _mediator.Send(command);
 }

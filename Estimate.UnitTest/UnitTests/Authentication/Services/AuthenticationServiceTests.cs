@@ -1,6 +1,6 @@
-using Estimate.Application.Authentication.Login;
-using Estimate.Application.Authentication.Register;
+using Estimate.Application.Authentication.LoginUseCase;
 using Estimate.Application.Authentication.RegisterUseCase;
+using Estimate.Application.Infrastructure;
 using Estimate.Domain.Common;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
@@ -195,13 +195,13 @@ public class AuthenticationServiceMocks
                 Times.Once);
     }
 
-    public AuthenticationServiceMocks ShouldCallLoginWithPassword(User user, LoginRequest request)
+    public AuthenticationServiceMocks ShouldCallLoginWithPassword(User user, LoginCommand command)
     {
         UserRepository
             .Verify(e => e
                     .LoginUsingPasswordAsync(
                         user,
-                        request.Password,
+                        command.Password,
                         false,
                         false),
                 Times.Once);

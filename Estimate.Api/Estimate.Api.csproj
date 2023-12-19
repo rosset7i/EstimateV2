@@ -21,8 +21,4 @@
         <ProjectReference Include="..\Estimate.Infra.IoC\Estimate.Infra.IoC.csproj" />
         <ProjectReference Include="..\Estimate.Infra\Estimate.Infra.csproj" />
     </ItemGroup>
-
-
-
-
 </Project>

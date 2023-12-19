@@ -1,6 +1,6 @@
-using Estimate.Application.Estimates.Dtos;
 using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
-using Estimate.Application.Products.Dtos;
+using Estimate.Application.Products.CreateProductUseCase;
+using Estimate.Application.Products.UpdateProductUseCase;
 using Estimate.Domain.Entities;
 using Estimate.UnitTest.TestUtils;
 

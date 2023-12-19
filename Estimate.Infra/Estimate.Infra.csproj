@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Estimate.Application\Estimate.Application.csproj" />
         <ProjectReference Include="..\Estimate.Domain\Estimate.Domain.csproj" />
     </ItemGroup>
 
@@ -18,6 +19,7 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.10" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.32.2" />
+
 
 
     </ItemGroup>

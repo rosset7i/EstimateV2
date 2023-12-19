@@ -1,14 +1,14 @@
-﻿using Estimate.Application.Estimates.Dtos;
-using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
+﻿using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 using Estimate.Domain.Common;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
 using Estimate.Domain.Interface.Base;
+using MediatR;
 using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Estimates.CreateEstimateUseCase;
 
-public class CreateEstimateHandler
+public class CreateEstimateHandler : IRequestHandler<CreateEstimateRequest, void>
 {
     private readonly IEstimateRepository _estimateRepository;
     private readonly ISupplierRepository _supplierRepository;

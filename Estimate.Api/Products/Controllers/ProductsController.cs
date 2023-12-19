@@ -1,9 +1,11 @@
 using Estimate.Api.ErrorHandling;
-using Estimate.Application.Products.Dtos;
+using Estimate.Application.Infrastructure.Models.PagingAndSorting;
+using Estimate.Application.Products.CreateProductUseCase;
+using Estimate.Application.Products.FetchPagedProductsUseCase;
 using Estimate.Application.Products.Services.Interfaces;
+using Estimate.Application.Products.UpdateProductUseCase;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
-using Estimate.Infra.Repositories.Base.Models.PagingAndSorting;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,15 +1,13 @@
-﻿using Estimate.Application.Authentication.Login;
-using Estimate.Application.Authentication.Register;
-using Estimate.Domain.Common;
+﻿using Estimate.Domain.Common;
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
-using Estimate.Infra.TokenFactory;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 
 namespace Estimate.Application.Authentication.RegisterUseCase;
 
-public class RegisterHandler
+public class RegisterHandler : IRequestHandler<RegisterCommand, RegisterResult>
 {
     private readonly IUserRepository _userRepository;
 
@@ -18,25 +16,25 @@ public class RegisterHandler
         _userRepository = userRepository;
     }
 
-    public async Task<IdentityResult> RegisterAsync(RegisterRequest request)
+    public async Task<RegisterResult> Handle(RegisterCommand command, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.FetchByEmailAsync(request.Email);
+        var user = await _userRepository.FetchByEmailAsync(command.Email);
 
         if (user is not null)
             throw new BusinessException(DomainError.Authentication.EmailAlreadyInUse);
 
         var newUser = new User(
-            request.Name,
-            request.Email,
-            request.Phone);
+            command.Name,
+            command.Email,
+            command.Phone);
 
         var result = await _userRepository.CreateUserAsync(
             newUser,
-            request.Password);
+            command.Password);
 
         if(!result.Succeeded)
             throw new BusinessException(DomainError.Authentication.RegisterError(result.Errors));
 
-        return result;
+        return new RegisterResult(result);
     }
 }

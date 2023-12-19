@@ -1,12 +1,12 @@
-﻿using Estimate.Application.Authentication.Login;
+﻿using Estimate.Application.Infrastructure;
 using Estimate.Domain.Common;
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Interface;
-using Estimate.Infra.TokenFactory;
+using MediatR;
 
 namespace Estimate.Application.Authentication.LoginUseCase;
 
-public class LoginHandler
+public class LoginHandler : IRequestHandler<LoginCommand, LoginResult>
 {
     private readonly IJwtTokenGeneratorService _tokenGeneratorService;
     private readonly IUserRepository _userRepository;
@@ -19,16 +19,16 @@ public class LoginHandler
         _userRepository = userRepository;
     }
     
-    public async Task<LoginResponse> LoginAsync(LoginRequest request)
+    public async Task<LoginResult> Handle(LoginCommand command, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.FetchByEmailAsync(request.Email);
+        var user = await _userRepository.FetchByEmailAsync(command.Email);
 
         if (user is null)
             throw new BusinessException(DomainError.Authentication.WrongEmailOrPassword);
 
         var result = await _userRepository.LoginUsingPasswordAsync(
             user,
-            request.Password,
+            command.Password,
             false,
             false);
 
@@ -37,7 +37,7 @@ public class LoginHandler
 
         var token = _tokenGeneratorService.GenerateToken(user);
 
-        var authResponse = new LoginResponse(
+        var authResponse = new LoginResult(
             user.Email,
             token);
         
