@@ -1,6 +1,6 @@
 namespace Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 
-public class UpdateEstimateProductsResponse
+public class UpdateEstimateProductsResult
 {
-    
+
 }

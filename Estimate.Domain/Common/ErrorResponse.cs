@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Estimate.Domain.Common;
+﻿namespace Estimate.Domain.Common;
 
 public class ErrorResponse
 {
@@ -20,7 +18,4 @@ public class ErrorResponse
         Status = status;
         Errors = errors;
     }
-
-    public override string ToString() =>
-        JsonConvert.SerializeObject(this);
 }

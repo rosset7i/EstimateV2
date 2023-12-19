@@ -7,7 +7,7 @@ using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 
-public class UpdateEstimateProductsHandler : IRequestHandler<UpdateEstimateProductsCommand, UpdateEstimateProductsResponse>
+public class UpdateEstimateProductsHandler : IRequestHandler<UpdateEstimateProductsCommand, UpdateEstimateProductsResult>
 {
     private readonly IEstimateRepository _estimateRepository;
     private readonly IProductRepository _productRepository;
@@ -23,7 +23,7 @@ public class UpdateEstimateProductsHandler : IRequestHandler<UpdateEstimateProdu
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<UpdateEstimateProductsResponse> Handle(UpdateEstimateProductsCommand command, CancellationToken cancellationToken)
+    public async Task<UpdateEstimateProductsResult> Handle(UpdateEstimateProductsCommand command, CancellationToken cancellationToken)
     {
         var estimate = await _estimateRepository.FetchEstimateWithProducts(command.EstimateId);
 
@@ -42,7 +42,7 @@ public class UpdateEstimateProductsHandler : IRequestHandler<UpdateEstimateProdu
         await _estimateRepository.UpdateProducts(estimate);
         await _unitOfWork.SaveChangesAsync();
 
-        return new UpdateEstimateProductsResponse();
+        return new UpdateEstimateProductsResult();
     }
 
     private async Task<bool> ProductsExistsAsync(List<UpdateEstimateProductsRequest> request)

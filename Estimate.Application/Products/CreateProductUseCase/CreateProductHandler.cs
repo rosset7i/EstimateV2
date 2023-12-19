@@ -1,4 +1,5 @@
-﻿using Estimate.Domain.Entities;
+﻿using Estimate.Application.Estimates.CreateEstimateUseCase;
+using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
 using Estimate.Domain.Interface.Base;
 
@@ -17,7 +18,7 @@ public class CreateProductHandler
         _unitOfWork = unitOfWork;
     }
 
-    public async Task CreateProductAsync(CreateProductRequest request)
+    public async Task<CreateEstimateResult> Handle(CreateProductRequest request, CancellationToken cancellationToken)
     {
         var newProduct = new Product(
             Guid.NewGuid(),
@@ -25,5 +26,7 @@ public class CreateProductHandler
 
         await _productRepository.AddAsync(newProduct);
         await _unitOfWork.SaveChangesAsync();
+
+        return new CreateEstimateResult();
     }
 }
