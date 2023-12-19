@@ -2,7 +2,7 @@ using Estimate.Domain.Entities;
 
 namespace Estimate.Application.Estimates.FetchEstimateDetailsUseCase;
 
-public class EstimateDetailsResponse
+public class FetchEstimateDetailsResponse
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
@@ -10,7 +10,7 @@ public class EstimateDetailsResponse
     public string SupplierName { get; set; }
     public List<ProductInEstimateResponse> ProductsInEstimate { get; set; }
 
-    private EstimateDetailsResponse(
+    private FetchEstimateDetailsResponse(
         Guid id,
         string name,
         Guid supplierId,
@@ -24,9 +24,9 @@ public class EstimateDetailsResponse
         ProductsInEstimate = productsInEstimate;
     }
     
-    public static EstimateDetailsResponse Of(EstimateEn estimate)
+    public static FetchEstimateDetailsResponse Of(EstimateEn estimate)
     {
-        return new EstimateDetailsResponse(
+        return new FetchEstimateDetailsResponse(
             estimate.Id,
             estimate.Name,
             estimate.Supplier.Id,

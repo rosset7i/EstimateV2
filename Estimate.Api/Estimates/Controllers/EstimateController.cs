@@ -1,9 +1,12 @@
 using Estimate.Api.ErrorHandling;
 using Estimate.Application.Estimates.CreateEstimateUseCase;
+using Estimate.Application.Estimates.FetchEstimateDetailsUseCase;
 using Estimate.Application.Estimates.FetchPagedEstimatesUseCase;
+using Estimate.Application.Estimates.RemoveEstimateUseCase;
 using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 using Estimate.Application.Estimates.UpdateEstimateUseCase;
 using Estimate.Application.Infrastructure.Models.PagingAndSorting;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,42 +16,32 @@ namespace Estimate.Api.Estimates.Controllers;
 [Authorize]
 public class EstimateController : ApiController
 {
-    private readonly IEstimateQuery _estimateQuery;
-    private readonly IEstimateStore _estimateStore;
+    private readonly IMediator _mediator;
 
-    public EstimateController(
-        IEstimateQuery estimateQuery,
-        IEstimateStore estimateStore)
-    {
-        _estimateQuery = estimateQuery;
-        _estimateStore = estimateStore;
-    }
+    public EstimateController(IMediator mediator) =>
+        _mediator = mediator;
 
     [HttpGet]
-    public async Task<PagedResultOf<EstimateResponse>> FetchPagedEstimatesAsync([FromQuery]PagedAndSortedEstimateRequest request) =>
-        await _estimateQuery.FetchPagedEstimatesAsync(request);
+    public async Task<PagedResultOf<EstimateResponse>> FetchPagedEstimatesAsync([FromQuery]FetchPagedEstimatesQuery query) =>
+        await _mediator.Send(query);
 
-    [HttpGet("{estimateId:guid}")]
-    public async Task<EstimateDetailsResponse> FetchEstimateDetailsByIdAsync([FromRoute]Guid estimateId) =>
-        await _estimateQuery.FetchEstimateDetailsByIdAsync(estimateId);
+    [HttpGet("{query:guid}")]
+    public async Task<FetchEstimateDetailsResponse> FetchEstimateDetailsByIdAsync([FromRoute]FetchEstimateDetailsQuery query) =>
+        await _mediator.Send(query);
 
     [HttpPost]
-    public async Task CreateEstimateAsync([FromBody]CreateEstimateRequest request) =>
-        await _estimateStore.CreateEstimateAsync(request);
+    public async Task CreateEstimateAsync([FromBody]CreateEstimateCommand command) =>
+        await _mediator.Send(command);
 
-    [HttpPut("{estimateId:guid}/update")]
-    public async Task UpdateEstimateInfoAsync(
-        [FromRoute]Guid estimateId,
-        [FromBody]UpdateEstimateInfoRequest request) =>
-        await _estimateStore.UpdateEstimateInfoAsync(estimateId, request);
+    [HttpPut("/update")]
+    public async Task UpdateEstimateInfoAsync([FromBody]UpdateEstimateCommand command) =>
+        await _mediator.Send(command);
 
-    [HttpPut("{estimateId:guid}/updateProducts")]
-    public async Task UpdateEstimateProductsAsync(
-        [FromRoute]Guid estimateId,
-        [FromBody]List<UpdateEstimateProductsRequest> request) =>
-        await _estimateStore.UpdateEstimateProductsAsync(estimateId, request);
+    [HttpPut("/updateProducts")]
+    public async Task UpdateEstimateProductsAsync([FromBody]UpdateEstimateProductsCommand command) =>
+        await _mediator.Send(command);
 
     [HttpDelete("{estimateId:guid}/delete")]
-    public async Task DeleteEstimateByIdAsync([FromRoute]Guid estimateId) =>
-        await _estimateStore.DeleteEstimateByIdAsync(estimateId);
+    public async Task DeleteEstimateByIdAsync([FromRoute]RemoveEstimateCommand command) =>
+        await _mediator.Send(command);
 }

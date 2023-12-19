@@ -8,7 +8,7 @@ using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Estimates.CreateEstimateUseCase;
 
-public class CreateEstimateHandler : IRequestHandler<CreateEstimateRequest, void>
+public class CreateEstimateHandler : IRequestHandler<CreateEstimateCommand, CreateEstimateResult>
 {
     private readonly IEstimateRepository _estimateRepository;
     private readonly ISupplierRepository _supplierRepository;
@@ -27,29 +27,31 @@ public class CreateEstimateHandler : IRequestHandler<CreateEstimateRequest, void
         _unitOfWork = unitOfWork;
     }
 
-    public async Task CreateEstimateAsync(CreateEstimateRequest request)
+    public async Task<CreateEstimateResult> Handle(CreateEstimateCommand command, CancellationToken cancellationToken)
     {
-        var supplier = await _supplierRepository.FetchByIdAsync(request.SupplierId);
+        var supplier = await _supplierRepository.FetchByIdAsync(command.SupplierId);
 
         Validator.New()
             .When(supplier is null, DomainError.Common.NotFound<Supplier>())
-            .When(!await ProductsExistsAsync(request.ProductsInEstimate), DomainError.Common.NotFound<Product>())
+            .When(!await ProductsExistsAsync(command.ProductsInEstimate), DomainError.Common.NotFound<Product>())
             .ThrowExceptionIfAny();
 
         var newEstimate = new EstimateEn(
             Guid.NewGuid(),
-            request.Name,
-            request.SupplierId);
+            command.Name,
+            command.SupplierId);
 
         var productsToAdd =
             UpdateEstimateProductsRequest.ConvertToNewEntityList(
-                request.ProductsInEstimate,
+                command.ProductsInEstimate,
                 newEstimate.Id);
 
         newEstimate.UpdateProducts(productsToAdd);
 
         await _estimateRepository.AddAsync(newEstimate);
         await _unitOfWork.SaveChangesAsync();
+
+        return new CreateEstimateResult();
     }
 
     private async Task<bool> ProductsExistsAsync(List<UpdateEstimateProductsRequest> request)

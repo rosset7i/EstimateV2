@@ -11,12 +11,12 @@ public static class EstimateUtils
 {
     private static readonly Fixture Fixture = new();
 
-    public static CreateEstimateRequest CreateEstimateRequest() =>
+    public static CreateEstimateCommand CreateEstimateRequest() =>
         new(Constants.Estimate.Name,
             Constants.Supplier.Guid,
             Constants.Estimate.UpdateEstimateProductsRequests);
 
-    public static UpdateEstimateInfoRequest UpdateEstimateInfoRequest() =>
+    public static UpdateEstimateCommand UpdateEstimateInfoRequest() =>
         new(Constants.Estimate.Name,
             Constants.Supplier.Guid);
 

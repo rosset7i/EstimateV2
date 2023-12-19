@@ -2,11 +2,12 @@
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
 using Estimate.Domain.Interface.Base;
+using MediatR;
 using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 
-public class UpdateEstimateProductsHandler
+public class UpdateEstimateProductsHandler : IRequestHandler<UpdateEstimateProductsCommand, UpdateEstimateProductsResponse>
 {
     private readonly IEstimateRepository _estimateRepository;
     private readonly IProductRepository _productRepository;
@@ -21,7 +22,29 @@ public class UpdateEstimateProductsHandler
         _productRepository = productRepository;
         _unitOfWork = unitOfWork;
     }
-    
+
+    public async Task<UpdateEstimateProductsResponse> Handle(UpdateEstimateProductsCommand command, CancellationToken cancellationToken)
+    {
+        var estimate = await _estimateRepository.FetchEstimateWithProducts(command.EstimateId);
+
+        Validator.New()
+            .When(estimate is null, DomainError.Common.NotFound<EstimateEn>())
+            .When(!await ProductsExistsAsync(command.UpdateEstimateProducts), DomainError.Common.NotFound<Product>())
+            .ThrowExceptionIfAny();
+
+        var productsToAdd =
+            UpdateEstimateProductsRequest.ConvertToNewEntityList(
+                command.UpdateEstimateProducts,
+                estimate!.Id);
+
+        estimate.UpdateProducts(productsToAdd);
+
+        await _estimateRepository.UpdateProducts(estimate);
+        await _unitOfWork.SaveChangesAsync();
+
+        return new UpdateEstimateProductsResponse();
+    }
+
     private async Task<bool> ProductsExistsAsync(List<UpdateEstimateProductsRequest> request)
     {
         var productsIds = UpdateEstimateProductsRequest
@@ -32,27 +55,5 @@ public class UpdateEstimateProductsHandler
 
         return products.All(e => productsIds.Contains(e.Id))
                && products.Count == productsIds.Count;
-    }
-    
-    public async Task UpdateEstimateProductsAsync(
-        Guid estimateId,
-        List<UpdateEstimateProductsRequest> request)
-    {
-        var estimate = await _estimateRepository.FetchEstimateWithProducts(estimateId);
-
-        Validator.New()
-            .When(estimate is null, DomainError.Common.NotFound<EstimateEn>())
-            .When(!await ProductsExistsAsync(request), DomainError.Common.NotFound<Product>())
-            .ThrowExceptionIfAny();
-
-        var productsToAdd =
-            UpdateEstimateProductsRequest.ConvertToNewEntityList(
-                request,
-                estimate!.Id);
-
-        estimate.UpdateProducts(productsToAdd);
-
-        await _estimateRepository.UpdateProducts(estimate);
-        await _unitOfWork.SaveChangesAsync();
     }
 }

@@ -2,7 +2,7 @@ using Estimate.Domain.Entities;
 
 namespace Estimate.Application.Estimates.FetchEstimateDetailsUseCase;
 
-public record ProductInEstimateResponse
+public class ProductInEstimateResponse
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

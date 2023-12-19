@@ -1,13 +1,15 @@
 using Estimate.Domain.Entities;
+using MediatR;
 
 namespace Estimate.Application.Estimates.UpdateEstimateUseCase;
 
-public class UpdateEstimateInfoRequest
+public class UpdateEstimateCommand : IRequest<UpdateEstimateResult>
 {
+    public Guid EstimateId { get; set; }
     public string Name { get; set; }
     public Guid SupplierId { get; set; }
 
-    public UpdateEstimateInfoRequest(
+    public UpdateEstimateCommand(
         string name,
         Guid supplierId)
     {

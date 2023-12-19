@@ -1,14 +1,15 @@
 using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
+using MediatR;
 
 namespace Estimate.Application.Estimates.CreateEstimateUseCase;
 
-public class CreateEstimateRequest
+public class CreateEstimateCommand : IRequest<CreateEstimateResult>
 {
     public string Name { get; set; }
     public Guid SupplierId { get; set; }
     public List<UpdateEstimateProductsRequest> ProductsInEstimate { get; set; }
     
-    public CreateEstimateRequest(
+    public CreateEstimateCommand(
         string name,
         Guid supplierId,
         List<UpdateEstimateProductsRequest> productsInEstimate)

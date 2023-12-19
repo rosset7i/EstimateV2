@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Estimate.Application.Estimates.CreateEstimateUseCase;
 
-public class CreateEstimateValidator : AbstractValidator<CreateEstimateRequest>
+public class CreateEstimateValidator : AbstractValidator<CreateEstimateCommand>
 {
     public CreateEstimateValidator()
     {

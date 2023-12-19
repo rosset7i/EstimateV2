@@ -2,11 +2,12 @@
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
 using Estimate.Domain.Interface.Base;
+using MediatR;
 using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Estimates.UpdateEstimateUseCase;
 
-public class UpdateEstimateHandler
+public class UpdateEstimateHandler : IRequestHandler<UpdateEstimateCommand, UpdateEstimateResult>
 {
     private readonly IEstimateRepository _estimateRepository;
     private readonly ISupplierRepository _supplierRepository;
@@ -22,27 +23,27 @@ public class UpdateEstimateHandler
         _unitOfWork = unitOfWork;
     }
     
-    public async Task UpdateEstimateInfoAsync(
-        Guid estimateId,
-        UpdateEstimateInfoRequest request)
+    public async Task<UpdateEstimateResult> Handle(UpdateEstimateCommand command, CancellationToken cancellationToken)
     {
-        var estimate = await _estimateRepository.FetchByIdAsync(estimateId);
-        var supplier = await _supplierRepository.FetchByIdAsync(request.SupplierId);
+        var estimate = await _estimateRepository.FetchByIdAsync(command.EstimateId);
+        var supplier = await _supplierRepository.FetchByIdAsync(command.SupplierId);
 
         Validator.New()
             .When(estimate is null, DomainError.Common.NotFound<EstimateEn>())
             .When(supplier is null, DomainError.Common.NotFound<Supplier>())
             .ThrowExceptionIfAny();
 
-        UpdateEstimateInfo(estimate!, request);
+        UpdateEstimateInfo(estimate!, command);
         await _unitOfWork.SaveChangesAsync();
+
+        return new UpdateEstimateResult();
     }
     
     private void UpdateEstimateInfo(
         EstimateEn estimate,
-        UpdateEstimateInfoRequest request)
+        UpdateEstimateCommand command)
     {
-        var updateEstimate = request.UpdateInfoOf(estimate);
+        var updateEstimate = command.UpdateInfoOf(estimate);
         _estimateRepository.Update(updateEstimate);
     }
 }
