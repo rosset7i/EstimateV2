@@ -1,4 +1,4 @@
-﻿using Estimate.Core.Products.Services;
+﻿using Estimate.Application.Products.Services;
 using Estimate.Domain.Common;
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;

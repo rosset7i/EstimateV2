@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Estimate.Application\Estimate.Application.csproj" />
+      <ProjectReference Include="..\Estimate.Api\Estimate.Api.csproj" />
       <ProjectReference Include="..\Estimate.Domain\Estimate.Domain.csproj" />
     </ItemGroup>
 

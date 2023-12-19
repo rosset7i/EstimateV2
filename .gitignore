@@ -1,6 +1,6 @@
 .idea/
-Estimate.Application/bin/
-Estimate.Application/obj/
+Estimate.Api/bin/
+Estimate.Api/obj/
 Estimate.Domain/bin/
 Estimate.Domain/obj/
 Estimate.UnitTest/bin/
@@ -9,6 +9,6 @@ Estimate.Infra/bin/
 Estimate.Infra/obj/
 Estimate.Infra.IoC/bin/
 Estimate.Infra.IoC/obj/
-Estimate.Core/bin/
-Estimate.Core/obj/
+Estimate.Application/bin/
+Estimate.Application/obj/
 Estimate.sln.DotSettings.user

@@ -1,5 +1,5 @@
 using AutoFixture;
-using Estimate.Core.Estimates.Dtos;
+using Estimate.Application.Estimates.Dtos;
 using Estimate.Domain.Entities;
 using Estimate.UnitTest.TestUtils;
 

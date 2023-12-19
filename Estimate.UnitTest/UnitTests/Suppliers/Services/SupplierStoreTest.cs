@@ -1,4 +1,4 @@
-﻿using Estimate.Core.Suppliers.Services;
+﻿using Estimate.Application.Suppliers.Services;
 using Estimate.Domain.Common;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;

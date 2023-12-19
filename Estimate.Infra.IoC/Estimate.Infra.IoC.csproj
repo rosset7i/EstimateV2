@@ -18,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Estimate.Core\Estimate.Core.csproj" />
+      <ProjectReference Include="..\Estimate.Application\Estimate.Application.csproj" />
     </ItemGroup>
 
 </Project>

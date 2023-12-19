@@ -1,5 +1,5 @@
-﻿using Estimate.Core.Estimates.Dtos;
-using Estimate.Core.Estimates.Services;
+﻿using Estimate.Application.Estimates.Dtos;
+using Estimate.Application.Estimates.Services;
 using Estimate.Domain.Common;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;

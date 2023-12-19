@@ -1,5 +1,5 @@
-using Estimate.Core.Estimates.Dtos;
-using Estimate.Core.Products.Dtos;
+using Estimate.Application.Estimates.Dtos;
+using Estimate.Application.Products.Dtos;
 using Estimate.Domain.Entities;
 using Estimate.UnitTest.TestUtils;
 

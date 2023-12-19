@@ -1,5 +1,5 @@
-using Estimate.Core.Authentication.Dtos;
-using Estimate.Core.Authentication.Services;
+using Estimate.Application.Authentication.Dtos;
+using Estimate.Application.Authentication.Services;
 using Estimate.Domain.Common;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;

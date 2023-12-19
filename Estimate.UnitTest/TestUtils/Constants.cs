@@ -1,6 +1,6 @@
 using AutoFixture;
 using Bogus;
-using Estimate.Core.Estimates.Dtos;
+using Estimate.Application.Estimates.Dtos;
 
 namespace Estimate.UnitTest.TestUtils;
 
