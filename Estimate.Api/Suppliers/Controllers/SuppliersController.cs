@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Estimate.Api.Suppliers.Controllers;
 
-[Route("api/v1/suppliers")]
+[Route("api/v1/Suppliers")]
 [Authorize]
 public class SuppliersController : ApiController
 {
@@ -37,11 +37,11 @@ public class SuppliersController : ApiController
     public async Task CreateSupplierAsync([FromBody]CreateSupplierCommand command) =>
         await _mediator.Send(command);
 
-    [HttpPut("/update")]
+    [HttpPut("Update")]
     public async Task UpdateSupplierAsync([FromBody]UpdateSupplierCommand command) =>
         await _mediator.Send(command);
 
-    [HttpDelete("/delete")]
-    public async Task DeleteSupplierByIdAsync([FromRoute]RemoveSupplierCommand command) =>
+    [HttpDelete("Delete")]
+    public async Task DeleteSupplierByIdAsync([FromQuery]RemoveSupplierCommand command) =>
         await _mediator.Send(command);
 }

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Estimate.Api.Estimates.Controllers;
 
-[Route("api/v1/estimates")]
+[Route("api/v1/Estimates")]
 [Authorize]
 public class EstimateController : ApiController
 {
@@ -25,23 +25,23 @@ public class EstimateController : ApiController
     public async Task<PagedResultOf<EstimateResponse>> FetchPagedEstimatesAsync([FromQuery]FetchPagedEstimatesQuery query) =>
         await _mediator.Send(query);
 
-    [HttpGet("{query:guid}")]
-    public async Task<FetchEstimateDetailsResponse> FetchEstimateDetailsByIdAsync([FromRoute]FetchEstimateDetailsQuery query) =>
+    [HttpGet("FetchDetails")]
+    public async Task<FetchEstimateDetailsResponse> FetchEstimateDetailsByIdAsync([FromQuery]FetchEstimateDetailsQuery query) =>
         await _mediator.Send(query);
 
     [HttpPost]
     public async Task CreateEstimateAsync([FromBody]CreateEstimateCommand command) =>
         await _mediator.Send(command);
 
-    [HttpPut("/update")]
+    [HttpPut("Update")]
     public async Task UpdateEstimateInfoAsync([FromBody]UpdateEstimateCommand command) =>
         await _mediator.Send(command);
 
-    [HttpPut("/updateProducts")]
+    [HttpPut("UpdateProducts")]
     public async Task UpdateEstimateProductsAsync([FromBody]UpdateEstimateProductsCommand command) =>
         await _mediator.Send(command);
 
-    [HttpDelete("{estimateId:guid}/delete")]
-    public async Task DeleteEstimateByIdAsync([FromRoute]RemoveEstimateCommand command) =>
+    [HttpDelete("Delete")]
+    public async Task DeleteEstimateByIdAsync([FromQuery]RemoveEstimateCommand command) =>
         await _mediator.Send(command);
 }

@@ -1,5 +1,7 @@
 ﻿using System.Text;
+using Estimate.Application;
 using Estimate.Application.Authentication.RegisterUseCase;
+using Estimate.Application.Common.Behaviors;
 using Estimate.Application.Infrastructure;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
@@ -7,6 +9,7 @@ using Estimate.Domain.Interface.Base;
 using Estimate.Infra.AppDbContext;
 using Estimate.Infra.Repositories;
 using Estimate.Infra.Repositories.Base;
+using Estimate.Infra.TokenFactory;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -53,14 +56,18 @@ public static class StartupIoC
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("JwtSettings:Secret").Value!))
                 };
             });
+
+        services.AddScoped<IJwtTokenGeneratorService, JwtTokenGeneratorService>();
     }
 
-    public static void AddQueries(this IServiceCollection services)
+    public static void AddMediator(this IServiceCollection services)
     {
-    }
+        services.AddMediatR(options =>
+        {
+            options.RegisterServicesFromAssembly(typeof(IAssemblyMarker).Assembly);
 
-    public static void AddStores(this IServiceCollection services)
-    {
+            options.AddOpenBehavior(typeof(ValidationBehavior<,>));
+        });
     }
 
     public static void AddRepositories(this IServiceCollection services)
@@ -75,9 +82,7 @@ public static class StartupIoC
 
     public static void AddValidators(this IServiceCollection services)
     {
-        services.AddValidatorsFromAssemblyContaining<RegisterValidator>();
-        services.AddFluentValidationAutoValidation();
-        services.AddFluentValidationClientsideAdapters();
+        services.AddValidatorsFromAssemblyContaining<IAssemblyMarker>();
         ValidatorOptions.Global.LanguageManager.Enabled = false;
     }
 
