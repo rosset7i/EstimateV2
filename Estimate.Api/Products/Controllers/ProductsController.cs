@@ -18,10 +18,8 @@ public class ProductsController : ApiController
 {
     private readonly IMediator _mediator;
 
-    public ProductsController(IMediator mediator)
-    {
+    public ProductsController(IMediator mediator) =>
         _mediator = mediator;
-    }
 
     [HttpGet]
     public async Task<PagedResultOf<ProductResponse>> FetchPagedProductsAsync([FromQuery]PagedAndSortedProductQuery query) =>

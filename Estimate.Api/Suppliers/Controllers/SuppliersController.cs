@@ -18,10 +18,8 @@ public class SuppliersController : ApiController
 {
     private readonly IMediator _mediator;
 
-    public SuppliersController(IMediator mediator)
-    {
+    public SuppliersController(IMediator mediator) =>
         _mediator = mediator;
-    }
 
     [HttpGet]
     public async Task<PagedResultOf<SupplierResponse>> FetchPagedSuppliersAsync([FromQuery]PagedAndSortedSupplierQuery query) =>

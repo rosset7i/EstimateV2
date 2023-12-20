@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Estimate.Application.Authentication.LoginUseCase;
 
-public class LoginHandler : IRequestHandler<LoginCommand, LoginResult>
+public class LoginHandler : IRequestHandler<LoginCommand, ResultOf<LoginResult>>
 {
     private readonly IJwtTokenGeneratorService _tokenGeneratorService;
     private readonly IUserRepository _userRepository;
@@ -19,12 +19,13 @@ public class LoginHandler : IRequestHandler<LoginCommand, LoginResult>
         _userRepository = userRepository;
     }
     
-    public async Task<LoginResult> Handle(LoginCommand command, CancellationToken cancellationToken)
+    public async Task<ResultOf<LoginResult>> Handle(LoginCommand command, CancellationToken cancellationToken)
     {
         var user = await _userRepository.FetchByEmailAsync(command.Email);
 
         if (user is null)
-            throw new BusinessException(DomainError.Authentication.WrongEmailOrPassword);
+            return DomainError.Authentication.WrongEmailOrPassword;
+            //throw new BusinessException(DomainError.Authentication.WrongEmailOrPassword);
 
         var result = await _userRepository.LoginUsingPasswordAsync(
             user,
@@ -33,7 +34,8 @@ public class LoginHandler : IRequestHandler<LoginCommand, LoginResult>
             false);
 
         if (!result.Succeeded)
-            throw new BusinessException(DomainError.Authentication.WrongEmailOrPassword);
+            return DomainError.Authentication.WrongEmailOrPassword;
+            //throw new BusinessException(DomainError.Authentication.WrongEmailOrPassword);
 
         var token = _tokenGeneratorService.GenerateToken(user);
 

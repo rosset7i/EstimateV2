@@ -1,6 +1,7 @@
 ﻿using Estimate.Api.ErrorHandling;
 using Estimate.Application.Authentication.LoginUseCase;
 using Estimate.Application.Authentication.RegisterUseCase;
+using Estimate.Domain.Common.Errors;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,11 @@ public class AuthenticationController : ApiController
         await _mediator.Send(command);
 
     [HttpPost("login")]
-    public async Task<LoginResult> LoginAsync([FromBody]LoginCommand command) =>
-        await _mediator.Send(command);
+    public async Task<ResultOf<LoginResult>> LoginAsync([FromBody] LoginCommand command)
+    {
+        var result = await _mediator.Send(command);
+
+        return result;
+    }
+
 }

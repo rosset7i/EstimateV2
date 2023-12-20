@@ -1,5 +1,7 @@
 using Estimate.Api.ErrorHandling;
 using Estimate.Infra.IoC;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -13,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddRepositories();
     builder.Services.AddValidators();
     builder.Services.AddCaching(builder.Configuration);
+    builder.Services.AddSingleton<IActionResultExecutor<ObjectResult>, ErrorWrapper>();
 }
 
 var app = builder.Build();

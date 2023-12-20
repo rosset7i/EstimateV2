@@ -3,7 +3,6 @@ using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 
 namespace Estimate.Application.Authentication.RegisterUseCase;
 

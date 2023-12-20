@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using Estimate.Domain.Common.Errors;
+using MediatR;
 
 namespace Estimate.Application.Authentication.LoginUseCase;
 
-public class LoginCommand : IRequest<LoginResult>
+public class LoginCommand : IRequest<ResultOf<LoginResult>>
 {
     public string Email { get; set; }
     public string Password { get; set; }
