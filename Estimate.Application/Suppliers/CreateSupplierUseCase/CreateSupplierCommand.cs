@@ -1,10 +1,12 @@
+using MediatR;
+
 namespace Estimate.Application.Suppliers.CreateSupplierUseCase;
 
-public class CreateSupplierRequest
+public class CreateSupplierCommand : IRequest<CreateSupplierResult>
 {
     public string Name { get; set; }
     
-    public CreateSupplierRequest(
+    public CreateSupplierCommand(
         string name)
     {
         Name = name;

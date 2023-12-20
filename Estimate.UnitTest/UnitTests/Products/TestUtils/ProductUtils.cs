@@ -8,10 +8,10 @@ namespace Estimate.UnitTest.UnitTests.Products.TestUtils;
 
 public static class ProductUtils
 {
-    public static CreateProductRequest CreateProductRequest() =>
+    public static CreateProductCommand CreateProductRequest() =>
         new(Constants.Product.Name);
 
-    public static UpdateProductRequest UpdateProductRequest() =>
+    public static UpdateProductCommand UpdateProductRequest() =>
         new(Constants.Product.Name);
 
     public static Product Product() =>

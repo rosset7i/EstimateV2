@@ -1,8 +1,10 @@
 ﻿using Estimate.Application.Infrastructure;
 using Estimate.Application.Infrastructure.Models.PagingAndSorting;
+using MediatR;
+
 namespace Estimate.Application.Products.FetchPagedProductsUseCase;
 
-public class FetchPagedProductsHandler
+public class FetchPagedProductsHandler : IRequestHandler<PagedAndSortedProductQuery, PagedResultOf<ProductResponse>>
 {
     private readonly IDatabaseContext _dbContext;
 
@@ -11,13 +13,13 @@ public class FetchPagedProductsHandler
         _dbContext = dbContext;
     }
 
-    public async Task<PagedResultOf<ProductResponse>> FetchPagedProductsAsync(PagedAndSortedProductRequest request)
+    public async Task<PagedResultOf<ProductResponse>> Handle(PagedAndSortedProductQuery query, CancellationToken cancellationToken)
     {
         return await _dbContext.Product
-            .With(!string.IsNullOrEmpty(request.Name), e => e.Name.ToLower().Contains(request.Name!.ToLower()))
-            .With(request.ProductsIdsToFilter!.Any(), e => !request.ProductsIdsToFilter!.Contains(e.Id))
-            .SortBy(request)
+            .With(!string.IsNullOrEmpty(query.Name), e => e.Name.ToLower().Contains(query.Name!.ToLower()))
+            .With(query.ProductsIdsToFilter!.Any(), e => !query.ProductsIdsToFilter!.Contains(e.Id))
+            .SortBy(query)
             .Select(product => ProductResponse.Of(product))
-            .PageBy(request);
+            .PageBy(query);
     }
 }

@@ -18,11 +18,11 @@ public class CreateProductHandler
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<CreateEstimateResult> Handle(CreateProductRequest request, CancellationToken cancellationToken)
+    public async Task<CreateEstimateResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
         var newProduct = new Product(
             Guid.NewGuid(),
-            request.Name);
+            command.Name);
 
         await _productRepository.AddAsync(newProduct);
         await _unitOfWork.SaveChangesAsync();

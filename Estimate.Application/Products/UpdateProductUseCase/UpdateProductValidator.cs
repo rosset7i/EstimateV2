@@ -1,9 +1,8 @@
-﻿using Estimate.Application.Products.UpdateProductUseCase;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace Estimate.Application.Products.Validators;
+namespace Estimate.Application.Products.UpdateProductUseCase;
 
-public class UpdateProductValidator : AbstractValidator<UpdateProductRequest>
+public class UpdateProductValidator : AbstractValidator<UpdateProductCommand>
 {
     public UpdateProductValidator()
     {

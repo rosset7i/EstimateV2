@@ -2,10 +2,11 @@ using Estimate.Api.ErrorHandling;
 using Estimate.Application.Infrastructure.Models.PagingAndSorting;
 using Estimate.Application.Suppliers.CreateSupplierUseCase;
 using Estimate.Application.Suppliers.FetchPagedSuppliersUseCase;
-using Estimate.Application.Suppliers.Services.Interfaces;
+using Estimate.Application.Suppliers.RemoveSupplierUseCase;
 using Estimate.Application.Suppliers.UpdateSupplierUseCase;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,20 +16,16 @@ namespace Estimate.Api.Suppliers.Controllers;
 [Authorize]
 public class SuppliersController : ApiController
 {
-    private readonly ISupplierQuery _supplierQuery;
-    private readonly ISupplierStore _supplierStore;
+    private readonly IMediator _mediator;
 
-    public SuppliersController(
-        ISupplierQuery supplierQuery,
-        ISupplierStore supplierStore)
+    public SuppliersController(IMediator mediator)
     {
-        _supplierQuery = supplierQuery;
-        _supplierStore = supplierStore;
+        _mediator = mediator;
     }
 
     [HttpGet]
-    public async Task<PagedResultOf<SupplierResponse>> FetchPagedSuppliersAsync([FromQuery]PagedAndSortedSupplierRequest request) =>
-        await _supplierQuery.FetchPagedSuppliersAsync(request);
+    public async Task<PagedResultOf<SupplierResponse>> FetchPagedSuppliersAsync([FromQuery]PagedAndSortedSupplierQuery query) =>
+        await _mediator.Send(query);
     
     [HttpGet("{supplierId:guid}")]
     public async Task<Supplier?> FetchSupplierByIdAsync(
@@ -37,16 +34,14 @@ public class SuppliersController : ApiController
         await supplierRepository.FetchByIdAsync(supplierId);
     
     [HttpPost]
-    public async Task CreateSupplierAsync([FromBody]CreateSupplierRequest request) =>
-        await _supplierStore.CreateSupplierAsync(request);
+    public async Task CreateSupplierAsync([FromBody]CreateSupplierCommand command) =>
+        await _mediator.Send(command);
 
-    [HttpPut("{supplierId:guid}/update")]
-    public async Task UpdateSupplierAsync(
-        [FromRoute]Guid supplierId,
-        [FromBody]UpdateSupplierInfoRequest request) =>
-        await _supplierStore.UpdateSupplierAsync(supplierId, request);
+    [HttpPut("/update")]
+    public async Task UpdateSupplierAsync([FromBody]UpdateSupplierCommand command) =>
+        await _mediator.Send(command);
 
-    [HttpDelete("{supplierId:guid}/delete")]
-    public async Task DeleteSupplierByIdAsync([FromRoute]Guid supplierId) =>
-        await _supplierStore.DeleteSupplierByIdAsync(supplierId);
+    [HttpDelete("/delete")]
+    public async Task DeleteSupplierByIdAsync([FromRoute]RemoveSupplierCommand command) =>
+        await _mediator.Send(command);
 }

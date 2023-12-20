@@ -1,12 +1,14 @@
 using Estimate.Domain.Entities;
+using MediatR;
 
 namespace Estimate.Application.Products.UpdateProductUseCase;
 
-public class UpdateProductRequest
+public class UpdateProductCommand : IRequest<UpdateProductResult>
 {
+    public Guid ProductId { get; set; }
     public string Name { get; set; }
     
-    public UpdateProductRequest(
+    public UpdateProductCommand(
         string name)
     {
         Name = name;

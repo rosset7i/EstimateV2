@@ -1,9 +1,10 @@
 ﻿using Estimate.Application.Infrastructure;
 using Estimate.Application.Infrastructure.Models.PagingAndSorting;
+using MediatR;
 
 namespace Estimate.Application.Suppliers.FetchPagedSuppliersUseCase;
 
-public class FetchPagedSuppliersHandler
+public class FetchPagedSuppliersHandler : IRequestHandler<PagedAndSortedSupplierQuery, PagedResultOf<SupplierResponse>>
 {
     private readonly IDatabaseContext _dbContext;
 
@@ -12,12 +13,12 @@ public class FetchPagedSuppliersHandler
         _dbContext = dbContext;
     }
 
-    public async Task<PagedResultOf<SupplierResponse>> FetchPagedSuppliersAsync(PagedAndSortedSupplierRequest request)
+    public async Task<PagedResultOf<SupplierResponse>> Handle(PagedAndSortedSupplierQuery query, CancellationToken cancellationToken)
     {
         return await _dbContext.Supplier
-            .With(!string.IsNullOrEmpty(request.Name),e => e.Name.ToLower().Contains(request.Name!.ToLower()))
-            .SortBy(request)
+            .With(!string.IsNullOrEmpty(query.Name),e => e.Name.ToLower().Contains(query.Name!.ToLower()))
+            .SortBy(query)
             .Select(supplier => SupplierResponse.Of(supplier))
-            .PageBy(request);
+            .PageBy(query);
     }
 }

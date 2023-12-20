@@ -2,7 +2,7 @@
 
 namespace Estimate.Application.Products.CreateProductUseCase;
 
-public class CreateProductValidator : AbstractValidator<CreateProductRequest>
+public class CreateProductValidator : AbstractValidator<CreateProductCommand>
 {
     public CreateProductValidator()
     {

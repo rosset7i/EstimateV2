@@ -1,10 +1,10 @@
 namespace Estimate.Application.Products.CreateProductUseCase;
 
-public class CreateProductRequest
+public class CreateProductCommand
 {
     public string Name { get; set; }
 
-    public CreateProductRequest(
+    public CreateProductCommand(
         string name)
     {
         Name = name;

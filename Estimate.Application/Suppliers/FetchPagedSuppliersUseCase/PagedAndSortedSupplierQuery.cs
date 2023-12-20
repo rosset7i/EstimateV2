@@ -1,8 +1,9 @@
 ﻿using Estimate.Application.Infrastructure.Models.PagingAndSorting;
+using MediatR;
 
 namespace Estimate.Application.Suppliers.FetchPagedSuppliersUseCase;
 
-public class PagedAndSortedSupplierRequest : PagedAndSortedRequest
+public class PagedAndSortedSupplierQuery : PagedAndSortedRequest, IRequest<PagedResultOf<SupplierResponse>>
 {
     public string? Name { get; set; }
 }

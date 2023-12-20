@@ -2,10 +2,11 @@ using Estimate.Api.ErrorHandling;
 using Estimate.Application.Infrastructure.Models.PagingAndSorting;
 using Estimate.Application.Products.CreateProductUseCase;
 using Estimate.Application.Products.FetchPagedProductsUseCase;
-using Estimate.Application.Products.Services.Interfaces;
+using Estimate.Application.Products.RemoveProductUseCase;
 using Estimate.Application.Products.UpdateProductUseCase;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,20 +16,16 @@ namespace Estimate.Api.Products.Controllers;
 [Authorize]
 public class ProductsController : ApiController
 {
-    private readonly IProductStore _productStore;
-    private readonly IProductQuery _productQuery;
+    private readonly IMediator _mediator;
 
-    public ProductsController(
-        IProductStore productStore,
-        IProductQuery productQuery)
+    public ProductsController(IMediator mediator)
     {
-        _productStore = productStore;
-        _productQuery = productQuery;
+        _mediator = mediator;
     }
 
     [HttpGet]
-    public async Task<PagedResultOf<ProductResponse>> FetchPagedProductsAsync([FromQuery]PagedAndSortedProductRequest request) =>
-        await _productQuery.FetchPagedProductsAsync(request);
+    public async Task<PagedResultOf<ProductResponse>> FetchPagedProductsAsync([FromQuery]PagedAndSortedProductQuery query) =>
+        await _mediator.Send(query);
     
     [HttpGet("{productId:guid}")]
     public async Task<Product?> FetchProductByIdAsync(
@@ -37,16 +34,15 @@ public class ProductsController : ApiController
         await productRepository.FetchByIdAsync(productId);
     
     [HttpPost]
-    public async Task CreateProductAsync([FromBody]CreateProductRequest request) =>
-        await _productStore.CreateProductAsync(request);
+    public async Task CreateProductAsync([FromBody]CreateProductCommand command) =>
+        await _mediator.Send(command);
 
-    [HttpPut("{productId:guid}/update")]
+    [HttpPut("/update")]
     public async Task UpdateProductAsync(
-        [FromRoute]Guid productId,
-        [FromBody]UpdateProductRequest request) =>
-        await _productStore.UpdateProductAsync(productId, request);
+        [FromBody]UpdateProductCommand command) =>
+        await _mediator.Send(command);
 
-    [HttpDelete("{productId:guid}/delete")]
-    public async Task DeleteProductAsync([FromRoute]Guid productId) =>
-        await _productStore.DeleteProductAsync(productId);
+    [HttpDelete("/delete")]
+    public async Task DeleteProductAsync([FromRoute]RemoveProductCommand command) =>
+        await _mediator.Send(command);
 }

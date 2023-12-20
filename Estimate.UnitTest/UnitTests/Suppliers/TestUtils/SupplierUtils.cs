@@ -7,7 +7,7 @@ namespace Estimate.UnitTest.UnitTests.Suppliers.TestUtils;
 
 public static class SupplierUtils
 {
-    public static CreateSupplierRequest CreateSupplierRequest() =>
+    public static CreateSupplierCommand CreateSupplierRequest() =>
         new(Constants.Supplier.Name);
 
     public static UpdateSupplierInfoRequest UpdateSupplierRequest() =>
