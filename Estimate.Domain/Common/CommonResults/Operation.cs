@@ -1,6 +1,6 @@
 ﻿namespace Estimate.Domain.Common.CommonResults;
 
-public enum Result
+public enum Operation
 {
     Success = 0,
     Created = 1,

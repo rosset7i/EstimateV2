@@ -1,11 +1,13 @@
-﻿using Estimate.Domain.Entities;
+﻿using Estimate.Domain.Common.CommonResults;
+using Estimate.Domain.Common.Errors;
+using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
 using Estimate.Domain.Interface.Base;
 using MediatR;
 
 namespace Estimate.Application.Suppliers.CreateSupplierUseCase;
 
-public class CreateSupplierHandler : IRequestHandler<CreateSupplierCommand, CreateSupplierResult>
+public class CreateSupplierHandler : IRequestHandler<CreateSupplierCommand, ResultOf<Operation>>
 {
     private readonly ISupplierRepository _supplierRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -18,7 +20,7 @@ public class CreateSupplierHandler : IRequestHandler<CreateSupplierCommand, Crea
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<CreateSupplierResult> Handle(CreateSupplierCommand command, CancellationToken cancellationToken)
+    public async Task<ResultOf<Operation>> Handle(CreateSupplierCommand command, CancellationToken cancellationToken)
     {
         var newSupplier = new Supplier(
             Guid.NewGuid(),
@@ -27,6 +29,6 @@ public class CreateSupplierHandler : IRequestHandler<CreateSupplierCommand, Crea
         await _supplierRepository.AddAsync(newSupplier);
         await _unitOfWork.SaveChangesAsync();
 
-        return new CreateSupplierResult();
+        return Operation.Created;
     }
 }

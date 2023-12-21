@@ -1,11 +1,13 @@
 using Estimate.Api.ErrorHandling;
+using Estimate.Application.Common.Models.PagingAndSorting;
 using Estimate.Application.Estimates.CreateEstimateUseCase;
 using Estimate.Application.Estimates.FetchEstimateDetailsUseCase;
 using Estimate.Application.Estimates.FetchPagedEstimatesUseCase;
 using Estimate.Application.Estimates.RemoveEstimateUseCase;
 using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 using Estimate.Application.Estimates.UpdateEstimateUseCase;
-using Estimate.Application.Infrastructure.Models.PagingAndSorting;
+using Estimate.Domain.Common.CommonResults;
+using Estimate.Domain.Common.Errors;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,22 +28,22 @@ public class EstimateController : ApiController
         await _mediator.Send(query);
 
     [HttpGet("FetchDetails")]
-    public async Task<FetchEstimateDetailsResponse> FetchEstimateDetailsByIdAsync([FromQuery]FetchEstimateDetailsQuery query) =>
+    public async Task<ResultOf<FetchEstimateDetailsResponse>> FetchEstimateDetailsByIdAsync([FromQuery]FetchEstimateDetailsQuery query) =>
         await _mediator.Send(query);
 
     [HttpPost]
-    public async Task CreateEstimateAsync([FromBody]CreateEstimateCommand command) =>
+    public async Task<ResultOf<Operation>> CreateEstimateAsync([FromBody]CreateEstimateCommand command) =>
         await _mediator.Send(command);
 
     [HttpPut("Update")]
-    public async Task UpdateEstimateInfoAsync([FromBody]UpdateEstimateCommand command) =>
+    public async Task<ResultOf<Operation>> UpdateEstimateInfoAsync([FromBody]UpdateEstimateCommand command) =>
         await _mediator.Send(command);
 
     [HttpPut("UpdateProducts")]
-    public async Task UpdateEstimateProductsAsync([FromBody]UpdateEstimateProductsCommand command) =>
+    public async Task<ResultOf<Operation>> UpdateEstimateProductsAsync([FromBody]UpdateEstimateProductsCommand command) =>
         await _mediator.Send(command);
 
     [HttpDelete("Delete")]
-    public async Task DeleteEstimateByIdAsync([FromQuery]RemoveEstimateCommand command) =>
+    public async Task<ResultOf<Operation>> DeleteEstimateByIdAsync([FromQuery]RemoveEstimateCommand command) =>
         await _mediator.Send(command);
 }

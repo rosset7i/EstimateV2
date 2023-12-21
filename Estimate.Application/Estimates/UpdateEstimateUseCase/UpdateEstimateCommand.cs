@@ -1,9 +1,11 @@
+using Estimate.Domain.Common.CommonResults;
+using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using MediatR;
 
 namespace Estimate.Application.Estimates.UpdateEstimateUseCase;
 
-public class UpdateEstimateCommand : IRequest<UpdateEstimateResult>
+public class UpdateEstimateCommand : IRequest<ResultOf<Operation>>
 {
     public Guid EstimateId { get; set; }
     public string Name { get; set; }

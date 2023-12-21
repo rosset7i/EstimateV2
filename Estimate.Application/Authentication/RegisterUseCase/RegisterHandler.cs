@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Estimate.Application.Authentication.RegisterUseCase;
 
-public class RegisterHandler : IRequestHandler<RegisterCommand, RegisterResult>
+public class RegisterHandler : IRequestHandler<RegisterCommand, ResultOf<RegisterResult>>
 {
     private readonly IUserRepository _userRepository;
 
@@ -15,12 +15,12 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, RegisterResult>
         _userRepository = userRepository;
     }
 
-    public async Task<RegisterResult> Handle(RegisterCommand command, CancellationToken cancellationToken)
+    public async Task<ResultOf<RegisterResult>> Handle(RegisterCommand command, CancellationToken cancellationToken)
     {
         var user = await _userRepository.FetchByEmailAsync(command.Email);
 
         if (user is not null)
-            throw new BusinessException(DomainError.Authentication.EmailAlreadyInUse);
+            return DomainError.Authentication.EmailAlreadyInUse;
 
         var newUser = new User(
             command.Name,
@@ -32,7 +32,7 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, RegisterResult>
             command.Password);
 
         if(!result.Succeeded)
-            throw new BusinessException(DomainError.Authentication.RegisterError(result.Errors));
+            return DomainError.Authentication.RegisterError(result.Errors);
 
         return new RegisterResult(result);
     }

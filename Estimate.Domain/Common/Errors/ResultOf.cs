@@ -1,25 +1,31 @@
-﻿namespace Estimate.Domain.Common.Errors;
+﻿using System.Text.Json.Serialization;
 
-public record struct ResultOf<TValue>
+namespace Estimate.Domain.Common.Errors;
+
+public class ResultOf<TValue>  
 {
-    private readonly TValue? _value = default;
-    private TValue Value => _value!;
-    private Error[] Errors { get; set; }
-    // private Error? FirstError => Errors.Any() ? Errors[0] : null;
+    public TValue Result { get; private set; }
+    public List<Error> Errors { get; } = new();
 
-    private ResultOf(List<Error> errors)
+    [JsonIgnore]
+    public bool IsError => Errors.Any();
+
+    [JsonIgnore]
+    public Error FirstError => (Errors.Any() ? Errors[0] : null)!;
+
+    private ResultOf(TValue result)
     {
-        Errors = errors.ToArray();
+        Result = result;
     }
 
     private ResultOf(Error error)
     {
-        Errors = new[] {error};
+        Errors.Add(error);
     }
 
-    private ResultOf(TValue value)
+    private ResultOf(List<Error> errors)
     {
-        _value = value;
+        Errors.AddRange(errors);
     }
 
     public static implicit operator ResultOf<TValue>(TValue value)
@@ -27,13 +33,13 @@ public record struct ResultOf<TValue>
         return new ResultOf<TValue>(value);
     }
 
-    public static implicit operator ResultOf<TValue>(Error value)
+    public static implicit operator ResultOf<TValue>(Error error)
     {
-        return new ResultOf<TValue>(value);
+        return new ResultOf<TValue>(error);
     }
 
-    public static implicit operator ResultOf<TValue>(List<Error> value)
+    public static implicit operator ResultOf<TValue>(List<Error> errors)
     {
-        return new ResultOf<TValue>(value);
+        return new ResultOf<TValue>(errors);
     }
 }

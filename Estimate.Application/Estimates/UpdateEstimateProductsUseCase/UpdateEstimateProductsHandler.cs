@@ -1,4 +1,6 @@
 ﻿using Estimate.Domain.Common;
+using Estimate.Domain.Common.CommonResults;
+using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
 using Estimate.Domain.Interface.Base;
@@ -7,7 +9,7 @@ using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 
-public class UpdateEstimateProductsHandler : IRequestHandler<UpdateEstimateProductsCommand, UpdateEstimateProductsResult>
+public class UpdateEstimateProductsHandler : IRequestHandler<UpdateEstimateProductsCommand, ResultOf<Operation>>
 {
     private readonly IEstimateRepository _estimateRepository;
     private readonly IProductRepository _productRepository;
@@ -23,14 +25,17 @@ public class UpdateEstimateProductsHandler : IRequestHandler<UpdateEstimateProdu
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<UpdateEstimateProductsResult> Handle(UpdateEstimateProductsCommand command, CancellationToken cancellationToken)
+    public async Task<ResultOf<Operation>> Handle(UpdateEstimateProductsCommand command, CancellationToken cancellationToken)
     {
         var estimate = await _estimateRepository.FetchEstimateWithProducts(command.EstimateId);
 
-        Validator.New()
+        var errors =Validator.New()
             .When(estimate is null, DomainError.Common.NotFound<EstimateEn>())
             .When(!await ProductsExistsAsync(command.UpdateEstimateProducts), DomainError.Common.NotFound<Product>())
-            .ThrowExceptionIfAny();
+            .ReturnErrors();
+
+        if (errors.Any())
+            return errors;
 
         var productsToAdd =
             UpdateEstimateProductsRequest.ConvertToNewEntityList(
@@ -42,7 +47,7 @@ public class UpdateEstimateProductsHandler : IRequestHandler<UpdateEstimateProdu
         await _estimateRepository.UpdateProducts(estimate);
         await _unitOfWork.SaveChangesAsync();
 
-        return new UpdateEstimateProductsResult();
+        return Operation.Updated;
     }
 
     private async Task<bool> ProductsExistsAsync(List<UpdateEstimateProductsRequest> request)

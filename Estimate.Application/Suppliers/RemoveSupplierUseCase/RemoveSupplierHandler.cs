@@ -1,4 +1,5 @@
-﻿using Estimate.Domain.Common;
+﻿using Estimate.Domain.Common.CommonResults;
+using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
 using Estimate.Domain.Interface.Base;
@@ -7,7 +8,7 @@ using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Suppliers.RemoveSupplierUseCase;
 
-public class RemoveSupplierHandler : IRequestHandler<RemoveSupplierCommand, RemoveSupplierResult>
+public class RemoveSupplierHandler : IRequestHandler<RemoveSupplierCommand, ResultOf<Operation>>
 {
     private readonly ISupplierRepository _supplierRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -20,16 +21,16 @@ public class RemoveSupplierHandler : IRequestHandler<RemoveSupplierCommand, Remo
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<RemoveSupplierResult> Handle(RemoveSupplierCommand command, CancellationToken cancellationToken)
+    public async Task<ResultOf<Operation>> Handle(RemoveSupplierCommand command, CancellationToken cancellationToken)
     {
         var supplier = await _supplierRepository.FetchByIdAsync(command.SupplierId);
 
         if (supplier is null)
-            throw new BusinessException(DomainError.Common.NotFound<Supplier>());
+            return DomainError.Common.NotFound<Supplier>();
 
         _supplierRepository.Delete(supplier);
         await _unitOfWork.SaveChangesAsync();
 
-        return new RemoveSupplierResult();
+        return Operation.Deleted;
     }
 }

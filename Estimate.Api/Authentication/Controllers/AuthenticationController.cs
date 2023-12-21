@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Estimate.Api.Authentication.Controllers;
 
-[Route("api/v1/authentication")]
+[Route("api/v1/Authentication")]
 public class AuthenticationController : ApiController
 {
     private readonly IMediator _mediator;
@@ -15,16 +15,11 @@ public class AuthenticationController : ApiController
     public AuthenticationController(IMediator mediator) =>
         _mediator = mediator;
 
-    [HttpPost("register")]
-    public async Task<RegisterResult> RegisterAsync([FromBody]RegisterCommand command) =>
+    [HttpPost("Register")]
+    public async Task<ResultOf<RegisterResult>> RegisterAsync([FromBody]RegisterCommand command) =>
         await _mediator.Send(command);
 
-    [HttpPost("login")]
-    public async Task<ResultOf<LoginResult>> LoginAsync([FromBody] LoginCommand command)
-    {
-        var result = await _mediator.Send(command);
-
-        return result;
-    }
-
+    [HttpPost("Login")]
+    public async Task<ResultOf<LoginResult>> LoginAsync([FromBody] LoginCommand command) =>
+        await _mediator.Send(command);
 }

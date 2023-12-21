@@ -1,5 +1,6 @@
-﻿using Estimate.Application.Infrastructure;
+﻿using Estimate.Application.Common;
 using Estimate.Domain.Common;
+using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,7 @@ using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Estimates.FetchEstimateDetailsUseCase;
 
-public class FetchEstimateDetailsHandler : IRequestHandler<FetchEstimateDetailsQuery, FetchEstimateDetailsResponse>
+public class FetchEstimateDetailsHandler : IRequestHandler<FetchEstimateDetailsQuery, ResultOf<FetchEstimateDetailsResponse>>
 {
     private readonly IDatabaseContext _dbContext;
 
@@ -16,7 +17,7 @@ public class FetchEstimateDetailsHandler : IRequestHandler<FetchEstimateDetailsQ
         _dbContext = dbContext;
     }
 
-    public async Task<FetchEstimateDetailsResponse> Handle(FetchEstimateDetailsQuery query, CancellationToken cancellationToken)
+    public async Task<ResultOf<FetchEstimateDetailsResponse>> Handle(FetchEstimateDetailsQuery query, CancellationToken cancellationToken)
     {
         var result = await _dbContext.Estimate
             .Where(e => e.Id == query.EstimateId)
@@ -27,7 +28,7 @@ public class FetchEstimateDetailsHandler : IRequestHandler<FetchEstimateDetailsQ
             .FirstOrDefaultAsync(cancellationToken: cancellationToken);
 
         if (result is null)
-            throw new BusinessException(DomainError.Common.NotFound<EstimateEn>());
+            return DomainError.Common.NotFound<EstimateEn>();
 
         return result;
     }

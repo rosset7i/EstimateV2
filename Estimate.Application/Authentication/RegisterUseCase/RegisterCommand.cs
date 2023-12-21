@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using Estimate.Domain.Common.Errors;
+using MediatR;
 
 namespace Estimate.Application.Authentication.RegisterUseCase;
 
-public class RegisterCommand : IRequest<RegisterResult>
+public class RegisterCommand : IRequest<ResultOf<RegisterResult>>
 {
     public string Name { get; set; }
     public string Email { get; set; }

@@ -1,9 +1,11 @@
 using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
+using Estimate.Domain.Common.CommonResults;
+using Estimate.Domain.Common.Errors;
 using MediatR;
 
 namespace Estimate.Application.Estimates.CreateEstimateUseCase;
 
-public class CreateEstimateCommand : IRequest<CreateEstimateResult>
+public class CreateEstimateCommand : IRequest<ResultOf<Operation>>
 {
     public string Name { get; set; }
     public Guid SupplierId { get; set; }

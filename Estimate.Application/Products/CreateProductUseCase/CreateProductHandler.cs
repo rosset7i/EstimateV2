@@ -1,11 +1,13 @@
-﻿using Estimate.Application.Estimates.CreateEstimateUseCase;
+﻿using Estimate.Domain.Common.CommonResults;
+using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
 using Estimate.Domain.Interface.Base;
+using MediatR;
 
 namespace Estimate.Application.Products.CreateProductUseCase;
 
-public class CreateProductHandler
+public class CreateProductHandler : IRequestHandler<CreateProductCommand, ResultOf<Operation>>
 {
     private readonly IProductRepository _productRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -18,7 +20,7 @@ public class CreateProductHandler
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<CreateEstimateResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
+    public async Task<ResultOf<Operation>> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
         var newProduct = new Product(
             Guid.NewGuid(),
@@ -27,6 +29,6 @@ public class CreateProductHandler
         await _productRepository.AddAsync(newProduct);
         await _unitOfWork.SaveChangesAsync();
 
-        return new CreateEstimateResult();
+        return Operation.Created;
     }
 }

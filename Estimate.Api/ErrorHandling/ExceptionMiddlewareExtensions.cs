@@ -25,12 +25,12 @@ public static class ExceptionMiddlewareExtensions
                     context.Response.ContentType = "application/json";
                     logger.LogError($"Something went wrong: {contextFeature.Error}");
 
-                    var exceptionErrors = exception.Errors.Select(e => e.Message).ToArray();
+                    var exceptionErrors = exception.Errors
+                        .Select(e => e.Message)
+                        .ToArray();
 
                     var formattedJson = JsonConvert.SerializeObject(
                         new ErrorResponse(
-                                exception.Message,
-                                context.TraceIdentifier,
                                 (int)exception.FirstError.StatusCode,
                                 exceptionErrors),
                         new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });

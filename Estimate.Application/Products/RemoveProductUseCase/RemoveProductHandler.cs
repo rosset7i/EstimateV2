@@ -1,4 +1,6 @@
 ﻿using Estimate.Domain.Common;
+using Estimate.Domain.Common.CommonResults;
+using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
 using Estimate.Domain.Interface.Base;
@@ -7,7 +9,7 @@ using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Products.RemoveProductUseCase;
 
-public class RemoveProductHandler : IRequestHandler<RemoveProductCommand, RemoveProductResult>
+public class RemoveProductHandler : IRequestHandler<RemoveProductCommand, ResultOf<Operation>>
 {
     private readonly IProductRepository _productRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -20,16 +22,16 @@ public class RemoveProductHandler : IRequestHandler<RemoveProductCommand, Remove
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<RemoveProductResult> Handle(RemoveProductCommand command, CancellationToken cancellationToken)
+    public async Task<ResultOf<Operation>> Handle(RemoveProductCommand command, CancellationToken cancellationToken)
     {
         var product = await _productRepository.FetchByIdAsync(command.ProductId);
 
         if (product is null)
-            throw new BusinessException(DomainError.Common.NotFound<Product>());
+            return DomainError.Common.NotFound<Product>();
 
         _productRepository.Delete(product);
         await _unitOfWork.SaveChangesAsync();
 
-        return new RemoveProductResult();
+        return Operation.Deleted;
     }
 }

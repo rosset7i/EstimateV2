@@ -1,4 +1,4 @@
-﻿namespace Estimate.Application.Infrastructure.Models.PagingAndSorting;
+﻿namespace Estimate.Application.Common.Models.PagingAndSorting;
 
 public enum SortDirection
 {

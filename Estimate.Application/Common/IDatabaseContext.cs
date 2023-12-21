@@ -1,7 +1,7 @@
 ﻿using Estimate.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Estimate.Application.Infrastructure;
+namespace Estimate.Application.Common;
 
 public interface IDatabaseContext
 {

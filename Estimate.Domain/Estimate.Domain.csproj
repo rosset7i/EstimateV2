@@ -12,11 +12,5 @@
       <PackageReference Include="MediatR" Version="12.2.0" />
       <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.0" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Reference Include="Microsoft.AspNetCore.Mvc.Core">
-        <HintPath>..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.0\Microsoft.AspNetCore.Mvc.Core.dll</HintPath>
-      </Reference>
-    </ItemGroup>
     
 </Project>

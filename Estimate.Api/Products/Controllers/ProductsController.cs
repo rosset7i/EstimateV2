@@ -1,9 +1,11 @@
 using Estimate.Api.ErrorHandling;
-using Estimate.Application.Infrastructure.Models.PagingAndSorting;
+using Estimate.Application.Common.Models.PagingAndSorting;
 using Estimate.Application.Products.CreateProductUseCase;
 using Estimate.Application.Products.FetchPagedProductsUseCase;
 using Estimate.Application.Products.RemoveProductUseCase;
 using Estimate.Application.Products.UpdateProductUseCase;
+using Estimate.Domain.Common.CommonResults;
+using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
 using MediatR;
@@ -32,14 +34,14 @@ public class ProductsController : ApiController
         await productRepository.FetchByIdAsync(productId);
     
     [HttpPost]
-    public async Task CreateProductAsync([FromBody]CreateProductCommand command) =>
+    public async Task<ResultOf<Operation>> CreateProductAsync([FromBody]CreateProductCommand command) =>
         await _mediator.Send(command);
 
     [HttpPut("Update")]
-    public async Task UpdateProductAsync([FromBody]UpdateProductCommand command) =>
+    public async Task<ResultOf<Operation>> UpdateProductAsync([FromBody]UpdateProductCommand command) =>
         await _mediator.Send(command);
 
     [HttpDelete("Delete")]
-    public async Task DeleteProductAsync([FromQuery]RemoveProductCommand command) =>
+    public async Task<ResultOf<Operation>> DeleteProductAsync([FromQuery]RemoveProductCommand command) =>
         await _mediator.Send(command);
 }

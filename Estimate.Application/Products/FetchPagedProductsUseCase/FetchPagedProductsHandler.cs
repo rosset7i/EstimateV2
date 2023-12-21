@@ -1,5 +1,5 @@
-﻿using Estimate.Application.Infrastructure;
-using Estimate.Application.Infrastructure.Models.PagingAndSorting;
+﻿using Estimate.Application.Common;
+using Estimate.Application.Common.Models.PagingAndSorting;
 using MediatR;
 
 namespace Estimate.Application.Products.FetchPagedProductsUseCase;

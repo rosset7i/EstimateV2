@@ -1,4 +1,4 @@
-﻿using Estimate.Application.Infrastructure;
+﻿using Estimate.Application.Common;
 using Estimate.Domain.Entities;
 using Estimate.Infra.Mappings;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

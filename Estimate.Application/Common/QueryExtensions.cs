@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
-using Estimate.Application.Infrastructure.Models.PagingAndSorting;
+using Estimate.Application.Common.Models.PagingAndSorting;
 using Microsoft.EntityFrameworkCore;
 
-namespace Estimate.Application.Infrastructure;
+namespace Estimate.Application.Common;
 
 public static class QueryExtensions
 {

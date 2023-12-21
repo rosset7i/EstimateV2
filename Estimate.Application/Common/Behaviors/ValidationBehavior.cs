@@ -30,9 +30,8 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
             return await next();
 
         var errors = validationResult.Errors
-            .Select(e => new Error(e.ErrorMessage, HttpStatusCode.BadRequest))
-            .ToList();
+            .ConvertAll(e => new Error(e.ErrorMessage, HttpStatusCode.BadRequest));
 
-        throw new BusinessException(errors);
+        return (dynamic)errors;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Estimate.Domain.Entities;
 
-namespace Estimate.Application.Infrastructure;
+namespace Estimate.Application.Common;
 
 public interface IJwtTokenGeneratorService
 {

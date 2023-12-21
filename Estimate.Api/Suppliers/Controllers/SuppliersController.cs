@@ -1,9 +1,11 @@
 using Estimate.Api.ErrorHandling;
-using Estimate.Application.Infrastructure.Models.PagingAndSorting;
+using Estimate.Application.Common.Models.PagingAndSorting;
 using Estimate.Application.Suppliers.CreateSupplierUseCase;
 using Estimate.Application.Suppliers.FetchPagedSuppliersUseCase;
 using Estimate.Application.Suppliers.RemoveSupplierUseCase;
 using Estimate.Application.Suppliers.UpdateSupplierUseCase;
+using Estimate.Domain.Common.CommonResults;
+using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
 using MediatR;
@@ -32,14 +34,14 @@ public class SuppliersController : ApiController
         await supplierRepository.FetchByIdAsync(supplierId);
     
     [HttpPost]
-    public async Task CreateSupplierAsync([FromBody]CreateSupplierCommand command) =>
+    public async Task<ResultOf<Operation>> CreateSupplierAsync([FromBody]CreateSupplierCommand command) =>
         await _mediator.Send(command);
 
     [HttpPut("Update")]
-    public async Task UpdateSupplierAsync([FromBody]UpdateSupplierCommand command) =>
+    public async Task<ResultOf<Operation>> UpdateSupplierAsync([FromBody]UpdateSupplierCommand command) =>
         await _mediator.Send(command);
 
     [HttpDelete("Delete")]
-    public async Task DeleteSupplierByIdAsync([FromQuery]RemoveSupplierCommand command) =>
+    public async Task<ResultOf<Operation>> DeleteSupplierByIdAsync([FromQuery]RemoveSupplierCommand command) =>
         await _mediator.Send(command);
 }

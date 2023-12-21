@@ -1,8 +1,7 @@
 ﻿using System.Text;
 using Estimate.Application;
-using Estimate.Application.Authentication.RegisterUseCase;
+using Estimate.Application.Common;
 using Estimate.Application.Common.Behaviors;
-using Estimate.Application.Infrastructure;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
 using Estimate.Domain.Interface.Base;
@@ -11,7 +10,6 @@ using Estimate.Infra.Repositories;
 using Estimate.Infra.Repositories.Base;
 using Estimate.Infra.TokenFactory;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

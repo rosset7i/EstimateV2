@@ -1,5 +1,6 @@
 using Estimate.Application.Authentication.LoginUseCase;
 using Estimate.Application.Authentication.RegisterUseCase;
+using Estimate.Application.Common;
 using Estimate.Application.Infrastructure;
 using Estimate.Domain.Common;
 using Estimate.Domain.Entities;

@@ -1,5 +1,7 @@
 ﻿using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 using Estimate.Domain.Common;
+using Estimate.Domain.Common.CommonResults;
+using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Interface;
 using Estimate.Domain.Interface.Base;
@@ -8,7 +10,7 @@ using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Estimates.CreateEstimateUseCase;
 
-public class CreateEstimateHandler : IRequestHandler<CreateEstimateCommand, CreateEstimateResult>
+public class CreateEstimateHandler : IRequestHandler<CreateEstimateCommand, ResultOf<Operation>>
 {
     private readonly IEstimateRepository _estimateRepository;
     private readonly ISupplierRepository _supplierRepository;
@@ -27,14 +29,17 @@ public class CreateEstimateHandler : IRequestHandler<CreateEstimateCommand, Crea
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<CreateEstimateResult> Handle(CreateEstimateCommand command, CancellationToken cancellationToken)
+    public async Task<ResultOf<Operation>> Handle(CreateEstimateCommand command, CancellationToken cancellationToken)
     {
         var supplier = await _supplierRepository.FetchByIdAsync(command.SupplierId);
 
-        Validator.New()
+        var errors = Validator.New()
             .When(supplier is null, DomainError.Common.NotFound<Supplier>())
             .When(!await ProductsExistsAsync(command.ProductsInEstimate), DomainError.Common.NotFound<Product>())
-            .ThrowExceptionIfAny();
+            .ReturnErrors();
+
+        if (errors.Any())
+            return errors;
 
         var newEstimate = new EstimateEn(
             Guid.NewGuid(),
@@ -51,7 +56,7 @@ public class CreateEstimateHandler : IRequestHandler<CreateEstimateCommand, Crea
         await _estimateRepository.AddAsync(newEstimate);
         await _unitOfWork.SaveChangesAsync();
 
-        return new CreateEstimateResult();
+        return Operation.Created;
     }
 
     private async Task<bool> ProductsExistsAsync(List<UpdateEstimateProductsRequest> request)

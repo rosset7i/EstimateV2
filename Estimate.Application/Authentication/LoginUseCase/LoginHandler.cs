@@ -1,5 +1,4 @@
-﻿using Estimate.Application.Infrastructure;
-using Estimate.Domain.Common;
+﻿using Estimate.Application.Common;
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Interface;
 using MediatR;
@@ -25,7 +24,6 @@ public class LoginHandler : IRequestHandler<LoginCommand, ResultOf<LoginResult>>
 
         if (user is null)
             return DomainError.Authentication.WrongEmailOrPassword;
-            //throw new BusinessException(DomainError.Authentication.WrongEmailOrPassword);
 
         var result = await _userRepository.LoginUsingPasswordAsync(
             user,
@@ -35,12 +33,11 @@ public class LoginHandler : IRequestHandler<LoginCommand, ResultOf<LoginResult>>
 
         if (!result.Succeeded)
             return DomainError.Authentication.WrongEmailOrPassword;
-            //throw new BusinessException(DomainError.Authentication.WrongEmailOrPassword);
 
         var token = _tokenGeneratorService.GenerateToken(user);
 
         var authResponse = new LoginResult(
-            user.Email,
+            user.Email!,
             token);
         
         return authResponse;
