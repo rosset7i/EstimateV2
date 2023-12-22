@@ -18,7 +18,8 @@ public static class EstimateUtils
             Constants.Estimate.UpdateEstimateProductsRequests);
 
     public static UpdateEstimateCommand UpdateEstimateInfoRequest() =>
-        new(Constants.Estimate.Name,
+        new(Constants.Estimate.Guid,
+            Constants.Estimate.Name,
             Constants.Supplier.Guid);
 
     public static EstimateEn Estimate() =>
@@ -29,6 +30,5 @@ public static class EstimateUtils
     public static List<UpdateEstimateProductsRequest> UpdateEstimateProductsRequest() =>
         Fixture.CreateMany<UpdateEstimateProductsRequest>()
             .ToList();
-
 }
 

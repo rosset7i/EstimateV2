@@ -25,9 +25,9 @@ public class UpdateSupplierHandler : IRequestHandler<UpdateSupplierCommand, Resu
         var supplier = await _supplierRepository.FetchByIdAsync(command.SupplierId);
 
         if (supplier is null)
-            DomainError.Common.NotFound<Supplier>();
+            return DomainError.Common.NotFound<Supplier>();
 
-        var updatedSupplier = command.UpdateSupplierInfoRequest.UpdateInfoOf(supplier);
+        var updatedSupplier = command.UpdateInfoOf(supplier!);
 
         _supplierRepository.Update(updatedSupplier);
         await _unitOfWork.SaveChangesAsync();

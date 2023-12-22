@@ -1,85 +1,31 @@
 using Estimate.Application.Authentication.LoginUseCase;
-using Estimate.Application.Authentication.RegisterUseCase;
 using Estimate.Application.Common;
 using Estimate.Application.Common.Repositories;
-using Estimate.Application.Infrastructure;
-using Estimate.Domain.Common;
+using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
-using Estimate.Infra.TokenFactory;
 using Estimate.UnitTest.TestUtils;
 using Estimate.UnitTest.UnitTests.Authentication.TestUtils;
-using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 using Xunit;
-using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
-namespace Estimate.UnitTest.UnitTests.Authentication.Services;
+namespace Estimate.UnitTest.UnitTests.Authentication;
 
-public class AuthenticationServiceTests : IUnitTestBase<RegisterHandler, AuthenticationServiceMocks>
+public class LoginHandlerTests : IUnitTestBase<LoginHandler, LoginHandlerMocks>
 {
-    [Fact]
-    public async Task Register_WhenEmailDoesntExist_ShouldSaveNewUser()
-    {
-        //Arrange
-        var registerRequest = AuthenticationUtils.CreateRegisterRequest();
-
-        var mocks = GetMocks();
-        var service = GetClass(mocks);
-
-        mocks.UserRepository
-            .Setup(e => e.CreateUserAsync(
-                It.IsAny<User>(),
-                It.IsAny<string>()))
-            .ReturnsAsync(IdentityResult.Success);
-
-        //Act
-        var result = await service.RegisterAsync(registerRequest);
-
-        //Assert
-        result.Succeeded
-            .Should()
-            .BeTrue();
-        mocks.ShouldCallFetchUserByEmail(registerRequest.Email)
-            .ShouldCallCreateUser();
-    }
-    
-    [Fact]
-    public async Task Register_WhenEmailAlreadyExists_ShouldReturnConflict()
-    {
-        //Arrange
-        var user = AuthenticationUtils.CreateUser();
-        var registerRequest = AuthenticationUtils.CreateRegisterRequest();
-
-        var mocks = GetMocks();
-        var service = GetClass(mocks);
-
-        mocks.UserRepository
-            .Setup(e => e.FetchByEmailAsync(user.Email))
-            .ReturnsAsync(user);
-
-        //Act
-        var result = await Assert.ThrowsAsync<BusinessException>(() => service.RegisterAsync(registerRequest));
-
-        //Assert
-        Assert.Equivalent(DomainError.Authentication.EmailAlreadyInUse, result.FirstError);
-        mocks.ShouldCallFetchUserByEmail(user.Email)
-            .ShouldNotCallCreateUser();
-    }
-    
     [Fact]
     public async Task Login_WhenUserWithEmailDoesntExist_ShouldReturnError()
     {
         //Arrange
         var loginRequest = AuthenticationUtils.CreateLoginRequest();
 
-        loginRequest.Email = "";
+        loginRequest.Email = string.Empty;
         
         var mocks = GetMocks();
-        var service = GetClass(mocks);
+        var handle = GetClass(mocks);
 
         //Act
-        var result = await Assert.ThrowsAsync<BusinessException>(() => service.LoginAsync(loginRequest));
+        var result = await handle.Handle(loginRequest, CancellationToken.None);
 
         //Assert
         Assert.Equivalent(DomainError.Authentication.WrongEmailOrPassword, result.FirstError);
@@ -96,7 +42,7 @@ public class AuthenticationServiceTests : IUnitTestBase<RegisterHandler, Authent
         var user = AuthenticationUtils.CreateUser();
 
         var mocks = GetMocks();
-        var service = GetClass(mocks);
+        var handler = GetClass(mocks);
 
         mocks.UserRepository.Setup(e => e
             .FetchByEmailAsync(loginRequest.Email))
@@ -111,7 +57,7 @@ public class AuthenticationServiceTests : IUnitTestBase<RegisterHandler, Authent
             .ReturnsAsync(SignInResult.Failed);
 
         //Act
-        var result = await Assert.ThrowsAsync<BusinessException>( () => service.LoginAsync(loginRequest));
+        var result = await handler.Handle(loginRequest, CancellationToken.None);
 
         //Assert
         Assert.Equivalent(DomainError.Authentication.WrongEmailOrPassword, result.FirstError);
@@ -129,7 +75,7 @@ public class AuthenticationServiceTests : IUnitTestBase<RegisterHandler, Authent
         var user = AuthenticationUtils.CreateUser();
 
         var mocks = GetMocks();
-        var service = GetClass(mocks);
+        var handler = GetClass(mocks);
 
         mocks.UserRepository.Setup(e => e
             .FetchByEmailAsync(loginRequest.Email))
@@ -148,55 +94,44 @@ public class AuthenticationServiceTests : IUnitTestBase<RegisterHandler, Authent
             .Returns(loginResponse.Token);
 
         //Act
-        var result = await service.LoginAsync(loginRequest);
+        var result = await handler.Handle(loginRequest, CancellationToken.None);
 
         //Assert
-        result
-            .Should()
-            .BeEquivalentTo(loginResponse);
+        Assert.Equivalent(loginResponse, result.Result);
         mocks.ShouldCallFetchUserByEmail(loginRequest.Email)
             .ShouldCallLoginWithPassword(user, loginRequest)
             .ShouldCallGenerateToken(user);
     }
 
-    public AuthenticationServiceMocks GetMocks()
+    public LoginHandlerMocks GetMocks()
     {
-        return new AuthenticationServiceMocks(
+        return new LoginHandlerMocks(
             new Mock<IUserRepository>(),
             new Mock<IJwtTokenGeneratorService>());
     }
 
-    public RegisterHandler GetClass(AuthenticationServiceMocks mocks)
+    public LoginHandler GetClass(LoginHandlerMocks mocks)
     {
-        return new RegisterHandler(
+        return new LoginHandler(
             mocks.JtwTokenGeneratorService.Object,
             mocks.UserRepository.Object);
     }
 }
 
-public class AuthenticationServiceMocks
+public class LoginHandlerMocks
 {
     public Mock<IUserRepository> UserRepository { get; set; }
     public Mock<IJwtTokenGeneratorService> JtwTokenGeneratorService { get; set; }
 
-    public AuthenticationServiceMocks(
+    public LoginHandlerMocks(
         Mock<IUserRepository> userRepository,
         Mock<IJwtTokenGeneratorService> jtwTokenGeneratorService)
     {
         UserRepository = userRepository;
         JtwTokenGeneratorService = jtwTokenGeneratorService;
     }
-    
-    public void ShouldCallCreateUser()
-    {
-        UserRepository
-            .Verify(e => e.CreateUserAsync(
-                        It.IsAny<User>(),
-                        It.IsAny<string>()),
-                Times.Once);
-    }
 
-    public AuthenticationServiceMocks ShouldCallLoginWithPassword(User user, LoginCommand command)
+    public LoginHandlerMocks ShouldCallLoginWithPassword(User user, LoginCommand command)
     {
         UserRepository
             .Verify(e => e
@@ -210,7 +145,7 @@ public class AuthenticationServiceMocks
         return this;
     }
 
-    public AuthenticationServiceMocks ShouldCallFetchUserByEmail(string email)
+    public LoginHandlerMocks ShouldCallFetchUserByEmail(string email)
     {
         UserRepository
             .Verify(e => e
@@ -236,17 +171,8 @@ public class AuthenticationServiceMocks
                         It.IsAny<User>()),
                 Times.Never);
     }
-    
-    public void ShouldNotCallCreateUser()
-    {
-        UserRepository
-            .Verify(e => e.CreateUserAsync(
-                    It.IsAny<User>(),
-                    It.IsAny<string>()),
-                Times.Never);
-    }
 
-    public AuthenticationServiceMocks ShouldNotCallLoginWithPassword()
+    public LoginHandlerMocks ShouldNotCallLoginWithPassword()
     {
         UserRepository
             .Verify(e => e

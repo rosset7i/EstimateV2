@@ -22,4 +22,6 @@
       <ProjectReference Include="..\Estimate.Domain\Estimate.Domain.csproj" />
     </ItemGroup>
 
+
+
 </Project>

@@ -10,8 +10,9 @@ public static class SupplierUtils
     public static CreateSupplierCommand CreateSupplierRequest() =>
         new(Constants.Supplier.Name);
 
-    public static UpdateSupplierInfoRequest UpdateSupplierRequest() =>
-        new(Constants.Supplier.Name);
+    public static UpdateSupplierCommand UpdateSupplierRequest() =>
+        new(Constants.Supplier.Guid,
+            Constants.Supplier.Name);
 
     public static Supplier Supplier() =>
         new(Constants.Supplier.Guid,

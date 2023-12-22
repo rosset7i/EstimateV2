@@ -2,7 +2,7 @@
 
 namespace Estimate.Application.Suppliers.UpdateSupplierUseCase;
 
-public class UpdateSupplierValidator : AbstractValidator<UpdateSupplierInfoRequest>
+public class UpdateSupplierValidator : AbstractValidator<UpdateSupplierCommand>
 {
     public UpdateSupplierValidator()
     {

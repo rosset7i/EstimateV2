@@ -8,16 +8,13 @@ namespace Estimate.Application.Suppliers.UpdateSupplierUseCase;
 public class UpdateSupplierCommand : IRequest<ResultOf<Operation>>
 {
     public Guid SupplierId { get; set; }
-    public UpdateSupplierInfoRequest UpdateSupplierInfoRequest { get; set; }
-}
-
-public class UpdateSupplierInfoRequest
-{
     public string Name { get; set; }
 
-    public UpdateSupplierInfoRequest(
+    public UpdateSupplierCommand(
+        Guid supplierId,
         string name)
     {
+        SupplierId = supplierId;
         Name = name;
     }
 

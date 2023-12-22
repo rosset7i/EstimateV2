@@ -32,7 +32,7 @@ public class UpdateEstimateProductsHandler : IRequestHandler<UpdateEstimateProdu
 
         var errors = Validator.New()
             .When(estimate is null, DomainError.Common.NotFound<EstimateEn>())
-            .When(!await ProductsExistsAsync(command.UpdateEstimateProducts), DomainError.Common.NotFound<Product>())
+            .When(!await ProductsExistsAsync(command.UpdateEstimateProductsRequest), DomainError.Common.NotFound<Product>())
             .ReturnErrors();
 
         if (errors.Any())
@@ -40,7 +40,7 @@ public class UpdateEstimateProductsHandler : IRequestHandler<UpdateEstimateProdu
 
         var productsToAdd =
             UpdateEstimateProductsRequest.ConvertToNewEntityList(
-                command.UpdateEstimateProducts,
+                command.UpdateEstimateProductsRequest,
                 estimate!.Id);
 
         estimate.UpdateProducts(productsToAdd);

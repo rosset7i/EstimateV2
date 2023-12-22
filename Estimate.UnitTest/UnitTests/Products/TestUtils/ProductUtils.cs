@@ -26,6 +26,5 @@ public static class ProductUtils
                 Constants.Product.Name))
             .ToList();
     }
-
 }
 
