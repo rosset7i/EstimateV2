@@ -1,5 +1,5 @@
-﻿using Estimate.Domain.Entities;
-using Estimate.Domain.Interface;
+﻿using Estimate.Application.Common.Repositories;
+using Estimate.Domain.Entities;
 using Estimate.Infra.AppDbContext;
 using Estimate.Infra.Repositories.Base;
 using Microsoft.EntityFrameworkCore;

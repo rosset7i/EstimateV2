@@ -1,5 +1,6 @@
 using Estimate.Api.ErrorHandling;
 using Estimate.Application.Common.Models.PagingAndSorting;
+using Estimate.Application.Common.Repositories;
 using Estimate.Application.Products.CreateProductUseCase;
 using Estimate.Application.Products.FetchPagedProductsUseCase;
 using Estimate.Application.Products.RemoveProductUseCase;
@@ -7,7 +8,6 @@ using Estimate.Application.Products.UpdateProductUseCase;
 using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
-using Estimate.Domain.Interface;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

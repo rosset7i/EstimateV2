@@ -2,9 +2,9 @@
 using Estimate.Application;
 using Estimate.Application.Common;
 using Estimate.Application.Common.Behaviors;
+using Estimate.Application.Common.Repositories;
+using Estimate.Application.Common.Repositories.Base;
 using Estimate.Domain.Entities;
-using Estimate.Domain.Interface;
-using Estimate.Domain.Interface.Base;
 using Estimate.Infra.AppDbContext;
 using Estimate.Infra.Repositories;
 using Estimate.Infra.Repositories.Base;

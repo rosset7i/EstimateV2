@@ -1,10 +1,10 @@
 using Estimate.Application.Authentication.LoginUseCase;
 using Estimate.Application.Authentication.RegisterUseCase;
 using Estimate.Application.Common;
+using Estimate.Application.Common.Repositories;
 using Estimate.Application.Infrastructure;
 using Estimate.Domain.Common;
 using Estimate.Domain.Entities;
-using Estimate.Domain.Interface;
 using Estimate.Infra.TokenFactory;
 using Estimate.UnitTest.TestUtils;
 using Estimate.UnitTest.UnitTests.Authentication.TestUtils;

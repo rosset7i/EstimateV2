@@ -1,7 +1,8 @@
-﻿using Estimate.Domain.Entities;
-using Estimate.Domain.Interface.Base;
+﻿using Estimate.Application.Common.Repositories.Base;
+using Estimate.Domain.Entities;
+using Estimate.Domain.Entities.Estimate;
 
-namespace Estimate.Domain.Interface;
+namespace Estimate.Application.Common.Repositories;
 
 public interface IEstimateRepository : IRepositoryBase<Guid, EstimateEn>
 {

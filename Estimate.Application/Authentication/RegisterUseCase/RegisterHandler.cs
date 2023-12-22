@@ -1,7 +1,7 @@
-﻿using Estimate.Domain.Common;
+﻿using Estimate.Application.Common.Repositories;
+using Estimate.Domain.Common;
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
-using Estimate.Domain.Interface;
 using MediatR;
 
 namespace Estimate.Application.Authentication.RegisterUseCase;

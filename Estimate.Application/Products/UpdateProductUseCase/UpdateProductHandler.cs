@@ -1,8 +1,8 @@
-﻿using Estimate.Domain.Common.CommonResults;
+﻿using Estimate.Application.Common.Repositories;
+using Estimate.Application.Common.Repositories.Base;
+using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
-using Estimate.Domain.Interface;
-using Estimate.Domain.Interface.Base;
 using MediatR;
 using DomainError = Estimate.Domain.Common.Errors.DomainError;
 

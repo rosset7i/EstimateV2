@@ -1,5 +1,6 @@
 ﻿using Estimate.Application.Common;
 using Estimate.Domain.Entities;
+using Estimate.Domain.Entities.Estimate;
 using Estimate.Infra.Mappings;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

@@ -1,4 +1,5 @@
 using Estimate.Domain.Entities;
+using Estimate.Domain.Entities.Estimate;
 
 namespace Estimate.Application.Estimates.FetchEstimateDetailsUseCase;
 

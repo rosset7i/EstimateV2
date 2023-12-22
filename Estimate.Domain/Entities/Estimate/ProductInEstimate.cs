@@ -1,7 +1,7 @@
 using Estimate.Domain.Entities.Base;
 using Estimate.Domain.Entities.ValueObjects;
 
-namespace Estimate.Domain.Entities;
+namespace Estimate.Domain.Entities.Estimate;
 
 public class ProductInEstimate : Entity
 {

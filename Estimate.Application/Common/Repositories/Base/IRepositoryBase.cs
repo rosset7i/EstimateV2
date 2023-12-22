@@ -1,6 +1,6 @@
 ﻿using Estimate.Domain.Entities.Base;
 
-namespace Estimate.Domain.Interface.Base;
+namespace Estimate.Application.Common.Repositories.Base;
 
 public interface IRepositoryBase<TId, TEntity> where TEntity : Entity
 {

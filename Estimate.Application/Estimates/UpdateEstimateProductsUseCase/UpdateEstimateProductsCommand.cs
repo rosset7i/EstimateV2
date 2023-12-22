@@ -1,6 +1,7 @@
 ﻿using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
+using Estimate.Domain.Entities.Estimate;
 using Estimate.Domain.Entities.ValueObjects;
 using MediatR;
 

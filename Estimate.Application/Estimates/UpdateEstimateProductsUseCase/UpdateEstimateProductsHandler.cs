@@ -1,9 +1,10 @@
-﻿using Estimate.Domain.Common;
+﻿using Estimate.Application.Common.Repositories;
+using Estimate.Application.Common.Repositories.Base;
+using Estimate.Domain.Common;
 using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
-using Estimate.Domain.Interface;
-using Estimate.Domain.Interface.Base;
+using Estimate.Domain.Entities.Estimate;
 using MediatR;
 using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
@@ -29,7 +30,7 @@ public class UpdateEstimateProductsHandler : IRequestHandler<UpdateEstimateProdu
     {
         var estimate = await _estimateRepository.FetchEstimateWithProducts(command.EstimateId);
 
-        var errors =Validator.New()
+        var errors = Validator.New()
             .When(estimate is null, DomainError.Common.NotFound<EstimateEn>())
             .When(!await ProductsExistsAsync(command.UpdateEstimateProducts), DomainError.Common.NotFound<Product>())
             .ReturnErrors();

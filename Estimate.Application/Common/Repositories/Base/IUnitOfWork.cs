@@ -1,4 +1,4 @@
-﻿namespace Estimate.Domain.Interface.Base;
+﻿namespace Estimate.Application.Common.Repositories.Base;
 
 public interface IUnitOfWork
 {

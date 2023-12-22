@@ -1,4 +1,5 @@
 ﻿using Estimate.Domain.Entities;
+using Estimate.Domain.Entities.Estimate;
 using Estimate.Infra.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

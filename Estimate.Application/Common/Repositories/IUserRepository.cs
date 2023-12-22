@@ -1,7 +1,7 @@
 ﻿using Estimate.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace Estimate.Domain.Interface;
+namespace Estimate.Application.Common.Repositories;
 
 public interface IUserRepository
 {

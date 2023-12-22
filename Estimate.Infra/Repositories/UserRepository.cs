@@ -1,5 +1,5 @@
-﻿using Estimate.Domain.Entities;
-using Estimate.Domain.Interface;
+﻿using Estimate.Application.Common.Repositories;
+using Estimate.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace Estimate.Infra.Repositories;

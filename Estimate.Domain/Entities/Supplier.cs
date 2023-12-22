@@ -1,4 +1,5 @@
 using Estimate.Domain.Entities.Base;
+using Estimate.Domain.Entities.Estimate;
 
 namespace Estimate.Domain.Entities;
 

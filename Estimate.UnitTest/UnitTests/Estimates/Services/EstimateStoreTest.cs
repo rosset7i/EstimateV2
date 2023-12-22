@@ -1,15 +1,16 @@
-﻿using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
+﻿using Estimate.Application.Common.Repositories;
+using Estimate.Application.Common.Repositories.Base;
+using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 using Estimate.Domain.Common;
+using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
-using Estimate.Domain.Interface;
-using Estimate.Domain.Interface.Base;
+using Estimate.Domain.Entities.Estimate;
 using Estimate.UnitTest.TestUtils;
 using Estimate.UnitTest.UnitTests.Estimates.TestUtils;
 using Estimate.UnitTest.UnitTests.Products.TestUtils;
 using Estimate.UnitTest.UnitTests.Suppliers.TestUtils;
 using Moq;
 using Xunit;
-using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.UnitTest.UnitTests.Estimates.Services;
 
