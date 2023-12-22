@@ -2,9 +2,9 @@
 
 namespace Estimate.Application.Suppliers.UpdateSupplierUseCase;
 
-public class UpdateSupplierInfoValidator : AbstractValidator<UpdateSupplierInfoRequest>
+public class UpdateSupplierValidator : AbstractValidator<UpdateSupplierInfoRequest>
 {
-    public UpdateSupplierInfoValidator()
+    public UpdateSupplierValidator()
     {
         RuleFor(e => e.Name)
             .NotEmpty()

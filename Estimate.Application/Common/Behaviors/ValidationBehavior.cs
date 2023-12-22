@@ -1,5 +1,4 @@
 using System.Net;
-using Estimate.Domain.Common;
 using Estimate.Domain.Common.Errors;
 using FluentValidation;
 using MediatR;

@@ -6,7 +6,7 @@ namespace Estimate.Application.Common;
 
 public static class QueryExtensions
 {
-    public static async Task<PagedResultOf<TOutput>> PageBy<TOutput>(
+    public static async Task<PagedResultOf<TOutput>> ToPagedListAsync<TOutput>(
         this IQueryable<TOutput> entities,
         PagedAndSortedRequest request)
     {

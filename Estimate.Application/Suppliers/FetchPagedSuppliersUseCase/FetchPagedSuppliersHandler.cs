@@ -19,6 +19,6 @@ public class FetchPagedSuppliersHandler : IRequestHandler<PagedAndSortedSupplier
             .With(!string.IsNullOrEmpty(query.Name),e => e.Name.ToLower().Contains(query.Name!.ToLower()))
             .SortBy(query)
             .Select(supplier => SupplierResponse.Of(supplier))
-            .PageBy(query);
+            .ToPagedListAsync(query);
     }
 }

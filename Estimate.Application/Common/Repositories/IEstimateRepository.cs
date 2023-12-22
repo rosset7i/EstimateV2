@@ -1,5 +1,4 @@
 ﻿using Estimate.Application.Common.Repositories.Base;
-using Estimate.Domain.Entities;
 using Estimate.Domain.Entities.Estimate;
 
 namespace Estimate.Application.Common.Repositories;

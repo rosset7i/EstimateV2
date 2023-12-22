@@ -1,7 +1,4 @@
-using Estimate.Domain.Common.CommonResults;
-using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities.Base;
-using Estimate.Domain.Entities.Estimate.Events;
 
 namespace Estimate.Domain.Entities.Estimate;
 
@@ -30,12 +27,6 @@ public class EstimateEn : Entity
     public void AlterSupplier(Guid supplierId) =>
         SupplierId = supplierId;
 
-    public ResultOf<Operation> UpdateProducts(List<ProductInEstimate> products)
-    {
+    public void UpdateProducts(List<ProductInEstimate> products) =>
         ProductsInEstimate = products;
-
-        _domainEvents.Add(new ProductUpdatedEvent());
-
-        return Operation.Success;
-    }
 }

@@ -123,5 +123,4 @@ public static class StartupIoC
             c.CustomSchemaIds(x => x.FullName);
         });
     }
-
 }
