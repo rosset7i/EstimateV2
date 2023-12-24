@@ -11,9 +11,11 @@ public class UpdateProductCommand : IRequest<ResultOf<Operation>>
     public string Name { get; set; }
     
     public UpdateProductCommand(
-        string name)
+        string name, 
+        Guid productId)
     {
         Name = name;
+        ProductId = productId;
     }
 
     public Product UpdateInfoOf(Product product)

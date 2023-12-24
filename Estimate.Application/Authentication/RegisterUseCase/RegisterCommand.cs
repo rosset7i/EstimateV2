@@ -10,8 +10,6 @@ public class RegisterCommand : IRequest<ResultOf<RegisterResult>>
     public string Password { get; set; }
     public string Phone { get; set; }
 
-    public RegisterCommand() { }
-
     public RegisterCommand(
         string name,
         string email,

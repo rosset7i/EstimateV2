@@ -12,7 +12,8 @@ public static class ProductUtils
         new(Constants.Product.Name);
 
     public static UpdateProductCommand UpdateProductRequest() =>
-        new(Constants.Product.Name);
+        new(Constants.Product.Name,
+            Constants.Product.Guid);
 
     public static Product Product() =>
         new(Constants.Product.Guid,
