@@ -1,6 +1,7 @@
 ﻿using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
-using Estimate.Application.Suppliers.RemoveSupplierUseCase;
+using Estimate.Application.Suppliers.UpdateSupplierUseCase;
+using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.UnitTest.TestUtils;
@@ -8,15 +9,15 @@ using Estimate.UnitTest.UnitTests.Suppliers.TestUtils;
 using Moq;
 using Xunit;
 
-namespace Estimate.UnitTest.UnitTests.Suppliers.Services;
+namespace Estimate.UnitTest.UnitTests.Suppliers;
 
-public class RemoveSupplierHandlerTests : IUnitTestBase<RemoveSupplierHandler, RemoveSupplierHandlerMocks>
+public class UpdateSupplierHandlerTests : IUnitTestBase<UpdateSupplierHandler, UpdateSupplierHandleMocks>
 {
     [Fact]
-    public async Task RemoveSupplier_WhenSupplierIsFound_ShouldNotReturnError()
+    public async Task UpdateSupplier_WhenSupplierIsFound_ShouldNotReturnError()
     {
         //Arrange
-        var command = new RemoveSupplierCommand { SupplierId = Guid.NewGuid() };
+        var command = SupplierUtils.UpdateSupplierRequest();
         var supplier = SupplierUtils.Supplier();
 
         var mocks = GetMocks();
@@ -30,16 +31,17 @@ public class RemoveSupplierHandlerTests : IUnitTestBase<RemoveSupplierHandler, R
         var result = await handler.Handle(command, CancellationToken.None);
 
         //Assert
+        Assert.Equivalent(Operation.Updated, result.Result);
         mocks.ShouldCallSupplierRepositoryFetchById(command.SupplierId)
-            .ShouldCallSupplierRepositoryDelete(supplier)
+            .ShouldCallSupplierRepositoryUpdate(supplier)
             .ShouldCallUnitOfWork();
     }
 
     [Fact]
-    public async Task RemoveSupplier_WhenSupplierIsNotFound_ShouldReturnError()
+    public async Task UpdateSupplier_WhenSupplierIsNotFound_ShouldReturnError()
     {
         //Arrange
-        var command = new RemoveSupplierCommand { SupplierId = Guid.NewGuid() };
+        var command = SupplierUtils.UpdateSupplierRequest();
 
         var mocks = GetMocks();
         var handler = GetClass(mocks);
@@ -50,31 +52,31 @@ public class RemoveSupplierHandlerTests : IUnitTestBase<RemoveSupplierHandler, R
         //Assert
         Assert.Equivalent(DomainError.Common.NotFound<Supplier>(), result.FirstError);
         mocks.ShouldCallSupplierRepositoryFetchById(command.SupplierId)
-            .ShouldNotCallSupplierRepositoryDelete()
+            .ShouldNotCallSupplierRepositoryUpdate()
             .ShouldNotCallUnitOfWork();
     }
     
-    public RemoveSupplierHandlerMocks GetMocks()
+    public UpdateSupplierHandleMocks GetMocks()
     {
-        return new RemoveSupplierHandlerMocks(
+        return new UpdateSupplierHandleMocks(
             new Mock<ISupplierRepository>(),
             new Mock<IUnitOfWork>());
     }
 
-    public RemoveSupplierHandler GetClass(RemoveSupplierHandlerMocks mocks)
+    public UpdateSupplierHandler GetClass(UpdateSupplierHandleMocks mocks)
     {
-        return new RemoveSupplierHandler(
+        return new UpdateSupplierHandler(
             mocks.SupplierRepository.Object,
             mocks.UnitOfWork.Object);
     }
 }
 
-public class RemoveSupplierHandlerMocks
+public class UpdateSupplierHandleMocks
 {
     public Mock<ISupplierRepository> SupplierRepository { get; set; }
     public Mock<IUnitOfWork> UnitOfWork { get; set; }
 
-    public RemoveSupplierHandlerMocks(
+    public UpdateSupplierHandleMocks(
         Mock<ISupplierRepository> supplierRepository,
         Mock<IUnitOfWork> unitOfWork)
     {
@@ -82,7 +84,7 @@ public class RemoveSupplierHandlerMocks
         UnitOfWork = unitOfWork;
     }
 
-    public RemoveSupplierHandlerMocks ShouldCallSupplierRepositoryFetchById(Guid fornecedorId)
+    public UpdateSupplierHandleMocks ShouldCallSupplierRepositoryFetchById(Guid fornecedorId)
     {
         SupplierRepository
             .Verify(e => e.FetchByIdAsync(fornecedorId),
@@ -91,10 +93,10 @@ public class RemoveSupplierHandlerMocks
         return this;
     }
 
-    public RemoveSupplierHandlerMocks ShouldCallSupplierRepositoryDelete(Supplier supplier)
+    public UpdateSupplierHandleMocks ShouldCallSupplierRepositoryUpdate(Supplier supplier)
     {
         SupplierRepository
-            .Verify(e => e.Delete(supplier),
+            .Verify(e => e.Update(supplier),
                 Times.Once);
 
         return this;
@@ -107,10 +109,10 @@ public class RemoveSupplierHandlerMocks
                 Times.Once);
     }
 
-    public RemoveSupplierHandlerMocks ShouldNotCallSupplierRepositoryDelete()
+    public UpdateSupplierHandleMocks ShouldNotCallSupplierRepositoryUpdate()
     {
         SupplierRepository
-            .Verify(e => e.Delete(It.IsAny<Supplier>()),
+            .Verify(e => e.Update(It.IsAny<Supplier>()),
                 Times.Never);
 
         return this;

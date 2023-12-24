@@ -1,13 +1,14 @@
 ﻿using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Application.Suppliers.CreateSupplierUseCase;
+using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Entities;
 using Estimate.UnitTest.TestUtils;
 using Estimate.UnitTest.UnitTests.Suppliers.TestUtils;
 using Moq;
 using Xunit;
 
-namespace Estimate.UnitTest.UnitTests.Suppliers.Services;
+namespace Estimate.UnitTest.UnitTests.Suppliers;
 
 public class CreateSupplierHandlerTests : IUnitTestBase<CreateSupplierHandler, CreateSupplierHandlerMocks>
 {
@@ -24,6 +25,7 @@ public class CreateSupplierHandlerTests : IUnitTestBase<CreateSupplierHandler, C
         var result = await handler.Handle(command, CancellationToken.None);
         
         //Assert
+        Assert.Equivalent(Operation.Created, result.Result);
         mocks.ShouldCallSupplierRepositoryAdd()
             .ShouldCallUnitOfWork();
     }

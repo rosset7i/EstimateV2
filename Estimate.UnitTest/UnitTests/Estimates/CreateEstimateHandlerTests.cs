@@ -2,6 +2,7 @@
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Application.Estimates.CreateEstimateUseCase;
 using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
+using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Entities.Estimate;
@@ -38,6 +39,7 @@ public class CreateEstimateHandlerTests : IUnitTestBase<CreateEstimateHandler, C
         var result = await handler.Handle(estimateRequest, CancellationToken.None);
 
         //Assert
+        Assert.Equivalent(Operation.Created, result.Result);
         mocks.ShouldCallFetchSupplierById(estimateRequest.SupplierId)
             .ShouldCallFetchProductsByIdsAsync(estimateRequest.ProductsInEstimate)
             .ShouldCallAddEstimate()

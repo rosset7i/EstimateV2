@@ -1,6 +1,7 @@
 ﻿using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Application.Estimates.UpdateEstimateUseCase;
+using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities.Estimate;
 using Estimate.UnitTest.TestUtils;
@@ -35,6 +36,7 @@ public class UpdateEstimateHandlerTests : IUnitTestBase<UpdateEstimateHandler, U
         var result = await handler.Handle(command, CancellationToken.None);
 
         //Assert
+        Assert.Equivalent(Operation.Updated, result.Result);
         mocks.ShouldCallFetchEstimateById(command.EstimateId)
             .ShouldCallUpdateEstimate()
             .ShouldCallUnitOfWork();

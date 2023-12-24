@@ -1,6 +1,7 @@
 ﻿using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Application.Estimates.RemoveEstimateUseCase;
+using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities.Estimate;
 using Estimate.UnitTest.TestUtils;
@@ -30,6 +31,7 @@ public class RemoveEstimateHandlerTests : IUnitTestBase<RemoveEstimateHandler, R
         var result = await handler.Handle(command, CancellationToken.None);
 
         //Assert
+        Assert.Equivalent(Operation.Deleted, result.Result);
         mocks.ShouldCallFetchEstimateById(command.EstimateId)
             .ShouldCallDeleteEstimate()
             .ShouldCallUnitOfWork();

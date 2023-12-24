@@ -1,13 +1,14 @@
 ﻿using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Application.Products.CreateProductUseCase;
+using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Entities;
 using Estimate.UnitTest.TestUtils;
 using Estimate.UnitTest.UnitTests.Products.TestUtils;
 using Moq;
 using Xunit;
 
-namespace Estimate.UnitTest.UnitTests.Products.Services;
+namespace Estimate.UnitTest.UnitTests.Products;
 
 public class CreateProductHandlerTests : IUnitTestBase<CreateProductHandler, CreateProductHandlerMocks>
 {
@@ -24,6 +25,7 @@ public class CreateProductHandlerTests : IUnitTestBase<CreateProductHandler, Cre
         var result = await handler.Handle(command, CancellationToken.None);
 
         //Assert
+        Assert.Equivalent(Operation.Created, result.Result);
         mocks.ShouldCallAddProduct()
             .ShouldCallUnitOfWork();
     }

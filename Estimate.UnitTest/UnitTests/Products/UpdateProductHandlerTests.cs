@@ -1,6 +1,7 @@
 ﻿using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
-using Estimate.Application.Products.RemoveProductUseCase;
+using Estimate.Application.Products.UpdateProductUseCase;
+using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.UnitTest.TestUtils;
@@ -8,15 +9,15 @@ using Estimate.UnitTest.UnitTests.Products.TestUtils;
 using Moq;
 using Xunit;
 
-namespace Estimate.UnitTest.UnitTests.Products.Services;
+namespace Estimate.UnitTest.UnitTests.Products;
 
-public class RemoveProductHandlerTests : IUnitTestBase<RemoveProductHandler, RemoveProductHandlerMocks>
+public class UpdateProductHandlerTests : IUnitTestBase<UpdateProductHandler, UpdateProductHandlerMocks>
 {
     [Fact]
-    public async Task RemoveProduct_WhenProductIsFound_ShouldNotReturnError()
+    public async Task UpdateProduct_WhenProductIsFound_ShouldNotReturnError()
     {
         //Arrange
-        var command = new RemoveProductCommand { ProductId = Guid.NewGuid() };
+        var command = ProductUtils.UpdateProductRequest();
         var product = ProductUtils.Product();
 
         var mocks = GetMocks();
@@ -30,16 +31,17 @@ public class RemoveProductHandlerTests : IUnitTestBase<RemoveProductHandler, Rem
         var result = await handler.Handle(command, CancellationToken.None);
 
         //Assert
+        Assert.Equivalent(Operation.Updated, result.Result);
         mocks.ShouldCallFetchProductById(command.ProductId)
-            .ShouldCallDeleteProduct(product)
+            .ShouldCallUpdateProduct(product)
             .ShouldCallUnitOfWork();
     }
 
     [Fact]
-    public async Task RemoveProduct_WhenProductIsNotFound_ShouldReturnError()
+    public async Task UpdateProduct_WhenProductIsNotFound_ShouldReturnError()
     {
         //Arrange
-        var command = new RemoveProductCommand { ProductId = Guid.NewGuid() };
+        var command = ProductUtils.UpdateProductRequest();
 
         var mocks = GetMocks();
         var handler = GetClass(mocks);
@@ -50,31 +52,31 @@ public class RemoveProductHandlerTests : IUnitTestBase<RemoveProductHandler, Rem
         //Assert
         Assert.Equivalent(DomainError.Common.NotFound<Product>(), result.FirstError);
         mocks.ShouldCallFetchProductById(command.ProductId)
-            .ShouldNotCallDeleteProduct()
+            .ShouldNotCallUpdateProduct()
             .ShouldNoCallUnitOfWork();
     }
-    
-    public RemoveProductHandlerMocks GetMocks()
+
+    public UpdateProductHandlerMocks GetMocks()
     {
-        return new RemoveProductHandlerMocks(
+        return new UpdateProductHandlerMocks(
             new Mock<IProductRepository>(),
             new Mock<IUnitOfWork>());
     }
 
-    public RemoveProductHandler GetClass(RemoveProductHandlerMocks mocks)
+    public UpdateProductHandler GetClass(UpdateProductHandlerMocks mocks)
     {
-        return new RemoveProductHandler(
+        return new UpdateProductHandler(
             mocks.ProductRepository.Object,
             mocks.UnitOfWork.Object);
     }
 }
 
-public class RemoveProductHandlerMocks
+public class UpdateProductHandlerMocks
 {
     public Mock<IProductRepository> ProductRepository { get; set; }
     public Mock<IUnitOfWork> UnitOfWork { get; set; }
 
-    public RemoveProductHandlerMocks(
+    public UpdateProductHandlerMocks(
         Mock<IProductRepository> productRepository,
         Mock<IUnitOfWork> unitOfWork)
     {
@@ -82,7 +84,7 @@ public class RemoveProductHandlerMocks
         UnitOfWork = unitOfWork;
     }
 
-    public RemoveProductHandlerMocks ShouldCallFetchProductById(Guid productId)
+    public UpdateProductHandlerMocks ShouldCallFetchProductById(Guid productId)
     {
         ProductRepository
             .Verify(e => e.FetchByIdAsync(productId),
@@ -91,10 +93,10 @@ public class RemoveProductHandlerMocks
         return this;
     }
 
-    public RemoveProductHandlerMocks ShouldCallDeleteProduct(Product product)
+    public UpdateProductHandlerMocks ShouldCallUpdateProduct(Product product)
     {
         ProductRepository
-            .Verify(e => e.Delete(product),
+            .Verify(e => e.Update(product),
                 Times.Once);
 
         return this;
@@ -107,10 +109,10 @@ public class RemoveProductHandlerMocks
                 Times.Once);
     }
 
-    public RemoveProductHandlerMocks ShouldNotCallDeleteProduct()
+    public UpdateProductHandlerMocks ShouldNotCallUpdateProduct()
     {
         ProductRepository
-            .Verify(e => e.Delete(It.IsAny<Product>()),
+            .Verify(e => e.Update(It.IsAny<Product>()),
                 Times.Never);
 
         return this;

@@ -1,6 +1,7 @@
 ﻿using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
+using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Entities.Estimate;
@@ -104,6 +105,7 @@ public class UpdateEstimateProductsHandlerTests : IUnitTestBase<UpdateEstimatePr
         var result = await handler.Handle(command, CancellationToken.None);
 
         //Assert
+        Assert.Equivalent(Operation.Updated, result.Result);
         mocks.ShouldCallFetchEstimateWithProducts(command.EstimateId)
             .ShouldCallFetchProductsByIdsAsync(command.UpdateEstimateProductsRequest)
             .ShouldCallUpdateEstimate()
