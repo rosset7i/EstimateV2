@@ -1,5 +1,6 @@
 using Estimate.Api.ErrorHandling;
 using Estimate.Application.Common.Models.PagingAndSorting;
+using Estimate.Application.Estimates.CompareEstimatesUseCase;
 using Estimate.Application.Estimates.CreateEstimateUseCase;
 using Estimate.Application.Estimates.FetchEstimateDetailsUseCase;
 using Estimate.Application.Estimates.FetchPagedEstimatesUseCase;
@@ -25,6 +26,10 @@ public class EstimateController : ApiController
 
     [HttpGet]
     public async Task<PagedResultOf<EstimateResponse>> FetchPagedEstimatesAsync([FromQuery]FetchPagedEstimatesQuery query) =>
+        await _mediator.Send(query);
+
+    [HttpGet("Compare")]
+    public async Task<ResultOf<List<CompareEstimatesResponse>>> CompareEstimatesAsync([FromQuery]CompareEstimatesQuery query) =>
         await _mediator.Send(query);
 
     [HttpGet("FetchDetails")]
