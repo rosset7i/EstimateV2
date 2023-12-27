@@ -27,9 +27,8 @@ public class Validator
         return this;
     }
 
-    public void ThrowExceptionIfAny()
+    public List<Error> ReturnErrors()
     {
-        if(_errors.Any())
-            throw new BusinessException(_errors);
+        return _errors;
     }
 }

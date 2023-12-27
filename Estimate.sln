@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estimate.Application", "Estimate.Application\Estimate.Application.csproj", "{4716B18D-D081-47C3-B56A-2ED0396425CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estimate.Api", "Estimate.Api\Estimate.Api.csproj", "{4716B18D-D081-47C3-B56A-2ED0396425CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estimate.Domain", "Estimate.Domain\Estimate.Domain.csproj", "{2C75F11E-9C4D-4325-BD4D-BEB25CAB8E3B}"
 EndProject
@@ -10,11 +10,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estimate.UnitTest", "Estima
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estimate.Infra.IoC", "Estimate.Infra.IoC\Estimate.Infra.IoC.csproj", "{75E8571E-6D95-4AAF-B34B-F4E4B4C17DFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estimate.Core", "Estimate.Core\Estimate.Core.csproj", "{15BEB486-4614-4126-A60D-499D4E08743E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estimate.Application", "Estimate.Application\Estimate.Application.csproj", "{15BEB486-4614-4126-A60D-499D4E08743E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{3949DF33-81E9-4933-89DF-7D9733AC8A25}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{3949DF33-81E9-4933-89DF-7D9733AC8A25}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{8D00C957-6374-4BA9-B47E-BEC491D03955}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{8D00C957-6374-4BA9-B47E-BEC491D03955}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{33374BC1-5901-4BCE-BC0E-B87541A39F5A}"
 EndProject

@@ -1,5 +1,6 @@
-using Estimate.Core.Estimates.Dtos;
-using Estimate.Core.Products.Dtos;
+using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
+using Estimate.Application.Products.CreateProductUseCase;
+using Estimate.Application.Products.UpdateProductUseCase;
 using Estimate.Domain.Entities;
 using Estimate.UnitTest.TestUtils;
 
@@ -7,11 +8,12 @@ namespace Estimate.UnitTest.UnitTests.Products.TestUtils;
 
 public static class ProductUtils
 {
-    public static CreateProductRequest CreateProductRequest() =>
+    public static CreateProductCommand CreateProductRequest() =>
         new(Constants.Product.Name);
 
-    public static UpdateProductRequest UpdateProductRequest() =>
-        new(Constants.Product.Name);
+    public static UpdateProductCommand UpdateProductRequest() =>
+        new(Constants.Product.Name,
+            Constants.Product.Guid);
 
     public static Product Product() =>
         new(Constants.Product.Guid,
@@ -25,6 +27,5 @@ public static class ProductUtils
                 Constants.Product.Name))
             .ToList();
     }
-
 }
 

@@ -1,5 +1,5 @@
-﻿using Estimate.Domain.Entities;
-using Estimate.Domain.Interface;
+﻿using Estimate.Application.Common.Repositories;
+using Estimate.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace Estimate.Infra.Repositories;
@@ -20,7 +20,7 @@ public class UserRepository : IUserRepository
     public async Task<IdentityResult> CreateUserAsync(User user, string password) =>
         await _userManager.CreateAsync(user, password);
 
-    public async Task<User> FetchByEmailAsync(string email) =>
+    public async Task<User?> FetchByEmailAsync(string email) =>
         await _userManager.FindByEmailAsync(email);
 
     public async Task<SignInResult> LoginUsingPasswordAsync(

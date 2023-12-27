@@ -1,5 +1,5 @@
-﻿using Estimate.Domain.Entities.Base;
-using Estimate.Domain.Interface.Base;
+﻿using Estimate.Application.Common.Repositories.Base;
+using Estimate.Domain.Entities.Base;
 using Estimate.Infra.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;

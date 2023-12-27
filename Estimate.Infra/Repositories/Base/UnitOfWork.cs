@@ -1,4 +1,4 @@
-﻿using Estimate.Domain.Interface.Base;
+﻿using Estimate.Application.Common.Repositories.Base;
 using Estimate.Infra.AppDbContext;
 
 namespace Estimate.Infra.Repositories.Base;
@@ -12,8 +12,6 @@ public class UnitOfWork : IUnitOfWork
         _dbContext = dbContext;
     }
 
-    public async Task SaveChangesAsync()
-    {
+    public async Task SaveChangesAsync() =>
         await _dbContext.SaveChangesAsync();
-    }
 }
