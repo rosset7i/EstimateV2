@@ -10,7 +10,7 @@ public class CreateEstimateCommand : IRequest<ResultOf<Operation>>
     public string Name { get; set; }
     public Guid SupplierId { get; set; }
     public List<UpdateEstimateProductsRequest> ProductsInEstimate { get; set; }
-    
+
     public CreateEstimateCommand(
         string name,
         Guid supplierId,

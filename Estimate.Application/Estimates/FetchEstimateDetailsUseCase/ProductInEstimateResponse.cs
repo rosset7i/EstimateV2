@@ -29,7 +29,7 @@ public class ProductInEstimateResponse
             productInEstimate.Price.UnitPrice,
             productInEstimate.Price.Quantity);
     }
-    
+
     public static List<ProductInEstimateResponse> Of(List<ProductInEstimate> productInEstimate)
     {
         return productInEstimate

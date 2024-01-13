@@ -9,9 +9,9 @@ public class UpdateProductCommand : IRequest<ResultOf<Operation>>
 {
     public Guid ProductId { get; set; }
     public string Name { get; set; }
-    
+
     public UpdateProductCommand(
-        string name, 
+        string name,
         Guid productId)
     {
         Name = name;

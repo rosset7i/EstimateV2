@@ -6,7 +6,7 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace Estimate.Infra.Repositories;
 
-public class SupplierRepository : RepositoryBase<Guid,Supplier>, ISupplierRepository
+public class SupplierRepository : RepositoryBase<Guid, Supplier>, ISupplierRepository
 {
     public SupplierRepository(
         EstimateDbContext dbContext,

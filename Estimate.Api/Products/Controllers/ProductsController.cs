@@ -24,24 +24,24 @@ public class ProductsController : ApiController
         _mediator = mediator;
 
     [HttpGet]
-    public async Task<PagedResultOf<ProductResponse>> FetchPagedProductsAsync([FromQuery]PagedAndSortedProductQuery query) =>
+    public async Task<PagedResultOf<ProductResponse>> FetchPagedProductsAsync([FromQuery] PagedAndSortedProductQuery query) =>
         await _mediator.Send(query);
-    
+
     [HttpGet("{productId:guid}")]
     public async Task<Product?> FetchProductByIdAsync(
-        [FromRoute]Guid productId,
-        [FromServices]IProductRepository productRepository) =>
+        [FromRoute] Guid productId,
+        [FromServices] IProductRepository productRepository) =>
         await productRepository.FetchByIdAsync(productId);
-    
+
     [HttpPost]
-    public async Task<ResultOf<Operation>> CreateProductAsync([FromBody]CreateProductCommand command) =>
+    public async Task<ResultOf<Operation>> CreateProductAsync([FromBody] CreateProductCommand command) =>
         await _mediator.Send(command);
 
     [HttpPut("Update")]
-    public async Task<ResultOf<Operation>> UpdateProductAsync([FromBody]UpdateProductCommand command) =>
+    public async Task<ResultOf<Operation>> UpdateProductAsync([FromBody] UpdateProductCommand command) =>
         await _mediator.Send(command);
 
     [HttpDelete("Delete")]
-    public async Task<ResultOf<Operation>> DeleteProductAsync([FromQuery]RemoveProductCommand command) =>
+    public async Task<ResultOf<Operation>> DeleteProductAsync([FromQuery] RemoveProductCommand command) =>
         await _mediator.Send(command);
 }

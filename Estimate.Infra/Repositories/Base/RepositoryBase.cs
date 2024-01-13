@@ -57,7 +57,7 @@ public abstract class RepositoryBase<TId, TEntity> : IRepositoryBase<TId, TEntit
 
         DbContext.Set<TEntity>().Update(entity);
     }
-    
+
     public void Delete(TEntity entity) =>
         DbContext.Set<TEntity>().Remove(entity);
 

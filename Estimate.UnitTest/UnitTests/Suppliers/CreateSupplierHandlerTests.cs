@@ -23,13 +23,13 @@ public class CreateSupplierHandlerTests : IUnitTestBase<CreateSupplierHandler, C
 
         //Act
         var result = await handler.Handle(command, CancellationToken.None);
-        
+
         //Assert
         Assert.Equivalent(Operation.Created, result.Result);
         mocks.ShouldCallSupplierRepositoryAdd()
             .ShouldCallUnitOfWork();
     }
-    
+
     public CreateSupplierHandlerMocks GetMocks()
     {
         return new CreateSupplierHandlerMocks(

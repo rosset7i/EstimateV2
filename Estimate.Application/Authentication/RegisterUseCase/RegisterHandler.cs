@@ -30,7 +30,7 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, ResultOf<Registe
             newUser,
             command.Password);
 
-        if(!result.Succeeded)
+        if (!result.Succeeded)
             return DomainError.Authentication.RegisterError(result.Errors);
 
         return new RegisterResult(result);

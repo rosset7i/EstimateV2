@@ -23,7 +23,7 @@ public static class ProductUtils
     {
         return requests
             .Select(request => new Product(
-                request.ProductId, 
+                request.ProductId,
                 Constants.Product.Name))
             .ToList();
     }

@@ -55,7 +55,7 @@ public class RemoveProductHandlerTests : IUnitTestBase<RemoveProductHandler, Rem
             .ShouldNotCallDeleteProduct()
             .ShouldNoCallUnitOfWork();
     }
-    
+
     public RemoveProductHandlerMocks GetMocks()
     {
         return new RemoveProductHandlerMocks(

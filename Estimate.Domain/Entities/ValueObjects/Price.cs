@@ -10,17 +10,17 @@ public class Price : ValueObject<Price>
     public decimal TotalPrice => CalculateTotalPrice();
 
     public Price(
-        decimal unitPrice, 
+        decimal unitPrice,
         double quantity)
     {
         UnitPrice = unitPrice;
         Quantity = quantity;
         ValidateObject();
     }
-    
+
     private decimal CalculateTotalPrice() =>
         UnitPrice * (decimal)Quantity;
-    
+
     protected sealed override void ValidateObject()
     {
         RuleFor(e => e.UnitPrice)

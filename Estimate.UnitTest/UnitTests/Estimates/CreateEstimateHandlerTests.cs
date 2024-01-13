@@ -100,7 +100,7 @@ public class CreateEstimateHandlerTests : IUnitTestBase<CreateEstimateHandler, C
             .ShouldNotCallFetchEstimateWithProducts()
             .ShouldNotCallUnitOfWork();
     }
-    
+
     public CreateEstimateHandlerMocks GetMocks()
     {
         return new CreateEstimateHandlerMocks(
@@ -147,7 +147,7 @@ public class CreateEstimateHandlerMocks
 
         return this;
     }
-    
+
     public CreateEstimateHandlerMocks ShouldCallFetchProductsByIdsAsync(
         List<UpdateEstimateProductsRequest> request)
     {
@@ -160,7 +160,7 @@ public class CreateEstimateHandlerMocks
 
         return this;
     }
-    
+
     public CreateEstimateHandlerMocks ShouldCallAddEstimate()
     {
         EstimateRepository
@@ -176,7 +176,7 @@ public class CreateEstimateHandlerMocks
             .Verify(e => e.SaveChangesAsync(),
                 Times.Once);
     }
-    
+
     public CreateEstimateHandlerMocks ShouldNotCallFetchEstimateWithProducts()
     {
         EstimateRepository

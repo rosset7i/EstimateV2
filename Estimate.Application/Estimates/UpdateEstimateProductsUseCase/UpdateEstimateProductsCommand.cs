@@ -9,7 +9,7 @@ namespace Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 public class UpdateEstimateProductsCommand : IRequest<ResultOf<Operation>>
 {
     public Guid EstimateId { get; set; }
-    public List<UpdateEstimateProductsRequest> UpdateEstimateProductsRequest { get; set; } = new ();
+    public List<UpdateEstimateProductsRequest> UpdateEstimateProductsRequest { get; set; } = new();
 }
 
 public class UpdateEstimateProductsRequest

@@ -10,7 +10,7 @@ public class Product : Entity
     public List<ProductInEstimate> ProductsInEstimate { get; } = new();
 
     public Product(
-        Guid id, 
+        Guid id,
         string name)
     {
         Id = id;

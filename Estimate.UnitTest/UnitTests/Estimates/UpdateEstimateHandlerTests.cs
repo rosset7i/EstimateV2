@@ -102,7 +102,7 @@ public class UpdateEstimateHandlerMocks
 
         return this;
     }
-    
+
     public UpdateEstimateHandlerMocks ShouldCallUpdateEstimate()
     {
         EstimateRepository

@@ -15,6 +15,6 @@ public class BusinessException : Exception
 
     public BusinessException(Error error)
     {
-        Errors = new[] {error};
+        Errors = new[] { error };
     }
 }

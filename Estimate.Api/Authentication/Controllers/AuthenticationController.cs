@@ -16,7 +16,7 @@ public class AuthenticationController : ApiController
         _mediator = mediator;
 
     [HttpPost("Register")]
-    public async Task<ResultOf<RegisterResult>> RegisterAsync([FromBody]RegisterCommand command) =>
+    public async Task<ResultOf<RegisterResult>> RegisterAsync([FromBody] RegisterCommand command) =>
         await _mediator.Send(command);
 
     [HttpPost("Login")]

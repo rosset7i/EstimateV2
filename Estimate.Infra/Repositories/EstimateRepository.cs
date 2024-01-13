@@ -7,7 +7,7 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace Estimate.Infra.Repositories;
 
-public class EstimateRepository : RepositoryBase<Guid,EstimateEn>, IEstimateRepository
+public class EstimateRepository : RepositoryBase<Guid, EstimateEn>, IEstimateRepository
 {
     public EstimateRepository(
         EstimateDbContext dbContext,

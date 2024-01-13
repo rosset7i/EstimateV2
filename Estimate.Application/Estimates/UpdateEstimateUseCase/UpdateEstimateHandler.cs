@@ -25,7 +25,7 @@ public class UpdateEstimateHandler : IRequestHandler<UpdateEstimateCommand, Resu
         _supplierRepository = supplierRepository;
         _unitOfWork = unitOfWork;
     }
-    
+
     public async Task<ResultOf<Operation>> Handle(UpdateEstimateCommand command, CancellationToken cancellationToken)
     {
         var estimate = await _estimateRepository.FetchByIdAsync(command.EstimateId);
@@ -44,7 +44,7 @@ public class UpdateEstimateHandler : IRequestHandler<UpdateEstimateCommand, Resu
 
         return Operation.Updated;
     }
-    
+
     private void UpdateEstimateInfo(
         EstimateEn estimate,
         UpdateEstimateCommand command)

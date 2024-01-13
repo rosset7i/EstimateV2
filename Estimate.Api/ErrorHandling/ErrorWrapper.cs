@@ -28,7 +28,7 @@ public class ErrorWrapper : ObjectResultExecutor
             var isError = (bool)(resultOfType.GetProperty("IsError")
                 ?.GetValue(result.Value) ?? false);
 
-            if(!isError)
+            if (!isError)
                 return base.ExecuteAsync(context, result);
 
             var error = (Error)resultOfType.GetProperty("FirstError")?

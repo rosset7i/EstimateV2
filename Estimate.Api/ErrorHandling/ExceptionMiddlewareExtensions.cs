@@ -10,7 +10,7 @@ public static class ExceptionMiddlewareExtensions
     public static void ConfigureExceptionHandler(this IApplicationBuilder app, ILoggerProvider loggerProvider)
     {
         var logger = loggerProvider.CreateLogger(nameof(ExceptionMiddlewareExtensions));
-        
+
         app.UseExceptionHandler(appError =>
         {
             appError.Run(async context =>
@@ -18,7 +18,7 @@ public static class ExceptionMiddlewareExtensions
                 var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
 
                 var exception = (BusinessException)contextFeature?.Error!;
-                
+
                 if (contextFeature is not null)
                 {
                     context.Response.StatusCode = (int)exception.FirstError.StatusCode;

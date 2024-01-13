@@ -24,7 +24,7 @@ public class FetchEstimateDetailsResponse
         SupplierName = supplierName;
         ProductsInEstimate = productsInEstimate;
     }
-    
+
     public static FetchEstimateDetailsResponse Of(EstimateEn estimate)
     {
         return new FetchEstimateDetailsResponse(

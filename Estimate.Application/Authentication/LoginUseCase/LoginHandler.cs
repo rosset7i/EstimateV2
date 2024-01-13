@@ -17,7 +17,7 @@ public class LoginHandler : IRequestHandler<LoginCommand, ResultOf<LoginResult>>
         _tokenGeneratorService = tokenGeneratorService;
         _userRepository = userRepository;
     }
-    
+
     public async Task<ResultOf<LoginResult>> Handle(LoginCommand command, CancellationToken cancellationToken)
     {
         var user = await _userRepository.FetchByEmailAsync(command.Email);
@@ -39,7 +39,7 @@ public class LoginHandler : IRequestHandler<LoginCommand, ResultOf<LoginResult>>
         var authResponse = new LoginResult(
             user.Email!,
             token);
-        
+
         return authResponse;
     }
 }

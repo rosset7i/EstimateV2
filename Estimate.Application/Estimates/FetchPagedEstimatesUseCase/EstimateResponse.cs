@@ -18,7 +18,7 @@ public class EstimateResponse
         Name = name;
         SupplierName = supplierName;
     }
-    
+
     public static EstimateResponse Of(EstimateEn estimate)
     {
         return new EstimateResponse(
