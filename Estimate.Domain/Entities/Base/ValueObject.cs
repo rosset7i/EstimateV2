@@ -11,7 +11,7 @@ public abstract class ValueObject<TClass> : AbstractValidator<TClass>
 
     protected void ThrowIfAny(ValidationResult validationResult)
     {
-        if(validationResult.Errors.Any())
+        if (validationResult.Errors.Any())
             throw new BusinessException(DomainError.Common.InvalidDomain<TClass>());
     }
 }

@@ -55,7 +55,7 @@ public class UpdateSupplierHandlerTests : IUnitTestBase<UpdateSupplierHandler, U
             .ShouldNotCallSupplierRepositoryUpdate()
             .ShouldNotCallUnitOfWork();
     }
-    
+
     public UpdateSupplierHandleMocks GetMocks()
     {
         return new UpdateSupplierHandleMocks(

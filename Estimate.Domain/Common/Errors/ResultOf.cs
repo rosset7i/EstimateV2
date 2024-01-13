@@ -2,7 +2,7 @@
 
 namespace Estimate.Domain.Common.Errors;
 
-public class ResultOf<TValue>  
+public class ResultOf<TValue>
 {
     public TValue Result { get; private set; }
     public List<Error> Errors { get; } = new();

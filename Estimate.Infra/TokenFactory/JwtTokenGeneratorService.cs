@@ -20,11 +20,11 @@ public class JwtTokenGeneratorService : IJwtTokenGeneratorService
     public string GenerateToken(User user)
     {
         var key = _configuration.GetSection("JwtSettings:Secret").Value!;
-        
+
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
             SecurityAlgorithms.HmacSha256);
-            
+
         var claims = new List<Claim>
         {
             new("email", user.Email),

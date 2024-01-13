@@ -35,7 +35,7 @@ public class RegisterHandlerTests : IUnitTestBase<RegisterHandler, RegisterHandl
         mocks.ShouldCallFetchUserByEmail(registerRequest.Email)
             .ShouldCallCreateUser();
     }
-    
+
     [Fact]
     public async Task Register_WhenEmailAlreadyExists_ShouldReturnConflict()
     {
@@ -65,7 +65,7 @@ public class RegisterHandlerTests : IUnitTestBase<RegisterHandler, RegisterHandl
         //Arrange
         var registerRequest = AuthenticationUtils.CreateRegisterRequest();
         var authResult = IdentityResult.Failed();
-        
+
         var mocks = GetMocks();
         var handler = GetClass(mocks);
 
@@ -83,7 +83,7 @@ public class RegisterHandlerTests : IUnitTestBase<RegisterHandler, RegisterHandl
         mocks.ShouldCallFetchUserByEmail(registerRequest.Email)
             .ShouldCallCreateUser();
     }
-    
+
     public RegisterHandlerMocks GetMocks()
     {
         return new RegisterHandlerMocks(new Mock<IUserRepository>());
@@ -104,7 +104,7 @@ public class RegisterHandlerMocks
     {
         UserRepository = userRepository;
     }
-    
+
     public void ShouldCallCreateUser()
     {
         UserRepository

@@ -55,7 +55,7 @@ public class RemoveEstimateHandlerTests : IUnitTestBase<RemoveEstimateHandler, R
             .ShouldNotCallDeleteEstimate()
             .ShouldNotCallUnitOfWork();
     }
-    
+
     public RemoveEstimateHandlerMocks GetMocks()
     {
         return new RemoveEstimateHandlerMocks(
@@ -101,7 +101,7 @@ public class RemoveEstimateHandlerMocks
 
         return this;
     }
-    
+
     public void ShouldCallUnitOfWork()
     {
         UnitOfWork
@@ -117,7 +117,7 @@ public class RemoveEstimateHandlerMocks
 
         return this;
     }
-    
+
     public void ShouldNotCallUnitOfWork()
     {
         UnitOfWork

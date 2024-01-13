@@ -25,9 +25,8 @@ public class UpdateEstimateCommand : IRequest<ResultOf<Operation>>
     {
         estimate.AlterName(Name);
         estimate.AlterSupplier(SupplierId);
-        
+
         return estimate;
     }
 }
-    
-    
+

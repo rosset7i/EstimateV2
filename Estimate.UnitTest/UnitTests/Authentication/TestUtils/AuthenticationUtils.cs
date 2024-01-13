@@ -12,11 +12,11 @@ public static class AuthenticationUtils
             Constants.User.Email,
             Constants.User.Password,
             Constants.User.Phone);
-    
+
     public static LoginCommand CreateLoginRequest() =>
         new(Constants.User.Email,
             Constants.User.Password);
-    
+
     public static LoginResult CreateLoginResponse() =>
         new(Constants.User.Email,
             Constants.User.Token);

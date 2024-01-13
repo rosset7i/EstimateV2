@@ -20,7 +20,7 @@ public class LoginHandlerTests : IUnitTestBase<LoginHandler, LoginHandlerMocks>
         var loginRequest = AuthenticationUtils.CreateLoginRequest();
 
         loginRequest.Email = string.Empty;
-        
+
         var mocks = GetMocks();
         var handle = GetClass(mocks);
 
@@ -33,7 +33,7 @@ public class LoginHandlerTests : IUnitTestBase<LoginHandler, LoginHandlerMocks>
             .ShouldNotCallLoginWithPassword()
             .ShouldNotCallGenerateToken();
     }
-    
+
     [Fact]
     public async Task Login_WhenThePasswordDoesntMatch_ShouldReturnError()
     {
@@ -162,7 +162,7 @@ public class LoginHandlerMocks
                 .GenerateToken(user),
                 Times.Once);
     }
-    
+
     public void ShouldNotCallGenerateToken()
     {
         JtwTokenGeneratorService

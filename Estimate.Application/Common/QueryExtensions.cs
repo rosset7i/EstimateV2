@@ -12,7 +12,7 @@ public static class QueryExtensions
     {
         var totalItems = await entities.CountAsync();
 
-        var totalPages = (int)Math.Ceiling((double) totalItems / request.PageSize);
+        var totalPages = (int)Math.Ceiling((double)totalItems / request.PageSize);
 
         var pagedAndSortedResult = await entities
             .Skip((request.Page - 1) * request.PageSize)
@@ -25,7 +25,7 @@ public static class QueryExtensions
             request.Page,
             pagedAndSortedResult);
     }
-    
+
     public static IQueryable<TEntity> SortBy<TEntity>(
         this IQueryable<TEntity> query,
         PagedAndSortedRequest request)

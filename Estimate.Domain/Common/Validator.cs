@@ -21,7 +21,7 @@ public class Validator
         Error error,
         bool onlyIf = true)
     {
-        if(hasError && onlyIf)
+        if (hasError && onlyIf)
             _errors.Add(error);
 
         return this;

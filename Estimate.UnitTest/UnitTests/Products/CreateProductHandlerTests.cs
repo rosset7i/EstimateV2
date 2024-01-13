@@ -29,7 +29,7 @@ public class CreateProductHandlerTests : IUnitTestBase<CreateProductHandler, Cre
         mocks.ShouldCallAddProduct()
             .ShouldCallUnitOfWork();
     }
-    
+
     public CreateProductHandlerMocks GetMocks()
     {
         return new CreateProductHandlerMocks(

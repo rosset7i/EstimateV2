@@ -55,7 +55,7 @@ public class RemoveSupplierHandlerTests : IUnitTestBase<RemoveSupplierHandler, R
             .ShouldNotCallSupplierRepositoryDelete()
             .ShouldNotCallUnitOfWork();
     }
-    
+
     public RemoveSupplierHandlerMocks GetMocks()
     {
         return new RemoveSupplierHandlerMocks(

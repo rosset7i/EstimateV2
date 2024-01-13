@@ -17,7 +17,7 @@ public class EstimateDbContext : IdentityDbContext, IDatabaseContext
 
     public EstimateDbContext(DbContextOptions option) : base(option)
     {
-        
+
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
