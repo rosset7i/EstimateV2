@@ -1,7 +1,5 @@
 ﻿using Estimate.Application.Common;
-using Estimate.Domain.Common;
 using Estimate.Domain.Common.Errors;
-using Estimate.Domain.Entities;
 using Estimate.Domain.Entities.Estimate;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +11,8 @@ public class FetchEstimateDetailsHandler : IRequestHandler<FetchEstimateDetailsQ
 {
     private readonly IDatabaseContext _dbContext;
 
-    public FetchEstimateDetailsHandler(IDatabaseContext dbContext)
-    {
+    public FetchEstimateDetailsHandler(IDatabaseContext dbContext) =>
         _dbContext = dbContext;
-    }
 
     public async Task<ResultOf<FetchEstimateDetailsResponse>> Handle(FetchEstimateDetailsQuery query, CancellationToken cancellationToken)
     {
@@ -24,7 +20,7 @@ public class FetchEstimateDetailsHandler : IRequestHandler<FetchEstimateDetailsQ
             .Where(e => e.Id == query.EstimateId)
             .Include(e => e.Supplier)
             .Include(e => e.ProductsInEstimate)
-            .ThenInclude(p => p.Product)
+                .ThenInclude(p => p.Product)
             .Select(e => FetchEstimateDetailsResponse.Of(e))
             .FirstOrDefaultAsync(cancellationToken: cancellationToken);
 
