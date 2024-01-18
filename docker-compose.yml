@@ -1,0 +1,48 @@
+version: "3.8"
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-CU14-ubuntu-20.04
+    container_name: mssql
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Senh@123
+    volumes:
+      - sql_server_data:/var/opt/mssql
+
+  redis:
+    image: redis
+    container_name: redis
+    environment:
+      - REDIS_HOST=redis
+    ports:
+      - 6379:6379
+
+  mariadb:
+    image: docker.io/bitnami/mariadb
+    ports:
+      - '3306:3306'
+    container_name: mariadb
+    environment:
+      - MARIADB_ROOT_USER=rossetti
+      - MARIADB_ROOT_PASSWORD=Senh@123
+      - MARIADB_DATABASE=jasperreports
+
+  jasperreports:
+    image: docker.io/bitnami/jasperreports
+    container_name: jasperreports
+    ports:
+      - '8080:8080'
+      - '8443:8443'
+    depends_on:
+      - mariadb
+    environment:
+      - JASPERREPORTS_DATABASE_USER=rossetti
+      - JASPERREPORTS_DATABASE_PASSWORD=Senh@123
+      - JASPERREPORTS_DATABASE_NAME=jasperreports
+      - JASPERREPORTS_USERNAME=rossetti
+      - JASPERREPORTS_PASSWORD=Senh@123
+
+volumes:
+  sql_server_data:
