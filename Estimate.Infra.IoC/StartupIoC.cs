@@ -26,7 +26,7 @@ public static class StartupIoC
     {
         services.AddDbContext<EstimateDbContext>(options =>
         {
-            options.UseSqlServer(configuration.GetConnectionString("Default"));
+            options.UseNpgsql(configuration.GetConnectionString("Default"));
         });
         services
             .AddIdentity<User, IdentityRole>()
