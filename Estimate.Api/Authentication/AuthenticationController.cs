@@ -5,7 +5,7 @@ using Estimate.Domain.Common.Errors;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Estimate.Api.Authentication.Controllers;
+namespace Estimate.Api.Authentication;
 
 [Route("api/v1/Authentication")]
 public class AuthenticationController : ApiController

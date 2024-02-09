@@ -12,7 +12,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Estimate.Api.Products.Controllers;
+namespace Estimate.Api.Products;
 
 [Route("api/v1/Products")]
 [Authorize]
