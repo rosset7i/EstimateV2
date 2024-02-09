@@ -2,7 +2,7 @@
 
 namespace Estimate.Domain.Entities;
 
-public class User : IdentityUser
+public sealed class User : IdentityUser
 {
     public string Name { get; set; }
 

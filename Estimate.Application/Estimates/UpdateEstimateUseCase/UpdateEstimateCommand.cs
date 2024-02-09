@@ -11,16 +11,6 @@ public class UpdateEstimateCommand : IRequest<ResultOf<Operation>>
     public string Name { get; set; }
     public Guid SupplierId { get; set; }
 
-    public UpdateEstimateCommand(
-        Guid estimateId,
-        string name,
-        Guid supplierId)
-    {
-        EstimateId = estimateId;
-        Name = name;
-        SupplierId = supplierId;
-    }
-
     public EstimateEn UpdateInfoOf(EstimateEn estimate)
     {
         estimate.AlterName(Name);

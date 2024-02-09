@@ -26,6 +26,7 @@ public class Price : ValueObject<Price>
         RuleFor(e => e.UnitPrice)
             .NotEmpty()
             .GreaterThan(0.01m);
+
         RuleFor(e => e.Quantity)
             .NotEmpty()
             .GreaterThan(0.01);

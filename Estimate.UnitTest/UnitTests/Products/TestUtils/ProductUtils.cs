@@ -1,3 +1,4 @@
+using Bogus;
 using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 using Estimate.Application.Products.CreateProductUseCase;
 using Estimate.Application.Products.UpdateProductUseCase;
@@ -9,11 +10,12 @@ namespace Estimate.UnitTest.UnitTests.Products.TestUtils;
 public static class ProductUtils
 {
     public static CreateProductCommand CreateProductRequest() =>
-        new(Constants.Product.Name);
+        new Faker<CreateProductCommand>()
+            .Generate();
 
     public static UpdateProductCommand UpdateProductRequest() =>
-        new(Constants.Product.Name,
-            Constants.Product.Guid);
+        new Faker<UpdateProductCommand>()
+            .Generate();
 
     public static Product Product() =>
         new(Constants.Product.Guid,

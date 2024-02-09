@@ -16,7 +16,7 @@ public class RegisterHandlerTests : IUnitTestBase<RegisterHandler, RegisterHandl
     public async Task Register_WhenEmailDoesntExist_ShouldSaveNewUser()
     {
         //Arrange
-        var registerRequest = AuthenticationUtils.CreateRegisterRequest();
+        var command = AuthenticationUtils.CreateRegisterRequest();
 
         var mocks = GetMocks();
         var handler = GetClass(mocks);
@@ -28,11 +28,11 @@ public class RegisterHandlerTests : IUnitTestBase<RegisterHandler, RegisterHandl
             .ReturnsAsync(IdentityResult.Success);
 
         //Act
-        var result = await handler.Handle(registerRequest, CancellationToken.None);
+        var result = await handler.Handle(command, CancellationToken.None);
 
         //Assert
         Assert.Equal(IdentityResult.Success, result.Result.IdentityResult);
-        mocks.ShouldCallFetchUserByEmail(registerRequest.Email)
+        mocks.ShouldCallFetchUserByEmail(command.Email)
             .ShouldCallCreateUser();
     }
 
@@ -41,21 +41,21 @@ public class RegisterHandlerTests : IUnitTestBase<RegisterHandler, RegisterHandl
     {
         //Arrange
         var user = AuthenticationUtils.CreateUser();
-        var registerRequest = AuthenticationUtils.CreateRegisterRequest();
+        var command = AuthenticationUtils.CreateRegisterRequest();
 
         var mocks = GetMocks();
         var handler = GetClass(mocks);
 
         mocks.UserRepository
-            .Setup(e => e.FetchByEmailAsync(user.Email!))
+            .Setup(e => e.FetchByEmailAsync(command.Email))
             .ReturnsAsync(user);
 
         //Act
-        var result = await handler.Handle(registerRequest, CancellationToken.None);
+        var result = await handler.Handle(command, CancellationToken.None);
 
         //Assert
         Assert.Equivalent(DomainError.Authentication.EmailAlreadyInUse, result.FirstError);
-        mocks.ShouldCallFetchUserByEmail(user.Email!)
+        mocks.ShouldCallFetchUserByEmail(command.Email)
             .ShouldNotCallCreateUser();
     }
 
@@ -63,7 +63,7 @@ public class RegisterHandlerTests : IUnitTestBase<RegisterHandler, RegisterHandl
     public async Task Register_WhenCreateUserIsUnsuccessful_ShouldReturnError()
     {
         //Arrange
-        var registerRequest = AuthenticationUtils.CreateRegisterRequest();
+        var command = AuthenticationUtils.CreateRegisterRequest();
         var authResult = IdentityResult.Failed();
 
         var mocks = GetMocks();
@@ -76,11 +76,11 @@ public class RegisterHandlerTests : IUnitTestBase<RegisterHandler, RegisterHandl
             .ReturnsAsync(authResult);
 
         //Act
-        var result = await handler.Handle(registerRequest, CancellationToken.None);
+        var result = await handler.Handle(command, CancellationToken.None);
 
         //Assert
         Assert.Equivalent(DomainError.Authentication.RegisterError(authResult.Errors), result.FirstError);
-        mocks.ShouldCallFetchUserByEmail(registerRequest.Email)
+        mocks.ShouldCallFetchUserByEmail(command.Email)
             .ShouldCallCreateUser();
     }
 

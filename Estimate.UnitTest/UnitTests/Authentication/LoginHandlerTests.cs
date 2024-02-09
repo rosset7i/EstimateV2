@@ -14,55 +14,53 @@ namespace Estimate.UnitTest.UnitTests.Authentication;
 public class LoginHandlerTests : IUnitTestBase<LoginHandler, LoginHandlerMocks>
 {
     [Fact]
-    public async Task Login_WhenUserWithEmailDoesntExist_ShouldReturnError()
+    public async Task Login_WhenUserDoesntExist_ShouldReturnError()
     {
         //Arrange
-        var loginRequest = AuthenticationUtils.CreateLoginRequest();
-
-        loginRequest.Email = string.Empty;
+        var command = AuthenticationUtils.CreateLoginCommand();
 
         var mocks = GetMocks();
         var handle = GetClass(mocks);
 
         //Act
-        var result = await handle.Handle(loginRequest, CancellationToken.None);
+        var result = await handle.Handle(command, CancellationToken.None);
 
         //Assert
         Assert.Equivalent(DomainError.Authentication.WrongEmailOrPassword, result.FirstError);
-        mocks.ShouldCallFetchUserByEmail(loginRequest.Email)
+        mocks.ShouldCallFetchUserByEmail(command.Email)
             .ShouldNotCallLoginWithPassword()
             .ShouldNotCallGenerateToken();
     }
 
     [Fact]
-    public async Task Login_WhenThePasswordDoesntMatch_ShouldReturnError()
+    public async Task Login_WhenIdentityFails_ShouldReturnError()
     {
         //Arrange
-        var loginRequest = AuthenticationUtils.CreateLoginRequest();
+        var command = AuthenticationUtils.CreateLoginCommand();
         var user = AuthenticationUtils.CreateUser();
 
         var mocks = GetMocks();
         var handler = GetClass(mocks);
 
         mocks.UserRepository.Setup(e => e
-            .FetchByEmailAsync(loginRequest.Email))
+            .FetchByEmailAsync(command.Email))
             .ReturnsAsync(user);
 
         mocks.UserRepository.Setup(e => e
             .LoginUsingPasswordAsync(
                 user,
-                loginRequest.Password,
+                command.Password,
                 false,
                 false))
             .ReturnsAsync(SignInResult.Failed);
 
         //Act
-        var result = await handler.Handle(loginRequest, CancellationToken.None);
+        var result = await handler.Handle(command, CancellationToken.None);
 
         //Assert
         Assert.Equivalent(DomainError.Authentication.WrongEmailOrPassword, result.FirstError);
-        mocks.ShouldCallFetchUserByEmail(loginRequest.Email)
-            .ShouldCallLoginWithPassword(user, loginRequest)
+        mocks.ShouldCallFetchUserByEmail(command.Email)
+            .ShouldCallLoginWithPassword(user, command)
             .ShouldNotCallGenerateToken();
     }
 
@@ -70,7 +68,7 @@ public class LoginHandlerTests : IUnitTestBase<LoginHandler, LoginHandlerMocks>
     public async Task Login_WhenPasswordMatch_ShouldReturnToken()
     {
         //Arrange
-        var loginRequest = AuthenticationUtils.CreateLoginRequest();
+        var commmand = AuthenticationUtils.CreateLoginCommand();
         var loginResponse = AuthenticationUtils.CreateLoginResponse();
         var user = AuthenticationUtils.CreateUser();
 
@@ -78,13 +76,13 @@ public class LoginHandlerTests : IUnitTestBase<LoginHandler, LoginHandlerMocks>
         var handler = GetClass(mocks);
 
         mocks.UserRepository.Setup(e => e
-            .FetchByEmailAsync(loginRequest.Email))
+            .FetchByEmailAsync(commmand.Email))
             .ReturnsAsync(user);
 
         mocks.UserRepository.Setup(e => e
             .LoginUsingPasswordAsync(
                 user,
-                loginRequest.Password,
+                commmand.Password,
                 false,
                 false))
             .ReturnsAsync(SignInResult.Success);
@@ -94,12 +92,12 @@ public class LoginHandlerTests : IUnitTestBase<LoginHandler, LoginHandlerMocks>
             .Returns(loginResponse.Token);
 
         //Act
-        var result = await handler.Handle(loginRequest, CancellationToken.None);
+        var result = await handler.Handle(commmand, CancellationToken.None);
 
         //Assert
         Assert.Equivalent(loginResponse, result.Result);
-        mocks.ShouldCallFetchUserByEmail(loginRequest.Email)
-            .ShouldCallLoginWithPassword(user, loginRequest)
+        mocks.ShouldCallFetchUserByEmail(commmand.Email)
+            .ShouldCallLoginWithPassword(user, commmand)
             .ShouldCallGenerateToken(user);
     }
 

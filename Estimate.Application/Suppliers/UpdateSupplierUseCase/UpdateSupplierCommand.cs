@@ -10,14 +10,6 @@ public class UpdateSupplierCommand : IRequest<ResultOf<Operation>>
     public Guid SupplierId { get; set; }
     public string Name { get; set; }
 
-    public UpdateSupplierCommand(
-        Guid supplierId,
-        string name)
-    {
-        SupplierId = supplierId;
-        Name = name;
-    }
-
     public Supplier UpdateInfoOf(Supplier supplier)
     {
         supplier.AlterName(Name);

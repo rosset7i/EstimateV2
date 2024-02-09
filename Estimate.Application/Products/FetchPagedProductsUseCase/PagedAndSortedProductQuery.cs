@@ -5,6 +5,6 @@ namespace Estimate.Application.Products.FetchPagedProductsUseCase;
 
 public class PagedAndSortedProductQuery : PagedAndSortedRequest, IRequest<PagedResultOf<ProductResponse>>
 {
-    public string? Name { get; set; }
-    public List<Guid>? ProductsIdsToFilter { get; set; } = new();
+    public string Name { get; set; }
+    public List<Guid> ProductsIdsToFilter { get; set; } = new();
 }

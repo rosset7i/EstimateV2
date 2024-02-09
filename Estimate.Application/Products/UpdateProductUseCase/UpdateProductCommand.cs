@@ -10,14 +10,6 @@ public class UpdateProductCommand : IRequest<ResultOf<Operation>>
     public Guid ProductId { get; set; }
     public string Name { get; set; }
 
-    public UpdateProductCommand(
-        string name,
-        Guid productId)
-    {
-        Name = name;
-        ProductId = productId;
-    }
-
     public Product UpdateInfoOf(Product product)
     {
         product.AlterName(Name);
