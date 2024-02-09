@@ -2,12 +2,13 @@ using Bogus;
 using Estimate.Application.Authentication.LoginUseCase;
 using Estimate.Application.Authentication.RegisterUseCase;
 using Estimate.Domain.Entities;
-using Estimate.UnitTest.TestUtils;
 
 namespace Estimate.UnitTest.UnitTests.Authentication.TestUtils;
 
 public static class AuthenticationUtils
 {
+    private static readonly Faker Faker = new();
+
     public static RegisterCommand CreateRegisterRequest() =>
         new Faker<RegisterCommand>()
             .RuleFor(e => e.Email, f => f.Internet.Email())
@@ -21,11 +22,11 @@ public static class AuthenticationUtils
             .Generate();
 
     public static LoginResult CreateLoginResponse() =>
-        new(Constants.User.Email,
-            Constants.User.Token);
+        new(Faker.Internet.Email(),
+            Faker.Lorem.Text());
 
     public static User CreateUser() =>
-        new(Constants.User.Name,
-            Constants.User.Email,
-            Constants.User.Phone);
+        new(Faker.Name.FirstName(),
+            Faker.Internet.Email(),
+            Faker.Phone.PhoneNumber("(##)#####-####"));
 }

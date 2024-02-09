@@ -3,12 +3,13 @@ using Estimate.Application.Estimates.CreateEstimateUseCase;
 using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 using Estimate.Application.Estimates.UpdateEstimateUseCase;
 using Estimate.Domain.Entities.Estimate;
-using Estimate.UnitTest.TestUtils;
 
 namespace Estimate.UnitTest.UnitTests.Estimates.TestUtils;
 
 public static class EstimateUtils
 {
+    private static readonly Faker Faker = new();
+
     public static CreateEstimateCommand CreateEstimateRequest() =>
         new Faker<CreateEstimateCommand>()
             .RuleFor(e => e.Name, f => f.Name.FirstName())
@@ -21,9 +22,9 @@ public static class EstimateUtils
             .Generate();
 
     public static EstimateEn Estimate() =>
-        new(Constants.Estimate.Guid,
-            Constants.Estimate.Name,
-            Constants.Supplier.Guid);
+        new(Guid.NewGuid(),
+            Faker.Name.FirstName(),
+            Guid.NewGuid());
 
     public static List<UpdateEstimateProductsRequest> UpdateEstimateProductsRequest() =>
         new Faker<UpdateEstimateProductsRequest>()

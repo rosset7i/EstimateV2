@@ -2,12 +2,13 @@ using Bogus;
 using Estimate.Application.Suppliers.CreateSupplierUseCase;
 using Estimate.Application.Suppliers.UpdateSupplierUseCase;
 using Estimate.Domain.Entities;
-using Estimate.UnitTest.TestUtils;
 
 namespace Estimate.UnitTest.UnitTests.Suppliers.TestUtils;
 
 public static class SupplierUtils
 {
+    private static readonly Faker Faker = new();
+
     public static CreateSupplierCommand CreateSupplierRequest() =>
         new Faker<CreateSupplierCommand>()
             .RuleFor(e => e.Name, f => f.Name.FirstName())
@@ -19,7 +20,7 @@ public static class SupplierUtils
             .Generate();
 
     public static Supplier Supplier() =>
-        new(Constants.Supplier.Guid,
-            Constants.Supplier.Name);
+        new(Guid.NewGuid(),
+            Faker.Name.FirstName());
 }
 

@@ -28,16 +28,14 @@ public static class StartupIoC
         {
             options.UseNpgsql(configuration.GetConnectionString("Default"));
         });
-        services
-            .AddIdentity<User, IdentityRole>()
+        services.AddIdentity<User, IdentityRole>()
             .AddEntityFrameworkStores<EstimateDbContext>()
             .AddDefaultTokenProviders();
     }
 
     public static void AddAuthentication(this IServiceCollection services, ConfigurationManager configuration)
     {
-        services
-            .AddAuthentication(options =>
+        services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;

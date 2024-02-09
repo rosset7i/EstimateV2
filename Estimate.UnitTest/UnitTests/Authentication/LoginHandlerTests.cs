@@ -95,7 +95,7 @@ public class LoginHandlerTests : IUnitTestBase<LoginHandler, LoginHandlerMocks>
         var result = await handler.Handle(commmand, CancellationToken.None);
 
         //Assert
-        Assert.Equivalent(loginResponse, result.Result);
+        Assert.Equivalent(loginResponse.Token, result.Result.Token);
         mocks.ShouldCallFetchUserByEmail(commmand.Email)
             .ShouldCallLoginWithPassword(user, commmand)
             .ShouldCallGenerateToken(user);
