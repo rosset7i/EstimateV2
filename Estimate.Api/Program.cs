@@ -1,7 +1,7 @@
 using Estimate.Application;
 using Estimate.Infra.IoC;
 using Rossetti.Common.Configuration;
-using Rossetti.Common.Result;
+using Rossetti.Common.ErrorHandler.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 {

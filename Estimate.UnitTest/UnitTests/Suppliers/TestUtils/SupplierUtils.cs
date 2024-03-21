@@ -7,20 +7,27 @@ namespace Estimate.UnitTest.UnitTests.Suppliers.TestUtils;
 
 public static class SupplierUtils
 {
-    private static readonly Faker Faker = new();
+    public static CreateSupplierCommand CreateSupplierRequest()
+    {
+        return new Faker<CreateSupplierCommand>()
+            .CustomInstantiator(f => new CreateSupplierCommand(
+                f.Name.FirstName()));
+    }
 
-    public static CreateSupplierCommand CreateSupplierRequest() =>
-        new Faker<CreateSupplierCommand>()
-            .RuleFor(e => e.Name, f => f.Name.FirstName())
-            .Generate();
+    public static UpdateSupplierCommand UpdateSupplierRequest()
+    {
+        return new Faker<UpdateSupplierCommand>()
+            .CustomInstantiator(f => new UpdateSupplierCommand(
+                Guid.NewGuid(),
+                f.Name.FirstName()));
+    }
 
-    public static UpdateSupplierCommand UpdateSupplierRequest() =>
-        new Faker<UpdateSupplierCommand>()
-            .RuleFor(e => e.Name, f => f.Name.FirstName())
-            .Generate();
-
-    public static Supplier Supplier() =>
-        new(Guid.NewGuid(),
-            Faker.Name.FirstName());
+    public static Supplier Supplier()
+    {
+        return new Faker<Supplier>()
+            .CustomInstantiator(f => new Supplier(
+                Guid.NewGuid(),
+                f.Name.FirstName()));
+    }
 }
 

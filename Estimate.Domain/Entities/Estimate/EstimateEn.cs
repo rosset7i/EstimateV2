@@ -1,4 +1,4 @@
-using Estimate.Domain.Entities.Base;
+using Rossetti.Common.Entities;
 
 namespace Estimate.Domain.Entities.Estimate;
 

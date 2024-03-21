@@ -1,7 +1,7 @@
 ﻿using Estimate.Domain.Entities.Estimate;
-using Estimate.Infra.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Rossetti.Common.Data;
 
 namespace Estimate.Infra.Mappings;
 

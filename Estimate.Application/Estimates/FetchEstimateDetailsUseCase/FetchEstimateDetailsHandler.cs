@@ -2,6 +2,7 @@
 using Estimate.Domain.Entities.Estimate;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Rossetti.Common.ErrorHandler;
 using Rossetti.Common.Result;
 
 namespace Estimate.Application.Estimates.FetchEstimateDetailsUseCase;

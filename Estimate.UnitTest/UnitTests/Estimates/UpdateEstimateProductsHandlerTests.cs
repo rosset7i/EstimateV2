@@ -3,13 +3,13 @@ using Estimate.Application.Common.Models;
 using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
-using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Entities.Estimate;
 using Estimate.UnitTest.TestUtils;
 using Estimate.UnitTest.UnitTests.Estimates.TestUtils;
 using Estimate.UnitTest.UnitTests.Products.TestUtils;
 using Moq;
+using Rossetti.Common.ErrorHandler;
 using Rossetti.Common.Result;
 using Xunit;
 

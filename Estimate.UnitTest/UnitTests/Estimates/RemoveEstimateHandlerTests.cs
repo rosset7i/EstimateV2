@@ -1,12 +1,11 @@
 ﻿using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Application.Estimates.RemoveEstimateUseCase;
-using Estimate.Domain.Common.CommonResults;
-using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities.Estimate;
 using Estimate.UnitTest.TestUtils;
 using Estimate.UnitTest.UnitTests.Estimates.TestUtils;
 using Moq;
+using Rossetti.Common.ErrorHandler;
 using Rossetti.Common.Result;
 using Xunit;
 
@@ -18,7 +17,7 @@ public class RemoveEstimateHandlerTests : IUnitTestBase<RemoveEstimateHandler, R
     public async Task DeleteEstimate_WhenEstimateIsNotNull_ShouldNotReturnError()
     {
         //Arrange
-        var command = new RemoveEstimateCommand { EstimateId = Guid.NewGuid() };
+        var command = new RemoveEstimateCommand(Guid.NewGuid());
         var estimate = EstimateUtils.Estimate();
 
         var mocks = GetMocks();
@@ -42,7 +41,7 @@ public class RemoveEstimateHandlerTests : IUnitTestBase<RemoveEstimateHandler, R
     public async Task DeleteEstimate_WhenEstimateIsNull_ShouldReturnError()
     {
         //Arrange
-        var command = new RemoveEstimateCommand { EstimateId = Guid.NewGuid() };
+        var command = new RemoveEstimateCommand(Guid.NewGuid());
 
         var mocks = GetMocks();
         var service = GetClass(mocks);

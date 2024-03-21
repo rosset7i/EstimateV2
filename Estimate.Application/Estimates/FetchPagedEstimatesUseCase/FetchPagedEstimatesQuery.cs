@@ -1,5 +1,5 @@
-﻿using Estimate.Application.Common.Models.PagingAndSorting;
-using MediatR;
+﻿using MediatR;
+using Rossetti.Common.Data.Pagination;
 
 namespace Estimate.Application.Estimates.FetchPagedEstimatesUseCase;
 

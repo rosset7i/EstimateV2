@@ -1,12 +1,11 @@
 ﻿using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Application.Products.RemoveProductUseCase;
-using Estimate.Domain.Common.CommonResults;
-using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.UnitTest.TestUtils;
 using Estimate.UnitTest.UnitTests.Products.TestUtils;
 using Moq;
+using Rossetti.Common.ErrorHandler;
 using Rossetti.Common.Result;
 using Xunit;
 
@@ -18,7 +17,7 @@ public class RemoveProductHandlerTests : IUnitTestBase<RemoveProductHandler, Rem
     public async Task RemoveProduct_WhenProductIsFound_ShouldNotReturnError()
     {
         //Arrange
-        var command = new RemoveProductCommand { ProductId = Guid.NewGuid() };
+        var command = new RemoveProductCommand(Guid.NewGuid());
         var product = ProductUtils.Product();
 
         var mocks = GetMocks();
@@ -42,7 +41,7 @@ public class RemoveProductHandlerTests : IUnitTestBase<RemoveProductHandler, Rem
     public async Task RemoveProduct_WhenProductIsNotFound_ShouldReturnError()
     {
         //Arrange
-        var command = new RemoveProductCommand { ProductId = Guid.NewGuid() };
+        var command = new RemoveProductCommand(Guid.NewGuid());
 
         var mocks = GetMocks();
         var handler = GetClass(mocks);

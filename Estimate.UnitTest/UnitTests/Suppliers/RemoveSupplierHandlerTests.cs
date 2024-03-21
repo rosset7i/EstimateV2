@@ -1,12 +1,11 @@
 ﻿using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Application.Suppliers.RemoveSupplierUseCase;
-using Estimate.Domain.Common.CommonResults;
-using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.UnitTest.TestUtils;
 using Estimate.UnitTest.UnitTests.Suppliers.TestUtils;
 using Moq;
+using Rossetti.Common.ErrorHandler;
 using Rossetti.Common.Result;
 using Xunit;
 
@@ -18,7 +17,7 @@ public class RemoveSupplierHandlerTests : IUnitTestBase<RemoveSupplierHandler, R
     public async Task RemoveSupplier_WhenSupplierIsFound_ShouldNotReturnError()
     {
         //Arrange
-        var command = new RemoveSupplierCommand { SupplierId = Guid.NewGuid() };
+        var command = new RemoveSupplierCommand(Guid.NewGuid());
         var supplier = SupplierUtils.Supplier();
 
         var mocks = GetMocks();
@@ -42,7 +41,7 @@ public class RemoveSupplierHandlerTests : IUnitTestBase<RemoveSupplierHandler, R
     public async Task RemoveSupplier_WhenSupplierIsNotFound_ShouldReturnError()
     {
         //Arrange
-        var command = new RemoveSupplierCommand { SupplierId = Guid.NewGuid() };
+        var command = new RemoveSupplierCommand(Guid.NewGuid());
 
         var mocks = GetMocks();
         var handler = GetClass(mocks);

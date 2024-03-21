@@ -1,5 +1,5 @@
-using Estimate.Domain.Entities.Base;
 using Estimate.Domain.Entities.ValueObjects;
+using Rossetti.Common.Entities;
 
 namespace Estimate.Domain.Entities.Estimate;
 

@@ -1,15 +1,14 @@
 using Estimate.Api.ErrorHandling;
-using Estimate.Application.Common.Models.PagingAndSorting;
 using Estimate.Application.Common.Repositories;
 using Estimate.Application.Products.CreateProductUseCase;
 using Estimate.Application.Products.FetchPagedProductsUseCase;
 using Estimate.Application.Products.RemoveProductUseCase;
 using Estimate.Application.Products.UpdateProductUseCase;
-using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Rossetti.Common.Data.Pagination;
 using Rossetti.Common.Result;
 
 namespace Estimate.Api.Products;

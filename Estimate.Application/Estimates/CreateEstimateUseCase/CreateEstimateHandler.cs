@@ -2,12 +2,12 @@
 using Estimate.Application.Common.Models;
 using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
-using Estimate.Domain.Common;
-using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Entities.Estimate;
 using MediatR;
+using Rossetti.Common.ErrorHandler;
 using Rossetti.Common.Result;
+using Rossetti.Common.Validation;
 
 namespace Estimate.Application.Estimates.CreateEstimateUseCase;
 

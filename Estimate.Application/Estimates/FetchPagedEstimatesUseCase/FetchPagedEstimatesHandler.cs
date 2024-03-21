@@ -1,7 +1,8 @@
 ﻿using Estimate.Application.Common;
-using Estimate.Application.Common.Models.PagingAndSorting;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Rossetti.Common.Data;
+using Rossetti.Common.Data.Pagination;
 
 namespace Estimate.Application.Estimates.FetchPagedEstimatesUseCase;
 

@@ -7,26 +7,38 @@ namespace Estimate.UnitTest.UnitTests.Authentication.TestUtils;
 
 public static class AuthenticationUtils
 {
-    private static readonly Faker Faker = new();
+    public static RegisterCommand CreateRegisterRequest()
+    {
+        return new Faker<RegisterCommand>()
+            .CustomInstantiator(f => new RegisterCommand(
+                f.Name.FirstName(),
+                f.Internet.Email(),
+                f.Internet.Password(),
+                f.Phone.PhoneNumber()));
+    }
 
-    public static RegisterCommand CreateRegisterRequest() =>
-        new Faker<RegisterCommand>()
-            .RuleFor(e => e.Email, f => f.Internet.Email())
-            .RuleFor(e => e.Password, f => f.Internet.Password())
-            .Generate();
+    public static LoginCommand CreateLoginCommand()
+    {
+        return new Faker<LoginCommand>()
+            .CustomInstantiator(f => new LoginCommand(
+                f.Internet.Email(),
+                f.Internet.Password()));
+    }
 
-    public static LoginCommand CreateLoginCommand() =>
-        new Faker<LoginCommand>()
-            .RuleFor(e => e.Email, f => f.Internet.Email())
-            .RuleFor(e => e.Password, f => f.Internet.Password())
-            .Generate();
+    public static LoginResult CreateLoginResponse()
+    {
+        return new Faker<LoginResult>()
+            .CustomInstantiator(f => new LoginResult(
+                f.Internet.Email(),
+                f.Lorem.Text()));
+    }
 
-    public static LoginResult CreateLoginResponse() =>
-        new(Faker.Internet.Email(),
-            Faker.Lorem.Text());
-
-    public static User CreateUser() =>
-        new(Faker.Name.FirstName(),
-            Faker.Internet.Email(),
-            Faker.Phone.PhoneNumber("(##)#####-####"));
+    public static User CreateUser()
+    {
+        return new Faker<User>()
+            .CustomInstantiator(f => new User(
+                f.Name.FindName(),
+                f.Internet.Email(),
+                f.Phone.PhoneNumber("(##)#####-####")));
+    }
 }

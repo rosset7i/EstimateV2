@@ -1,5 +1,4 @@
 using Estimate.Api.ErrorHandling;
-using Estimate.Application.Common.Models.PagingAndSorting;
 using Estimate.Application.Estimates.CompareEstimatesUseCase;
 using Estimate.Application.Estimates.CreateEstimateUseCase;
 using Estimate.Application.Estimates.FetchEstimateDetailsUseCase;
@@ -7,10 +6,10 @@ using Estimate.Application.Estimates.FetchPagedEstimatesUseCase;
 using Estimate.Application.Estimates.RemoveEstimateUseCase;
 using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 using Estimate.Application.Estimates.UpdateEstimateUseCase;
-using Estimate.Domain.Common.CommonResults;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Rossetti.Common.Data.Pagination;
 using Rossetti.Common.Result;
 
 namespace Estimate.Api.Estimates;

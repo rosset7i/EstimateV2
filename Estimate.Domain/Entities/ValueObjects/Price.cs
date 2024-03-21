@@ -1,5 +1,5 @@
-﻿using Estimate.Domain.Entities.Base;
-using FluentValidation;
+﻿using FluentValidation;
+using Rossetti.Common.Entities;
 
 namespace Estimate.Domain.Entities.ValueObjects;
 
