@@ -3,10 +3,10 @@ using Estimate.Application.Common.Repositories.Base;
 using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 using Estimate.Domain.Common;
 using Estimate.Domain.Common.CommonResults;
-using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Entities.Estimate;
 using MediatR;
+using Rossetti.Common.Result;
 using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Estimates.CreateEstimateUseCase;
@@ -35,8 +35,8 @@ public class CreateEstimateHandler : IRequestHandler<CreateEstimateCommand, Resu
         var supplier = await _supplierRepository.FetchByIdAsync(command.SupplierId);
 
         var errors = Validator.New()
-            .When(supplier is null, DomainError.Common.NotFound<Supplier>())
-            .When(!await ProductsExistsAsync(command.ProductsInEstimate), DomainError.Common.NotFound<Product>())
+            .When(supplier is null, CommonError.NotFound<Supplier>())
+            .When(!await ProductsExistsAsync(command.ProductsInEstimate), CommonError.NotFound<Product>())
             .ReturnErrors();
 
         if (errors.Any())

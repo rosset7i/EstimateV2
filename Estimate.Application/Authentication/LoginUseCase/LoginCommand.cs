@@ -1,5 +1,6 @@
 ﻿using Estimate.Domain.Common.Errors;
 using MediatR;
+using Rossetti.Common.Result;
 
 namespace Estimate.Application.Authentication.LoginUseCase;
 

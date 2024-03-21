@@ -7,6 +7,7 @@ using Estimate.Domain.Entities.Estimate;
 using Estimate.UnitTest.TestUtils;
 using Estimate.UnitTest.UnitTests.Estimates.TestUtils;
 using Moq;
+using Rossetti.Common.Result;
 using Xunit;
 
 namespace Estimate.UnitTest.UnitTests.Estimates;
@@ -50,7 +51,7 @@ public class RemoveEstimateHandlerTests : IUnitTestBase<RemoveEstimateHandler, R
         var result = await service.Handle(command, CancellationToken.None);
 
         //Assert
-        Assert.Equivalent(DomainError.Common.NotFound<EstimateEn>(), result.FirstError);
+        Assert.Equivalent(CommonError.NotFound<EstimateEn>(), result.FirstError);
         mocks.ShouldCallFetchEstimateById(command.EstimateId)
             .ShouldNotCallDeleteEstimate()
             .ShouldNotCallUnitOfWork();

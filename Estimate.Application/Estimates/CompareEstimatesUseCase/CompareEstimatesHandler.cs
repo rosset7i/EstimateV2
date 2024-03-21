@@ -1,7 +1,7 @@
 ﻿using Estimate.Application.Common;
-using Estimate.Domain.Common.Errors;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Rossetti.Common.Result;
 
 namespace Estimate.Application.Estimates.CompareEstimatesUseCase;
 
@@ -9,10 +9,8 @@ public class CompareEstimatesHandler : IRequestHandler<CompareEstimatesQuery, Re
 {
     private readonly IDatabaseContext _dbContext;
 
-    public CompareEstimatesHandler(IDatabaseContext dbContext)
-    {
+    public CompareEstimatesHandler(IDatabaseContext dbContext) =>
         _dbContext = dbContext;
-    }
 
     public async Task<ResultOf<List<CompareEstimatesResponse>>> Handle(CompareEstimatesQuery query, CancellationToken cancellationToken)
     {

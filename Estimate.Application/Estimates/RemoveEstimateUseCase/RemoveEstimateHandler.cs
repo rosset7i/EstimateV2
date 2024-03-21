@@ -1,9 +1,9 @@
 ﻿using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Domain.Common.CommonResults;
-using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities.Estimate;
 using MediatR;
+using Rossetti.Common.Result;
 
 namespace Estimate.Application.Estimates.RemoveEstimateUseCase;
 
@@ -25,7 +25,7 @@ public class RemoveEstimateHandler : IRequestHandler<RemoveEstimateCommand, Resu
         var estimate = await _estimateRepository.FetchByIdAsync(command.EstimateId);
 
         if (estimate is null)
-            return DomainError.Common.NotFound<EstimateEn>();
+            return CommonError.NotFound<EstimateEn>();
 
         _estimateRepository.Delete(estimate);
         await _unitOfWork.SaveChangesAsync();

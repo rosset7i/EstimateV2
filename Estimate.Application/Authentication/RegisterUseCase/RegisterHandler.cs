@@ -2,6 +2,8 @@
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using MediatR;
+using Rossetti.Common.Result;
+using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Authentication.RegisterUseCase;
 

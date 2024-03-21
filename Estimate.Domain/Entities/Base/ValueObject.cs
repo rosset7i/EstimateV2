@@ -1,7 +1,8 @@
 ﻿using Estimate.Domain.Common;
-using Estimate.Domain.Common.Errors;
 using FluentValidation;
 using FluentValidation.Results;
+using Rossetti.Common.Result;
+using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Domain.Entities.Base;
 
@@ -12,6 +13,6 @@ public abstract class ValueObject<TClass> : AbstractValidator<TClass>
     protected void ThrowIfAny(ValidationResult validationResult)
     {
         if (validationResult.Errors.Any())
-            throw new BusinessException(DomainError.Common.InvalidDomain<TClass>());
+            throw new BusinessException(CommonError.InvalidDomain<TClass>());
     }
 }

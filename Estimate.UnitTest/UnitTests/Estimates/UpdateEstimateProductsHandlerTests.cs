@@ -9,6 +9,7 @@ using Estimate.UnitTest.TestUtils;
 using Estimate.UnitTest.UnitTests.Estimates.TestUtils;
 using Estimate.UnitTest.UnitTests.Products.TestUtils;
 using Moq;
+using Rossetti.Common.Result;
 using Xunit;
 
 namespace Estimate.UnitTest.UnitTests.Estimates;
@@ -36,7 +37,7 @@ public class UpdateEstimateProductsHandlerTests : IUnitTestBase<UpdateEstimatePr
         var result = await handler.Handle(command, CancellationToken.None);
 
         //Assert
-        Assert.Equivalent(DomainError.Common.NotFound<EstimateEn>(), result.FirstError);
+        Assert.Equivalent(CommonError.NotFound<EstimateEn>(), result.FirstError);
         mocks.ShouldCallFetchEstimateWithProducts(command.EstimateId)
             .ShouldCallFetchProductsByIdsAsync(command.UpdateEstimateProductsRequest)
             .ShouldNotCallUpdateEstimate()
@@ -70,7 +71,7 @@ public class UpdateEstimateProductsHandlerTests : IUnitTestBase<UpdateEstimatePr
         var result = await handler.Handle(command, CancellationToken.None);
 
         //Assert
-        Assert.Equivalent(DomainError.Common.NotFound<Product>(), result.FirstError);
+        Assert.Equivalent(CommonError.NotFound<Product>(), result.FirstError);
         mocks.ShouldCallFetchEstimateWithProducts(command.EstimateId)
             .ShouldCallFetchProductsByIdsAsync(command.UpdateEstimateProductsRequest)
             .ShouldNotCallUpdateEstimate()

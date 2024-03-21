@@ -12,6 +12,7 @@ using Estimate.Domain.Common.Errors;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Rossetti.Common.Result;
 
 namespace Estimate.Api.Estimates;
 

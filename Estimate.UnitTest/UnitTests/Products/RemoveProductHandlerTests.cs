@@ -7,6 +7,7 @@ using Estimate.Domain.Entities;
 using Estimate.UnitTest.TestUtils;
 using Estimate.UnitTest.UnitTests.Products.TestUtils;
 using Moq;
+using Rossetti.Common.Result;
 using Xunit;
 
 namespace Estimate.UnitTest.UnitTests.Products;
@@ -50,7 +51,7 @@ public class RemoveProductHandlerTests : IUnitTestBase<RemoveProductHandler, Rem
         var result = await handler.Handle(command, CancellationToken.None);
 
         //Assert
-        Assert.Equivalent(DomainError.Common.NotFound<Product>(), result.FirstError);
+        Assert.Equivalent(CommonError.NotFound<Product>(), result.FirstError);
         mocks.ShouldCallFetchProductById(command.ProductId)
             .ShouldNotCallDeleteProduct()
             .ShouldNoCallUnitOfWork();

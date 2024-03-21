@@ -8,6 +8,7 @@ using Estimate.UnitTest.TestUtils;
 using Estimate.UnitTest.UnitTests.Estimates.TestUtils;
 using Estimate.UnitTest.UnitTests.Suppliers.TestUtils;
 using Moq;
+using Rossetti.Common.Result;
 using Xunit;
 
 namespace Estimate.UnitTest.UnitTests.Estimates;
@@ -55,7 +56,7 @@ public class UpdateEstimateHandlerTests : IUnitTestBase<UpdateEstimateHandler, U
         var result = await handler.Handle(command, CancellationToken.None);
 
         //Assert
-        Assert.Equivalent(DomainError.Common.NotFound<EstimateEn>(), result.FirstError);
+        Assert.Equivalent(CommonError.NotFound<EstimateEn>(), result.FirstError);
         mocks.ShouldCallFetchEstimateById(command.EstimateId)
             .ShouldNotCallUpdateEstimate()
             .ShouldNotCallUnitOfWork();

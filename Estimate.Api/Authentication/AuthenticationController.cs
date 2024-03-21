@@ -1,9 +1,9 @@
 ﻿using Estimate.Api.ErrorHandling;
 using Estimate.Application.Authentication.LoginUseCase;
 using Estimate.Application.Authentication.RegisterUseCase;
-using Estimate.Domain.Common.Errors;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Rossetti.Common.Result;
 
 namespace Estimate.Api.Authentication;
 

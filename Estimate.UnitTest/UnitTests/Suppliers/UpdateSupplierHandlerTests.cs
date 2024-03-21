@@ -7,6 +7,7 @@ using Estimate.Domain.Entities;
 using Estimate.UnitTest.TestUtils;
 using Estimate.UnitTest.UnitTests.Suppliers.TestUtils;
 using Moq;
+using Rossetti.Common.Result;
 using Xunit;
 
 namespace Estimate.UnitTest.UnitTests.Suppliers;
@@ -50,7 +51,7 @@ public class UpdateSupplierHandlerTests : IUnitTestBase<UpdateSupplierHandler, U
         var result = await handler.Handle(command, CancellationToken.None);
 
         //Assert
-        Assert.Equivalent(DomainError.Common.NotFound<Supplier>(), result.FirstError);
+        Assert.Equivalent(CommonError.NotFound<Supplier>(), result.FirstError);
         mocks.ShouldCallSupplierRepositoryFetchById(command.SupplierId)
             .ShouldNotCallSupplierRepositoryUpdate()
             .ShouldNotCallUnitOfWork();

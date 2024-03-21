@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using Estimate.Application;
 using Estimate.Application.Common;
-using Estimate.Application.Common.Behaviors;
 using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Domain.Entities;
@@ -26,7 +25,7 @@ public static class StartupIoC
     {
         services.AddDbContext<EstimateDbContext>(options =>
         {
-            options.UseNpgsql(configuration.GetConnectionString("Default"));
+            options.UseSqlServer(configuration.GetConnectionString("Default"));
         });
         services.AddIdentity<User, IdentityRole>()
             .AddEntityFrameworkStores<EstimateDbContext>()
@@ -56,16 +55,6 @@ public static class StartupIoC
         services.AddScoped<IJwtTokenGeneratorService, JwtTokenGeneratorService>();
     }
 
-    public static void AddMediator(this IServiceCollection services)
-    {
-        services.AddMediatR(options =>
-        {
-            options.RegisterServicesFromAssembly(typeof(IAssemblyMarker).Assembly);
-
-            options.AddOpenBehavior(typeof(ValidationBehavior<,>));
-        });
-    }
-
     public static void AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IDatabaseContext, EstimateDbContext>();
@@ -74,12 +63,6 @@ public static class StartupIoC
         services.AddScoped<IEstimateRepository, EstimateRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-    }
-
-    public static void AddValidators(this IServiceCollection services)
-    {
-        services.AddValidatorsFromAssemblyContaining<IAssemblyMarker>();
-        ValidatorOptions.Global.LanguageManager.Enabled = false;
     }
 
     public static void AddCaching(this IServiceCollection service, ConfigurationManager configuration)

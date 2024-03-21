@@ -3,6 +3,7 @@ using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities.Estimate;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Rossetti.Common.Result;
 using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Estimates.FetchEstimateDetailsUseCase;
@@ -25,7 +26,7 @@ public class FetchEstimateDetailsHandler : IRequestHandler<FetchEstimateDetailsQ
             .FirstOrDefaultAsync(cancellationToken: cancellationToken);
 
         if (result is null)
-            return DomainError.Common.NotFound<EstimateEn>();
+            return CommonError.NotFound<EstimateEn>();
 
         return result;
     }

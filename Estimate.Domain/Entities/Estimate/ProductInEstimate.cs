@@ -13,6 +13,8 @@ public class ProductInEstimate : Entity
     public Guid EstimateId { get; }
     public EstimateEn Estimate { get; }
 
+    public ProductInEstimate() { }
+
     public ProductInEstimate(
         Guid id,
         Price price,

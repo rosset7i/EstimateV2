@@ -2,6 +2,7 @@
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using MediatR;
+using Rossetti.Common.Result;
 
 namespace Estimate.Application.Suppliers.UpdateSupplierUseCase;
 

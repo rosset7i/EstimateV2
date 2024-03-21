@@ -1,14 +1,15 @@
 version: "3.8"
 services:
-  postgres:
-    image: postgres
-    container_name: pg
+  sqlsserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql
     ports:
-      - 5432:5432
+      - 1433:1433
     environment:
-      - POSTGRES_PASSWORD=Senh@123
+      - SA_PASSWORD=Senh@123
+      - ACCEPT_EULA=Y
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - sqlserver_data:/var/lib/sqlserver/data
 
   redis:
     image: redis
@@ -44,4 +45,4 @@ services:
       - JASPERREPORTS_PASSWORD=Senh@123
 
 volumes:
-  postgres_data:
+  sqlserver_data:

@@ -1,7 +1,7 @@
 using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 using Estimate.Domain.Common.CommonResults;
-using Estimate.Domain.Common.Errors;
 using MediatR;
+using Rossetti.Common.Result;
 
 namespace Estimate.Application.Estimates.CreateEstimateUseCase;
 

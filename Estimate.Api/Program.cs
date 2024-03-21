@@ -1,7 +1,8 @@
 using Estimate.Api.ErrorHandling;
+using Estimate.Application;
 using Estimate.Infra.IoC;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Rossetti.Common.Configuration;
+using Rossetti.Common.Result;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -11,11 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddAuthentication(builder.Configuration);
     builder.Services.AddAuthorization();
     builder.Services.AddSwagger();
-    builder.Services.AddMediator();
     builder.Services.AddRepositories();
-    builder.Services.AddValidators();
     builder.Services.AddCaching(builder.Configuration);
-    builder.Services.AddSingleton<IActionResultExecutor<ObjectResult>, ErrorWrapper>();
+    //Migrate
+    builder.Services.AddMediator<IAssemblyMarker>();
+    builder.Services.AddValidators<IAssemblyMarker>();
+    builder.Services.AddErrorWrapper();
 }
 
 var app = builder.Build();
@@ -32,6 +34,8 @@ var app = builder.Build();
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();
-    app.ConfigureExceptionHandler(app.Services.GetRequiredService<ILoggerProvider>());
+    //Migrated
+    app.UseBusinessExceptionHandler();
+    //Migrated
     app.Run();
 }

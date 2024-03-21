@@ -1,5 +1,6 @@
 using System.Net;
 using Microsoft.AspNetCore.Identity;
+using Rossetti.Common.Result;
 
 namespace Estimate.Domain.Common.Errors;
 

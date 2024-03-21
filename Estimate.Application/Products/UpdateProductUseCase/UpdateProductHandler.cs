@@ -4,6 +4,7 @@ using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using MediatR;
+using Rossetti.Common.Result;
 using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Products.UpdateProductUseCase;
@@ -26,7 +27,7 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, Result
         var product = await _productRepository.FetchByIdAsync(command.ProductId);
 
         if (product is null)
-            return DomainError.Common.NotFound<Product>();
+            return CommonError.NotFound<Product>();
 
         var updatedProduct = command.UpdateInfoOf(product);
 

@@ -1,4 +1,5 @@
 ﻿using Estimate.Domain.Common.Errors;
+using Rossetti.Common.Result;
 
 namespace Estimate.Domain.Common;
 

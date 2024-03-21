@@ -3,6 +3,7 @@ using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities.Estimate;
 using Estimate.Domain.Entities.ValueObjects;
 using MediatR;
+using Rossetti.Common.Result;
 
 namespace Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 

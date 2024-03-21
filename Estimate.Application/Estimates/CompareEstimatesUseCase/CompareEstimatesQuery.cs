@@ -1,5 +1,5 @@
-﻿using Estimate.Domain.Common.Errors;
-using MediatR;
+﻿using MediatR;
+using Rossetti.Common.Result;
 
 namespace Estimate.Application.Estimates.CompareEstimatesUseCase;
 

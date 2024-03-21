@@ -4,6 +4,7 @@ using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using MediatR;
+using Rossetti.Common.Result;
 
 namespace Estimate.Application.Products.RemoveProductUseCase;
 
@@ -25,7 +26,7 @@ public class RemoveProductHandler : IRequestHandler<RemoveProductCommand, Result
         var product = await _productRepository.FetchByIdAsync(command.ProductId);
 
         if (product is null)
-            return DomainError.Common.NotFound<Product>();
+            return CommonError.NotFound<Product>();
 
         _productRepository.Delete(product);
         await _unitOfWork.SaveChangesAsync();
