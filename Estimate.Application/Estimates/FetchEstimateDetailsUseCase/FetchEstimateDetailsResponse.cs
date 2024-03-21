@@ -1,15 +1,14 @@
-using Estimate.Domain.Entities;
 using Estimate.Domain.Entities.Estimate;
 
 namespace Estimate.Application.Estimates.FetchEstimateDetailsUseCase;
 
 public class FetchEstimateDetailsResponse
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public Guid SupplierId { get; set; }
-    public string SupplierName { get; set; }
-    public List<ProductInEstimateResponse> ProductsInEstimate { get; set; }
+    public Guid Id { get; init; }
+    public string Name { get; init; }
+    public Guid SupplierId { get; init; }
+    public string SupplierName { get; init; }
+    public List<ProductInEstimateResponse> ProductsInEstimate { get; init; }
 
     private FetchEstimateDetailsResponse(
         Guid id,

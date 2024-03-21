@@ -6,7 +6,6 @@ using Estimate.Application.Products.FetchPagedProductsUseCase;
 using Estimate.Application.Products.RemoveProductUseCase;
 using Estimate.Application.Products.UpdateProductUseCase;
 using Estimate.Domain.Common.CommonResults;
-using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

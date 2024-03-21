@@ -4,8 +4,8 @@ namespace Estimate.Application.Products.FetchPagedProductsUseCase;
 
 public class ProductResponse
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; }
+    public Guid Id { get; init; }
+    public string Name { get; init; }
 
     private ProductResponse(
         Guid id,

@@ -1,10 +1,8 @@
 ﻿using Estimate.Application.Common;
-using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities.Estimate;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Rossetti.Common.Result;
-using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Estimates.FetchEstimateDetailsUseCase;
 

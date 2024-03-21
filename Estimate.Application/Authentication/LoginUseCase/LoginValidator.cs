@@ -7,8 +7,10 @@ public class LoginValidator : AbstractValidator<LoginCommand>
     public LoginValidator()
     {
         RuleFor(e => e.Email)
-            .NotNull()
             .NotEmpty()
             .EmailAddress();
+
+        RuleFor(e => e.Password)
+            .NotEmpty();
     }
 }

@@ -1,3 +1,3 @@
 namespace Estimate.Application;
 
-public interface IAssemblyMarker { }
+public interface IAssemblyMarker;

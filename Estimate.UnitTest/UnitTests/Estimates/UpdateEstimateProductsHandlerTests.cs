@@ -1,8 +1,9 @@
-﻿using Estimate.Application.Common.Repositories;
+﻿using Estimate.Application.Common.Helpers;
+using Estimate.Application.Common.Models;
+using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 using Estimate.Domain.Common.CommonResults;
-using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Entities.Estimate;
 using Estimate.UnitTest.TestUtils;
@@ -20,11 +21,9 @@ public class UpdateEstimateProductsHandlerTests : IUnitTestBase<UpdateEstimatePr
     public async Task UpdateEstimateProducts_WhenDoesntFindEstimate_ShouldReturnNotFound()
     {
         //Arrange
-        var command = new UpdateEstimateProductsCommand
-        {
-            EstimateId = Guid.NewGuid(),
-            UpdateEstimateProductsRequest = EstimateUtils.UpdateEstimateProductsRequest()
-        };
+        var command = new UpdateEstimateProductsCommand(
+            Guid.NewGuid(),
+            EstimateUtils.UpdateEstimateProductsRequest());
 
         var mocks = GetMocks();
         var handler = GetClass(mocks);
@@ -48,14 +47,11 @@ public class UpdateEstimateProductsHandlerTests : IUnitTestBase<UpdateEstimatePr
     public async Task UpdateEstimateProducts_WhenDoesntProducts_ShouldReturnNotFound()
     {
         //Arrange
-        var command = new UpdateEstimateProductsCommand
-        {
-            EstimateId = Guid.NewGuid(),
-            UpdateEstimateProductsRequest = EstimateUtils.UpdateEstimateProductsRequest()
-        };
+        var command = new UpdateEstimateProductsCommand(
+            Guid.NewGuid(),
+            EstimateUtils.UpdateEstimateProductsRequest());
         var estimate = EstimateUtils.Estimate();
-        var productIds = UpdateEstimateProductsRequest
-            .ExtractProductIds(command.UpdateEstimateProductsRequest);
+        var productIds = CreateProductEstimateHelper.ExtractProductIds(command.UpdateEstimateProductsRequest);
 
         var mocks = GetMocks();
         var handler = GetClass(mocks);
@@ -82,15 +78,12 @@ public class UpdateEstimateProductsHandlerTests : IUnitTestBase<UpdateEstimatePr
     public async Task UpdateEstimateProducts_WhenIsSuccessful_ShouldNotReturnErrors()
     {
         //Arrange
-        var command = new UpdateEstimateProductsCommand
-        {
-            EstimateId = Guid.NewGuid(),
-            UpdateEstimateProductsRequest = EstimateUtils.UpdateEstimateProductsRequest()
-        };
+        var command = new UpdateEstimateProductsCommand(
+            Guid.NewGuid(),
+            EstimateUtils.UpdateEstimateProductsRequest());
         var estimate = EstimateUtils.Estimate();
         var products = ProductUtils.Products(command.UpdateEstimateProductsRequest);
-        var productIds = UpdateEstimateProductsRequest
-            .ExtractProductIds(command.UpdateEstimateProductsRequest);
+        var productIds = CreateProductEstimateHelper.ExtractProductIds(command.UpdateEstimateProductsRequest);
 
         var mocks = GetMocks();
         var handler = GetClass(mocks);
@@ -149,8 +142,7 @@ public class UpdateEstimateProductsHandlerMocks
     public UpdateEstimateProductsHandlerMocks ShouldCallFetchProductsByIdsAsync(
         List<UpdateEstimateProductsRequest> request)
     {
-        var productIds = UpdateEstimateProductsRequest
-            .ExtractProductIds(request);
+        var productIds = CreateProductEstimateHelper.ExtractProductIds(request);
 
         ProductRepository
             .Verify(e => e.FetchProductsByIdsAsync(productIds),

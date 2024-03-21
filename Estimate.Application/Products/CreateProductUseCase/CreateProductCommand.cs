@@ -4,7 +4,4 @@ using Rossetti.Common.Result;
 
 namespace Estimate.Application.Products.CreateProductUseCase;
 
-public class CreateProductCommand : IRequest<ResultOf<Operation>>
-{
-    public string Name { get; set; }
-}
+public record CreateProductCommand(string Name) : IRequest<ResultOf<Operation>>;

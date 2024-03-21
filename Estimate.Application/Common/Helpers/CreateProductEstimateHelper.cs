@@ -1,18 +1,18 @@
-using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
+using Estimate.Application.Common.Models;
 using Estimate.Domain.Entities.Estimate;
 using Estimate.Domain.Entities.ValueObjects;
 
-namespace Estimate.Application.Common.CommonServices;
+namespace Estimate.Application.Common.Helpers;
 
-public static class CreateProductEstimateService
+public static class CreateProductEstimateHelper
 {
-    private static ProductInEstimate[] CreateProductEstimateList(
+    public static List<ProductInEstimate> CreateProductEstimateList(
         IEnumerable<UpdateEstimateProductsRequest> productsToAdd,
         Guid estimateId)
     {
         return productsToAdd
             .Select(e => CreateProductEstimate(estimateId, e))
-            .ToArray();
+            .ToList();
     }
 
     private static ProductInEstimate CreateProductEstimate(Guid estimateId, UpdateEstimateProductsRequest request)
@@ -24,7 +24,7 @@ public static class CreateProductEstimateService
             estimateId);
     }
 
-    private static List<Guid> ExtractProductIds(IEnumerable<UpdateEstimateProductsRequest> request)
+    public static List<Guid> ExtractProductIds(IEnumerable<UpdateEstimateProductsRequest> request)
     {
         return request
             .Select(e => e.ProductId)

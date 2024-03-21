@@ -4,10 +4,10 @@ namespace Estimate.Application.Estimates.FetchEstimateDetailsUseCase;
 
 public class ProductInEstimateResponse
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public decimal UnitPrice { get; set; }
-    public double Quantity { get; set; }
+    public Guid Id { get; init; }
+    public string Name { get; init; }
+    public decimal UnitPrice { get; init; }
+    public double Quantity { get; init; }
 
     private ProductInEstimateResponse(
         Guid id,
@@ -30,7 +30,7 @@ public class ProductInEstimateResponse
             productInEstimate.Price.Quantity);
     }
 
-    public static List<ProductInEstimateResponse> Of(List<ProductInEstimate> productInEstimate)
+    public static List<ProductInEstimateResponse> Of(IEnumerable<ProductInEstimate> productInEstimate)
     {
         return productInEstimate
             .Select(product => Of(product))

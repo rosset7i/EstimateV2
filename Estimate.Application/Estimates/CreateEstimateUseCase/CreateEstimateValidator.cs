@@ -9,7 +9,6 @@ public class CreateEstimateValidator : AbstractValidator<CreateEstimateCommand>
     {
         RuleFor(e => e.Name)
             .NotEmpty()
-            .NotNull()
             .MaximumLength(75);
 
         RuleFor(e => e.SupplierId)

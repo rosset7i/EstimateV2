@@ -10,7 +10,6 @@ public class SupplierRepository : RepositoryBase<Guid, Supplier>, ISupplierRepos
 {
     public SupplierRepository(
         EstimateDbContext dbContext,
-        IDistributedCache distributedCache) : base(dbContext, distributedCache)
-    {
-    }
+        IDistributedCache distributedCache
+    ) : base(dbContext, distributedCache) { }
 }

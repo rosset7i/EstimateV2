@@ -11,12 +11,13 @@ public class ProductRepository : RepositoryBase<Guid, Product>, IProductReposito
 {
     public ProductRepository(
         EstimateDbContext dbContext,
-        IDistributedCache distributedCache) : base(dbContext, distributedCache)
-    {
-    }
+        IDistributedCache distributedCache
+    ) : base(dbContext, distributedCache) { }
 
-    public async Task<List<Product>> FetchProductsByIdsAsync(List<Guid> productIds) =>
-        await DbContext.Set<Product>()
+    public async Task<List<Product>> FetchProductsByIdsAsync(List<Guid> productIds)
+    {
+        return await DbContext.Set<Product>()
             .Where(e => productIds.Contains(e.Id))
             .ToListAsync();
+    }
 }

@@ -1,11 +1,9 @@
 ﻿using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Domain.Common.CommonResults;
-using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using MediatR;
 using Rossetti.Common.Result;
-using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Suppliers.RemoveSupplierUseCase;
 

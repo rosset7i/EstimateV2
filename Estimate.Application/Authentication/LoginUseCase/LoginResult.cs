@@ -2,8 +2,8 @@
 
 public class LoginResult
 {
-    public string Email { get; set; }
-    public string Token { get; set; }
+    public string Email { get; init; }
+    public string Token { get; init; }
 
     public LoginResult(
         string email,

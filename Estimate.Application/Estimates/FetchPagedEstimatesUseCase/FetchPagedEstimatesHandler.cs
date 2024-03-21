@@ -9,10 +9,8 @@ public class FetchPagedEstimatesHandler : IRequestHandler<FetchPagedEstimatesQue
 {
     private readonly IDatabaseContext _dbContext;
 
-    public FetchPagedEstimatesHandler(IDatabaseContext dbContext)
-    {
+    public FetchPagedEstimatesHandler(IDatabaseContext dbContext) =>
         _dbContext = dbContext;
-    }
 
     public async Task<PagedResultOf<EstimateResponse>> Handle(FetchPagedEstimatesQuery query, CancellationToken cancellationToken)
     {

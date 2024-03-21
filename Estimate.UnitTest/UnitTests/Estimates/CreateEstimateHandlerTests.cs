@@ -1,9 +1,9 @@
-﻿using Estimate.Application.Common.Repositories;
+﻿using Estimate.Application.Common.Helpers;
+using Estimate.Application.Common.Models;
+using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Application.Estimates.CreateEstimateUseCase;
-using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 using Estimate.Domain.Common.CommonResults;
-using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Entities.Estimate;
 using Estimate.UnitTest.TestUtils;
@@ -53,8 +53,7 @@ public class CreateEstimateHandlerTests : IUnitTestBase<CreateEstimateHandler, C
         //Arrange
         var estimateRequest = EstimateUtils.CreateEstimateRequest();
         var products = ProductUtils.Products(estimateRequest.ProductsInEstimate);
-        var productIds = UpdateEstimateProductsRequest
-            .ExtractProductIds(estimateRequest.ProductsInEstimate);
+        var productIds = CreateProductEstimateHelper.ExtractProductIds(estimateRequest.ProductsInEstimate);
 
         var mocks = GetMocks();
         var handler = GetClass(mocks);
@@ -152,8 +151,7 @@ public class CreateEstimateHandlerMocks
     public CreateEstimateHandlerMocks ShouldCallFetchProductsByIdsAsync(
         List<UpdateEstimateProductsRequest> request)
     {
-        var productIds = UpdateEstimateProductsRequest
-            .ExtractProductIds(request);
+        var productIds = CreateProductEstimateHelper.ExtractProductIds(request);
 
         ProductRepository
             .Verify(e => e.FetchProductsByIdsAsync(productIds),

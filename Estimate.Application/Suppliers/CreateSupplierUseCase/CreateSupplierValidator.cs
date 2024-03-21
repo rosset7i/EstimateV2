@@ -8,7 +8,6 @@ public class CreateSupplierValidator : AbstractValidator<CreateSupplierCommand>
     {
         RuleFor(e => e.Name)
             .NotEmpty()
-            .NotNull()
             .MaximumLength(75);
     }
 }

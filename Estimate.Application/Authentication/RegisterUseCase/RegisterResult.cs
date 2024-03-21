@@ -4,10 +4,8 @@ namespace Estimate.Application.Authentication.RegisterUseCase;
 
 public class RegisterResult
 {
-    public IdentityResult IdentityResult { get; set; }
+    public IdentityResult IdentityResult { get; init; }
 
-    public RegisterResult(IdentityResult identityResult)
-    {
+    public RegisterResult(IdentityResult identityResult) =>
         IdentityResult = identityResult;
-    }
 }

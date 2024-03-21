@@ -1,4 +1,5 @@
 using Bogus;
+using Estimate.Application.Common.Models;
 using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 using Estimate.Application.Products.CreateProductUseCase;
 using Estimate.Application.Products.UpdateProductUseCase;

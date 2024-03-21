@@ -15,10 +15,7 @@ public class EstimateDbContext : IdentityDbContext, IDatabaseContext
     public DbSet<ProductInEstimate> ProductInEstimate { get; set; }
     public DbSet<User> User { get; set; }
 
-    public EstimateDbContext(DbContextOptions option) : base(option)
-    {
-
-    }
+    public EstimateDbContext(DbContextOptions option) : base(option) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

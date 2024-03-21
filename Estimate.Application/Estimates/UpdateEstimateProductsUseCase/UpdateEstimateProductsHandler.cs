@@ -1,13 +1,13 @@
-﻿using Estimate.Application.Common.Repositories;
+﻿using Estimate.Application.Common.Helpers;
+using Estimate.Application.Common.Models;
+using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Domain.Common;
 using Estimate.Domain.Common.CommonResults;
-using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Entities.Estimate;
 using MediatR;
 using Rossetti.Common.Result;
-using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 
@@ -33,16 +33,15 @@ public class UpdateEstimateProductsHandler : IRequestHandler<UpdateEstimateProdu
 
         var errors = Validator.New()
             .When(estimate is null, CommonError.NotFound<EstimateEn>())
-            .When(!await ProductsExistsAsync(command.UpdateEstimateProductsRequest), CommonError.NotFound<Product>())
+            .When(!await ProductsExists(command.UpdateEstimateProductsRequest), CommonError.NotFound<Product>())
             .ReturnErrors();
 
         if (errors.Any())
             return errors;
 
-        var productsToAdd =
-            UpdateEstimateProductsRequest.ConvertToNewEntityList(
-                command.UpdateEstimateProductsRequest,
-                estimate!.Id);
+        var productsToAdd = CreateProductEstimateHelper.CreateProductEstimateList(
+            command.UpdateEstimateProductsRequest,
+            estimate!.Id);
 
         estimate.UpdateProducts(productsToAdd);
 
@@ -52,13 +51,11 @@ public class UpdateEstimateProductsHandler : IRequestHandler<UpdateEstimateProdu
         return Operation.Updated;
     }
 
-    private async Task<bool> ProductsExistsAsync(List<UpdateEstimateProductsRequest> request)
+    private async Task<bool> ProductsExists(IEnumerable<UpdateEstimateProductsRequest> request)
     {
-        var productsIds = UpdateEstimateProductsRequest
-            .ExtractProductIds(request);
+        var productsIds = CreateProductEstimateHelper.ExtractProductIds(request);
 
-        var products = await _productRepository
-            .FetchProductsByIdsAsync(productsIds);
+        var products = await _productRepository.FetchProductsByIdsAsync(productsIds);
 
         return products.All(e => productsIds.Contains(e.Id))
                && products.Count == productsIds.Count;

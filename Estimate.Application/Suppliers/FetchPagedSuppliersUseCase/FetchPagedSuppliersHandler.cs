@@ -8,10 +8,8 @@ public class FetchPagedSuppliersHandler : IRequestHandler<PagedAndSortedSupplier
 {
     private readonly IDatabaseContext _dbContext;
 
-    public FetchPagedSuppliersHandler(IDatabaseContext dbContext)
-    {
+    public FetchPagedSuppliersHandler(IDatabaseContext dbContext) =>
         _dbContext = dbContext;
-    }
 
     public async Task<PagedResultOf<SupplierResponse>> Handle(PagedAndSortedSupplierQuery query, CancellationToken cancellationToken)
     {

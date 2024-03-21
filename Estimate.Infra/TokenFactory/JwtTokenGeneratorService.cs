@@ -12,10 +12,8 @@ public class JwtTokenGeneratorService : IJwtTokenGeneratorService
 {
     private readonly IConfiguration _configuration;
 
-    public JwtTokenGeneratorService(IConfiguration configuration)
-    {
+    public JwtTokenGeneratorService(IConfiguration configuration) =>
         _configuration = configuration;
-    }
 
     public string GenerateToken(User user)
     {

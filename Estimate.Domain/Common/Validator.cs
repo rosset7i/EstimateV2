@@ -1,5 +1,4 @@
-﻿using Estimate.Domain.Common.Errors;
-using Rossetti.Common.Result;
+﻿using Rossetti.Common.Result;
 
 namespace Estimate.Domain.Common;
 
@@ -7,15 +6,9 @@ public class Validator
 {
     private readonly List<Error> _errors;
 
-    private Validator()
-    {
-        _errors = new List<Error>();
-    }
+    private Validator() => _errors = new List<Error>();
 
-    public static Validator New()
-    {
-        return new Validator();
-    }
+    public static Validator New() => new();
 
     public Validator When(
         bool hasError,
@@ -28,8 +21,5 @@ public class Validator
         return this;
     }
 
-    public List<Error> ReturnErrors()
-    {
-        return _errors;
-    }
+    public List<Error> ReturnErrors() => _errors;
 }

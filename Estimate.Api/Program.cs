@@ -1,4 +1,3 @@
-using Estimate.Api.ErrorHandling;
 using Estimate.Application;
 using Estimate.Infra.IoC;
 using Rossetti.Common.Configuration;

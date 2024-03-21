@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Estimate.Application.Common.Models;
+using FluentValidation;
 
 namespace Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 
@@ -11,11 +12,9 @@ public class UpdateEstimateProductsValidator : AbstractValidator<UpdateEstimateP
             .NotNull();
 
         RuleFor(e => e.UnitPrice)
-            .NotNull()
             .NotEmpty();
 
         RuleFor(e => e.Quantity)
-            .NotNull()
             .NotEmpty();
     }
 }

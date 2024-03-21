@@ -3,7 +3,6 @@ using Estimate.Application.Common.Repositories;
 using Estimate.Domain.Common.Errors;
 using MediatR;
 using Rossetti.Common.Result;
-using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Authentication.LoginUseCase;
 
@@ -38,10 +37,8 @@ public class LoginHandler : IRequestHandler<LoginCommand, ResultOf<LoginResult>>
 
         var token = _tokenGeneratorService.GenerateToken(user);
 
-        var authResponse = new LoginResult(
+        return new LoginResult(
             user.Email!,
             token);
-
-        return authResponse;
     }
 }

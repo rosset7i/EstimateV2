@@ -3,8 +3,6 @@ using MediatR;
 
 namespace Estimate.Application.Estimates.FetchPagedEstimatesUseCase;
 
-public class FetchPagedEstimatesQuery : PagedAndSortedRequest, IRequest<PagedResultOf<EstimateResponse>>
-{
-    public string Name { get; set; }
-    public Guid? SupplierId { get; set; }
-}
+public record FetchPagedEstimatesQuery(
+    string Name,
+    Guid? SupplierId) : PagedAndSortedRequest, IRequest<PagedResultOf<EstimateResponse>>;

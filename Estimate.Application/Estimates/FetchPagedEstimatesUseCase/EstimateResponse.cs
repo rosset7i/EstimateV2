@@ -1,13 +1,12 @@
-using Estimate.Domain.Entities;
 using Estimate.Domain.Entities.Estimate;
 
 namespace Estimate.Application.Estimates.FetchPagedEstimatesUseCase;
 
 public class EstimateResponse
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string SupplierName { get; set; }
+    public Guid Id { get; init; }
+    public string Name { get; init; }
+    public string SupplierName { get; init; }
 
     private EstimateResponse(
         Guid id,

@@ -8,7 +8,6 @@ public class UpdateProductValidator : AbstractValidator<UpdateProductCommand>
     {
         RuleFor(e => e.Name)
             .NotEmpty()
-            .NotNull()
             .MaximumLength(75);
     }
 }

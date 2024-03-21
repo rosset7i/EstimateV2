@@ -1,11 +1,9 @@
 ﻿using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Domain.Common.CommonResults;
-using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using MediatR;
 using Rossetti.Common.Result;
-using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Suppliers.UpdateSupplierUseCase;
 
@@ -29,9 +27,9 @@ public class UpdateSupplierHandler : IRequestHandler<UpdateSupplierCommand, Resu
         if (supplier is null)
             return CommonError.NotFound<Supplier>();
 
-        var updatedSupplier = command.UpdateInfoOf(supplier!);
+        supplier.AlterName(command.Name);
 
-        _supplierRepository.Update(updatedSupplier);
+        _supplierRepository.Update(supplier);
         await _unitOfWork.SaveChangesAsync();
 
         return Operation.Updated;

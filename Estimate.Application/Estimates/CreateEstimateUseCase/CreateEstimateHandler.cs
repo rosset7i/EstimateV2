@@ -1,13 +1,13 @@
-﻿using Estimate.Application.Common.Repositories;
+﻿using Estimate.Application.Common.Helpers;
+using Estimate.Application.Common.Models;
+using Estimate.Application.Common.Repositories;
 using Estimate.Application.Common.Repositories.Base;
-using Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
 using Estimate.Domain.Common;
 using Estimate.Domain.Common.CommonResults;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Entities.Estimate;
 using MediatR;
 using Rossetti.Common.Result;
-using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Estimates.CreateEstimateUseCase;
 
@@ -47,10 +47,9 @@ public class CreateEstimateHandler : IRequestHandler<CreateEstimateCommand, Resu
             command.Name,
             command.SupplierId);
 
-        var productsToAdd =
-            UpdateEstimateProductsRequest.ConvertToNewEntityList(
-                command.ProductsInEstimate,
-                newEstimate.Id);
+        var productsToAdd = CreateProductEstimateHelper.CreateProductEstimateList(
+            command.ProductsInEstimate,
+            newEstimate.Id);
 
         newEstimate.UpdateProducts(productsToAdd);
 
@@ -60,13 +59,11 @@ public class CreateEstimateHandler : IRequestHandler<CreateEstimateCommand, Resu
         return Operation.Created;
     }
 
-    private async Task<bool> ProductsExistsAsync(List<UpdateEstimateProductsRequest> request)
+    private async Task<bool> ProductsExistsAsync(IEnumerable<UpdateEstimateProductsRequest> request)
     {
-        var productsIds = UpdateEstimateProductsRequest
-            .ExtractProductIds(request);
+        var productsIds = CreateProductEstimateHelper.ExtractProductIds(request);
 
-        var products = await _productRepository
-            .FetchProductsByIdsAsync(productsIds);
+        var products = await _productRepository.FetchProductsByIdsAsync(productsIds);
 
         return products.All(e => productsIds.Contains(e.Id))
                && products.Count == productsIds.Count;

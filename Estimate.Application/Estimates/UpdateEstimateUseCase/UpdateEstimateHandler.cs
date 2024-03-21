@@ -2,12 +2,10 @@
 using Estimate.Application.Common.Repositories.Base;
 using Estimate.Domain.Common;
 using Estimate.Domain.Common.CommonResults;
-using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using Estimate.Domain.Entities.Estimate;
 using MediatR;
 using Rossetti.Common.Result;
-using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Estimates.UpdateEstimateUseCase;
 
@@ -50,7 +48,8 @@ public class UpdateEstimateHandler : IRequestHandler<UpdateEstimateCommand, Resu
         EstimateEn estimate,
         UpdateEstimateCommand command)
     {
-        var updateEstimate = command.UpdateInfoOf(estimate);
-        _estimateRepository.Update(updateEstimate);
+        estimate.AlterSupplier(command.SupplierId);
+        estimate.AlterName(command.Name);
+        _estimateRepository.Update(estimate);
     }
 }

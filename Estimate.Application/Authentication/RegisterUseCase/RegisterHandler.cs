@@ -3,7 +3,6 @@ using Estimate.Domain.Common.Errors;
 using Estimate.Domain.Entities;
 using MediatR;
 using Rossetti.Common.Result;
-using DomainError = Estimate.Domain.Common.Errors.DomainError;
 
 namespace Estimate.Application.Authentication.RegisterUseCase;
 
@@ -11,10 +10,8 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, ResultOf<Registe
 {
     private readonly IUserRepository _userRepository;
 
-    public RegisterHandler(IUserRepository userRepository)
-    {
+    public RegisterHandler(IUserRepository userRepository) =>
         _userRepository = userRepository;
-    }
 
     public async Task<ResultOf<RegisterResult>> Handle(RegisterCommand command, CancellationToken cancellationToken)
     {

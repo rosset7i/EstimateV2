@@ -8,7 +8,6 @@ public class UpdateEstimateValidator : AbstractValidator<UpdateEstimateCommand>
     {
         RuleFor(e => e.Name)
             .NotEmpty()
-            .NotNull()
             .MaximumLength(75);
     }
 }

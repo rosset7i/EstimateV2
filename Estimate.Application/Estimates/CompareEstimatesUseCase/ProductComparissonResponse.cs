@@ -4,11 +4,11 @@ namespace Estimate.Application.Estimates.CompareEstimatesUseCase;
 
 public class ProductComparissonResponse
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public decimal UnitPrice { get; set; }
-    public double Quantity { get; set; }
-    public decimal TotalPrice { get; set; }
+    public Guid Id { get; init; }
+    public string Name { get; init; }
+    public decimal UnitPrice { get; init; }
+    public double Quantity { get; init; }
+    public decimal TotalPrice { get; init; }
     public bool IsEconomic { get; set; }
 
     private ProductComparissonResponse(

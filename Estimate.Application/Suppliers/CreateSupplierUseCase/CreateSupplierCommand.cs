@@ -4,7 +4,4 @@ using Rossetti.Common.Result;
 
 namespace Estimate.Application.Suppliers.CreateSupplierUseCase;
 
-public class CreateSupplierCommand : IRequest<ResultOf<Operation>>
-{
-    public string Name { get; set; }
-}
+public record CreateSupplierCommand(string Name) : IRequest<ResultOf<Operation>>;

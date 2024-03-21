@@ -1,4 +1,4 @@
-namespace Estimate.Application.Estimates.UpdateEstimateProductsUseCase;
+namespace Estimate.Application.Common.Models;
 
 public record UpdateEstimateProductsRequest(
     Guid ProductId,

@@ -11,19 +11,18 @@ public class EstimateRepository : RepositoryBase<Guid, EstimateEn>, IEstimateRep
 {
     public EstimateRepository(
         EstimateDbContext dbContext,
-        IDistributedCache distributedCache) : base(dbContext, distributedCache)
-    {
-    }
+        IDistributedCache distributedCache
+    ) : base(dbContext, distributedCache) { }
 
-    public async Task<EstimateEn?> FetchEstimateWithProducts(Guid estimateId) =>
-        await DbContext.Set<EstimateEn>()
+    public async Task<EstimateEn?> FetchEstimateWithProducts(Guid estimateId)
+    {
+        return await DbContext.Set<EstimateEn>()
             .Where(e => e.Id == estimateId)
             .Include(e => e.ProductsInEstimate)
             .ThenInclude(e => e.Product)
             .FirstOrDefaultAsync();
-
+    }
 
     public async Task UpdateProducts(EstimateEn estimate) =>
-        await DbContext.Set<ProductInEstimate>()
-            .AddRangeAsync(estimate.ProductsInEstimate);
+        await DbContext.Set<ProductInEstimate>().AddRangeAsync(estimate.ProductsInEstimate);
 }

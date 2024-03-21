@@ -5,6 +5,6 @@ namespace Estimate.Application.Common.Repositories;
 
 public interface IEstimateRepository : IRepositoryBase<Guid, EstimateEn>
 {
-    Task<EstimateEn?> FetchEstimateWithProducts(Guid estimateId);
+    Task<EstimateEn> FetchEstimateWithProducts(Guid estimateId);
     Task UpdateProducts(EstimateEn estimate);
 }
