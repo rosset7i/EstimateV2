@@ -16,7 +16,7 @@ public class FetchPagedProductsHandler : IRequestHandler<PagedAndSortedProductQu
     {
         return await _dbContext.Product
             .With(!string.IsNullOrEmpty(query.Name), e => e.Name.ToLower().Contains(query.Name!.ToLower()))
-            .With(query.ProductsIdsToFilter.Any(), e => !query.ProductsIdsToFilter!.Contains(e.Id))
+            .With(query.ProductsIdsToFilter != null && query.ProductsIdsToFilter.Any(), e => !query.ProductsIdsToFilter!.Contains(e.Id))
             .SortBy(query)
             .Select(product => ProductResponse.Of(product))
             .ToPagedListAsync(query);
