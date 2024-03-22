@@ -1,4 +1,3 @@
-using Estimate.Api.ErrorHandling;
 using Estimate.Application.Estimates.CompareEstimatesUseCase;
 using Estimate.Application.Estimates.CreateEstimateUseCase;
 using Estimate.Application.Estimates.FetchEstimateDetailsUseCase;
@@ -9,6 +8,7 @@ using Estimate.Application.Estimates.UpdateEstimateUseCase;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Rossetti.Common.Controller;
 using Rossetti.Common.Data.Pagination;
 using Rossetti.Common.Result;
 

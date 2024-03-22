@@ -70,36 +70,4 @@ public static class StartupIoC
             redisOptions.Configuration = configuration.GetConnectionString("Redis");
         });
     }
-
-    public static void AddSwagger(this IServiceCollection services)
-    {
-        services.AddSwaggerGen(c =>
-        {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Estimate's API", Version = "v1" });
-            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            {
-                Type = SecuritySchemeType.Http,
-                BearerFormat = "Bearer {Token}",
-                Name = "Authorization",
-                Scheme = "bearer",
-                In = ParameterLocation.Header
-            });
-
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-                {
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        }
-                    },
-                    new string[] {}
-                }
-            });
-            c.CustomSchemaIds(x => x.FullName);
-        });
-    }
 }

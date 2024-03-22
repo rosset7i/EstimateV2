@@ -1,4 +1,3 @@
-using Estimate.Api.ErrorHandling;
 using Estimate.Application.Common.Repositories;
 using Estimate.Application.Suppliers.CreateSupplierUseCase;
 using Estimate.Application.Suppliers.FetchPagedSuppliersUseCase;
@@ -8,6 +7,7 @@ using Estimate.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Rossetti.Common.Controller;
 using Rossetti.Common.Data.Pagination;
 using Rossetti.Common.Result;
 
