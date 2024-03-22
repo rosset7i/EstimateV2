@@ -172,7 +172,7 @@ public class UpdateEstimateProductsHandlerMocks
     public void ShouldCallUnitOfWork()
     {
         UnitOfWork
-            .Verify(e => e.SaveChangesAsync(),
+            .Verify(e => e.SaveChangesAsync(CancellationToken.None),
                 Times.Once);
     }
 
@@ -188,7 +188,7 @@ public class UpdateEstimateProductsHandlerMocks
     public void ShouldNotCallUnitOfWork()
     {
         UnitOfWork
-            .Verify(e => e.SaveChangesAsync(),
+            .Verify(e => e.SaveChangesAsync(CancellationToken.None),
                 Times.Never);
     }
 }

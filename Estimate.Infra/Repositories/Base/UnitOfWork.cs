@@ -7,10 +7,8 @@ public class UnitOfWork : IUnitOfWork
 {
     private readonly EstimateDbContext _dbContext;
 
-    public UnitOfWork(EstimateDbContext dbContext)
-    {
+    public UnitOfWork(EstimateDbContext dbContext) =>
         _dbContext = dbContext;
-    }
 
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default) =>
         await _dbContext.SaveChangesAsync(cancellationToken);

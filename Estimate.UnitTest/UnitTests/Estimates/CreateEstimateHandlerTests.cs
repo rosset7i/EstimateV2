@@ -163,7 +163,7 @@ public class CreateEstimateHandlerMocks
     public CreateEstimateHandlerMocks ShouldCallAddEstimate()
     {
         EstimateRepository
-            .Verify(e => e.AddAsync(It.IsAny<EstimateEn>()),
+            .Verify(e => e.AddAsync(It.IsAny<EstimateEn>(), CancellationToken.None),
                 Times.Once);
 
         return this;
@@ -172,7 +172,7 @@ public class CreateEstimateHandlerMocks
     public void ShouldCallUnitOfWork()
     {
         UnitOfWork
-            .Verify(e => e.SaveChangesAsync(),
+            .Verify(e => e.SaveChangesAsync(CancellationToken.None),
                 Times.Once);
     }
 
@@ -188,7 +188,7 @@ public class CreateEstimateHandlerMocks
     public void ShouldNotCallUnitOfWork()
     {
         UnitOfWork
-            .Verify(e => e.SaveChangesAsync(),
+            .Verify(e => e.SaveChangesAsync(CancellationToken.None),
                 Times.Never);
     }
 }

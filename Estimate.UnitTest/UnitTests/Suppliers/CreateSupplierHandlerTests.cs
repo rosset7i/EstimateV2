@@ -61,7 +61,7 @@ public class CreateSupplierHandlerMocks
     public CreateSupplierHandlerMocks ShouldCallSupplierRepositoryAdd()
     {
         SupplierRepository
-            .Verify(e => e.AddAsync(It.IsAny<Supplier>()),
+            .Verify(e => e.AddAsync(It.IsAny<Supplier>(), CancellationToken.None),
                 Times.Once);
 
         return this;
@@ -70,7 +70,7 @@ public class CreateSupplierHandlerMocks
     public void ShouldCallUnitOfWork()
     {
         UnitOfWork
-            .Verify(e => e.SaveChangesAsync(),
+            .Verify(e => e.SaveChangesAsync(CancellationToken.None),
                 Times.Once);
     }
 }

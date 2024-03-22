@@ -105,7 +105,7 @@ public class UpdateProductHandlerMocks
     public void ShouldCallUnitOfWork()
     {
         UnitOfWork
-            .Verify(e => e.SaveChangesAsync(),
+            .Verify(e => e.SaveChangesAsync(CancellationToken.None),
                 Times.Once);
     }
 
@@ -121,7 +121,7 @@ public class UpdateProductHandlerMocks
     public void ShouldNoCallUnitOfWork()
     {
         UnitOfWork
-            .Verify(e => e.SaveChangesAsync(),
+            .Verify(e => e.SaveChangesAsync(CancellationToken.None),
                 Times.Never);
     }
 }

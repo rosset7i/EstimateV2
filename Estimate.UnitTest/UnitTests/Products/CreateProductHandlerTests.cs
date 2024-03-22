@@ -61,7 +61,7 @@ public class CreateProductHandlerMocks
     public CreateProductHandlerMocks ShouldCallAddProduct()
     {
         ProductRepository
-            .Verify(e => e.AddAsync(It.IsAny<Product>()),
+            .Verify(e => e.AddAsync(It.IsAny<Product>(), CancellationToken.None),
                 Times.Once);
 
         return this;
@@ -70,7 +70,7 @@ public class CreateProductHandlerMocks
     public void ShouldCallUnitOfWork()
     {
         UnitOfWork
-            .Verify(e => e.SaveChangesAsync(),
+            .Verify(e => e.SaveChangesAsync(CancellationToken.None),
                 Times.Once);
     }
 }
