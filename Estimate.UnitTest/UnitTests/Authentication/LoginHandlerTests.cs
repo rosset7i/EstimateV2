@@ -95,7 +95,7 @@ public class LoginHandlerTests : IUnitTestBase<LoginHandler, LoginHandlerMocks>
         var result = await handler.Handle(commmand, CancellationToken.None);
 
         //Assert
-        Assert.Equivalent(loginResponse.Token, result.Result.Token);
+        Assert.Equivalent(loginResponse.Token, result.Result?.Token);
         mocks.ShouldCallFetchUserByEmail(commmand.Email)
             .ShouldCallLoginWithPassword(user, commmand)
             .ShouldCallGenerateToken(user);
@@ -133,11 +133,11 @@ public class LoginHandlerMocks
     {
         UserRepository
             .Verify(e => e
-                    .LoginUsingPasswordAsync(
-                        user,
-                        command.Password,
-                        false,
-                        false),
+                .LoginUsingPasswordAsync(
+                    user,
+                    command.Password,
+                    false,
+                    false),
                 Times.Once);
 
         return this;
@@ -164,9 +164,7 @@ public class LoginHandlerMocks
     public void ShouldNotCallGenerateToken()
     {
         JtwTokenGeneratorService
-            .Verify(e => e
-                    .GenerateToken(
-                        It.IsAny<User>()),
+            .Verify(e => e.GenerateToken(It.IsAny<User>()),
                 Times.Never);
     }
 
@@ -174,11 +172,11 @@ public class LoginHandlerMocks
     {
         UserRepository
             .Verify(e => e
-                    .LoginUsingPasswordAsync(
-                        It.IsAny<User>(),
-                        It.IsAny<string>(),
-                        false,
-                        false),
+                .LoginUsingPasswordAsync(
+                    It.IsAny<User>(),
+                    It.IsAny<string>(),
+                    false,
+                    false),
                 Times.Never);
 
         return this;

@@ -23,7 +23,8 @@ public class ProductsController : ApiController
         _mediator = mediator;
 
     [HttpGet]
-    public async Task<PagedResultOf<ProductResponse>> FetchPagedProductsAsync([FromQuery] PagedAndSortedProductQuery query,
+    public async Task<PagedResultOf<ProductResponse>> FetchPagedProductsAsync(
+        [FromQuery] PagedAndSortedProductQuery query,
         CancellationToken cancellationToken) =>
         await _mediator.Send(query, cancellationToken);
 
@@ -34,17 +35,20 @@ public class ProductsController : ApiController
         await productRepository.FetchByIdAsync(productId);
 
     [HttpPost]
-    public async Task<ResultOf<Operation>> CreateProductAsync([FromBody] CreateProductCommand command,
+    public async Task<ResultOf<Operation>> CreateProductAsync(
+        [FromBody] CreateProductCommand command,
         CancellationToken cancellationToken) =>
         await _mediator.Send(command, cancellationToken);
 
     [HttpPut("Update")]
-    public async Task<ResultOf<Operation>> UpdateProductAsync([FromBody] UpdateProductCommand command,
+    public async Task<ResultOf<Operation>> UpdateProductAsync(
+        [FromBody] UpdateProductCommand command,
         CancellationToken cancellationToken) =>
         await _mediator.Send(command, cancellationToken);
 
     [HttpDelete("Delete")]
-    public async Task<ResultOf<Operation>> DeleteProductAsync([FromQuery] RemoveProductCommand command,
+    public async Task<ResultOf<Operation>> DeleteProductAsync(
+        [FromQuery] RemoveProductCommand command,
         CancellationToken cancellationToken) =>
         await _mediator.Send(command, cancellationToken);
 }
