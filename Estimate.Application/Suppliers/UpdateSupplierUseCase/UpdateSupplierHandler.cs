@@ -30,7 +30,7 @@ public class UpdateSupplierHandler : IRequestHandler<UpdateSupplierCommand, Resu
         supplier.AlterName(command.Name);
 
         _supplierRepository.Update(supplier);
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Operation.Updated;
     }

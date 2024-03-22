@@ -24,30 +24,38 @@ public class EstimateController : ApiController
         _mediator = mediator;
 
     [HttpGet]
-    public async Task<PagedResultOf<EstimateResponse>> FetchPagedEstimatesAsync([FromQuery] FetchPagedEstimatesQuery query) =>
-        await _mediator.Send(query);
+    public async Task<PagedResultOf<EstimateResponse>> FetchPagedEstimatesAsync(
+        [FromQuery] FetchPagedEstimatesQuery query,
+        CancellationToken cancellationToken) =>
+        await _mediator.Send(query, cancellationToken);
 
     [HttpGet("Compare")]
-    public async Task<ResultOf<List<CompareEstimatesResponse>>> CompareEstimatesAsync([FromQuery] CompareEstimatesQuery query) =>
-        await _mediator.Send(query);
+    public async Task<ResultOf<List<CompareEstimatesResponse>>> CompareEstimatesAsync([FromQuery] CompareEstimatesQuery query,
+        CancellationToken cancellationToken) =>
+        await _mediator.Send(query, cancellationToken);
 
     [HttpGet("FetchDetails")]
-    public async Task<ResultOf<FetchEstimateDetailsResponse>> FetchEstimateDetailsByIdAsync([FromQuery] FetchEstimateDetailsQuery query) =>
-        await _mediator.Send(query);
+    public async Task<ResultOf<FetchEstimateDetailsResponse>> FetchEstimateDetailsByIdAsync([FromQuery] FetchEstimateDetailsQuery query,
+        CancellationToken cancellationToken) =>
+        await _mediator.Send(query, cancellationToken);
 
     [HttpPost]
-    public async Task<ResultOf<Operation>> CreateEstimateAsync([FromBody] CreateEstimateCommand command) =>
-        await _mediator.Send(command);
+    public async Task<ResultOf<Operation>> CreateEstimateAsync([FromBody] CreateEstimateCommand command,
+        CancellationToken cancellationToken) =>
+        await _mediator.Send(command, cancellationToken);
 
     [HttpPut("Update")]
-    public async Task<ResultOf<Operation>> UpdateEstimateInfoAsync([FromBody] UpdateEstimateCommand command) =>
-        await _mediator.Send(command);
+    public async Task<ResultOf<Operation>> UpdateEstimateInfoAsync([FromBody] UpdateEstimateCommand command,
+        CancellationToken cancellationToken) =>
+        await _mediator.Send(command, cancellationToken);
 
     [HttpPut("UpdateProducts")]
-    public async Task<ResultOf<Operation>> UpdateEstimateProductsAsync([FromBody] UpdateEstimateProductsCommand command) =>
-        await _mediator.Send(command);
+    public async Task<ResultOf<Operation>> UpdateEstimateProductsAsync([FromBody] UpdateEstimateProductsCommand command,
+        CancellationToken cancellationToken) =>
+        await _mediator.Send(command, cancellationToken);
 
     [HttpDelete("Delete")]
-    public async Task<ResultOf<Operation>> DeleteEstimateByIdAsync([FromQuery] RemoveEstimateCommand command) =>
-        await _mediator.Send(command);
+    public async Task<ResultOf<Operation>> DeleteEstimateByIdAsync([FromQuery] RemoveEstimateCommand command,
+        CancellationToken cancellationToken) =>
+        await _mediator.Send(command, cancellationToken);
 }

@@ -28,7 +28,7 @@ public class RemoveProductHandler : IRequestHandler<RemoveProductCommand, Result
             return CommonError.NotFound<Product>();
 
         _productRepository.Delete(product);
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Operation.Deleted;
     }

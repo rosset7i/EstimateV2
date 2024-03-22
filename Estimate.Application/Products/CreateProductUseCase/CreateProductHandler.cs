@@ -25,8 +25,8 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Result
             Guid.NewGuid(),
             command.Name);
 
-        await _productRepository.AddAsync(newProduct);
-        await _unitOfWork.SaveChangesAsync();
+        await _productRepository.AddAsync(newProduct, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Operation.Created;
     }

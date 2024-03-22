@@ -46,7 +46,7 @@ public class UpdateEstimateProductsHandler : IRequestHandler<UpdateEstimateProdu
         estimate.UpdateProducts(productsToAdd);
 
         await _estimateRepository.UpdateProducts(estimate);
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Operation.Updated;
     }

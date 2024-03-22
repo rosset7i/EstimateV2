@@ -53,8 +53,8 @@ public class CreateEstimateHandler : IRequestHandler<CreateEstimateCommand, Resu
 
         newEstimate.UpdateProducts(productsToAdd);
 
-        await _estimateRepository.AddAsync(newEstimate);
-        await _unitOfWork.SaveChangesAsync();
+        await _estimateRepository.AddAsync(newEstimate, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Operation.Created;
     }

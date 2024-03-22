@@ -25,8 +25,8 @@ public class CreateSupplierHandler : IRequestHandler<CreateSupplierCommand, Resu
             Guid.NewGuid(),
             command.Name);
 
-        await _supplierRepository.AddAsync(newSupplier);
-        await _unitOfWork.SaveChangesAsync();
+        await _supplierRepository.AddAsync(newSupplier, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Operation.Created;
     }

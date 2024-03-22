@@ -30,7 +30,7 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, Result
         product.AlterName(command.Name);
 
         _productRepository.Update(product);
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Operation.Updated;
     }

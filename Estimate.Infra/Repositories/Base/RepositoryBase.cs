@@ -45,11 +45,11 @@ public abstract class RepositoryBase<TId, TEntity> : IRepositoryBase<TId, TEntit
         return cachedEntity;
     }
 
-    public async Task<ICollection<TEntity>> FetchAllAsync() =>
-        await DbContext.Set<TEntity>().ToListAsync();
+    public async Task<ICollection<TEntity>> FetchAllAsync(CancellationToken cancellationToken = default) =>
+        await DbContext.Set<TEntity>().ToListAsync(cancellationToken: cancellationToken);
 
-    public async Task AddAsync(TEntity entity) =>
-        await DbContext.Set<TEntity>().AddAsync(entity);
+    public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default) =>
+        await DbContext.Set<TEntity>().AddAsync(entity, cancellationToken: cancellationToken);
 
     public void Update(TEntity entity)
     {

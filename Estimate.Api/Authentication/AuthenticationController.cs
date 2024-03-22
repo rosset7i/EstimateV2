@@ -16,10 +16,14 @@ public class AuthenticationController : ApiController
         _mediator = mediator;
 
     [HttpPost("Register")]
-    public async Task<ResultOf<RegisterResult>> RegisterAsync([FromBody] RegisterCommand command) =>
-        await _mediator.Send(command);
+    public async Task<ResultOf<RegisterResult>> RegisterAsync(
+        [FromBody] RegisterCommand command,
+        CancellationToken cancellationToken) =>
+        await _mediator.Send(command, cancellationToken);
 
     [HttpPost("Login")]
-    public async Task<ResultOf<LoginResult>> LoginAsync([FromBody] LoginCommand command) =>
-        await _mediator.Send(command);
+    public async Task<ResultOf<LoginResult>> LoginAsync(
+        [FromBody] LoginCommand command,
+        CancellationToken cancellationToken) =>
+        await _mediator.Send(command, cancellationToken);
 }

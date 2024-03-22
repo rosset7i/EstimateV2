@@ -12,6 +12,6 @@ public class UnitOfWork : IUnitOfWork
         _dbContext = dbContext;
     }
 
-    public async Task SaveChangesAsync() =>
-        await _dbContext.SaveChangesAsync();
+    public async Task SaveChangesAsync(CancellationToken cancellationToken = default) =>
+        await _dbContext.SaveChangesAsync(cancellationToken);
 }

@@ -21,6 +21,6 @@ public class FetchPagedEstimatesHandler : IRequestHandler<FetchPagedEstimatesQue
             .Include(e => e.Supplier)
             .SortBy(query)
             .Select(estimate => EstimateResponse.Of(estimate))
-            .ToPagedListAsync(query);
+            .ToPagedListAsync(query, cancellationToken: cancellationToken);
     }
 }

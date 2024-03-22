@@ -39,7 +39,7 @@ public class UpdateEstimateHandler : IRequestHandler<UpdateEstimateCommand, Resu
             return errors;
 
         UpdateEstimateInfo(estimate!, command);
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Operation.Updated;
     }

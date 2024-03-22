@@ -28,7 +28,7 @@ public class RemoveEstimateHandler : IRequestHandler<RemoveEstimateCommand, Resu
             return CommonError.NotFound<EstimateEn>();
 
         _estimateRepository.Delete(estimate);
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Operation.Deleted;
     }

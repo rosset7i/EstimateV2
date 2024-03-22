@@ -28,7 +28,7 @@ public class RemoveSupplierHandler : IRequestHandler<RemoveSupplierCommand, Resu
             return CommonError.NotFound<Supplier>();
 
         _supplierRepository.Delete(supplier);
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Operation.Deleted;
     }

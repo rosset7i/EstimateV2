@@ -19,6 +19,6 @@ public class FetchPagedProductsHandler : IRequestHandler<PagedAndSortedProductQu
             .With(query.ProductsIdsToFilter != null && query.ProductsIdsToFilter.Any(), e => !query.ProductsIdsToFilter!.Contains(e.Id))
             .SortBy(query)
             .Select(product => ProductResponse.Of(product))
-            .ToPagedListAsync(query);
+            .ToPagedListAsync(query, cancellationToken: cancellationToken);
     }
 }
