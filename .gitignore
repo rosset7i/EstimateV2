@@ -1,4 +1,4 @@
 .idea/
 **/bin/
 **/obj/
-Estimate.sln.DotSettings.user
+**.sln.DotSettings.user
