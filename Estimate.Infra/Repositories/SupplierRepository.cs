@@ -1,8 +1,8 @@
 ﻿using Estimate.Application.Common.Repositories;
 using Estimate.Domain.Entities;
 using Estimate.Infra.AppDbContext;
-using Estimate.Infra.Repositories.Base;
 using Microsoft.Extensions.Caching.Distributed;
+using Rossetti.Common.Data.Repository;
 
 namespace Estimate.Infra.Repositories;
 

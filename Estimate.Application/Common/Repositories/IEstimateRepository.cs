@@ -1,5 +1,5 @@
-﻿using Estimate.Application.Common.Repositories.Base;
-using Estimate.Domain.Entities.Estimate;
+﻿using Estimate.Domain.Entities.Estimate;
+using Rossetti.Common.Data.Repository;
 
 namespace Estimate.Application.Common.Repositories;
 

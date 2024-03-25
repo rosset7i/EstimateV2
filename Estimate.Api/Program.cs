@@ -12,8 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddAuthentication(builder.Configuration);
     builder.Services.AddAuthorization();
     builder.Services.AddRepositories();
-    builder.Services.AddCaching(builder.Configuration);
     //Migrate
+    builder.Services.AddCaching(builder.Configuration.GetConnectionString("Redis")!);
     builder.Services.AddSwagger("Estimate");
     builder.Services.AddMediator<IAssemblyMarker>();
     builder.Services.AddValidators<IAssemblyMarker>();

@@ -13,7 +13,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 
 namespace Estimate.Infra.IoC;
 
@@ -61,13 +60,5 @@ public static class StartupIoC
         services.AddScoped<IEstimateRepository, EstimateRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-    }
-
-    public static void AddCaching(this IServiceCollection service, ConfigurationManager configuration)
-    {
-        service.AddStackExchangeRedisCache(redisOptions =>
-        {
-            redisOptions.Configuration = configuration.GetConnectionString("Redis");
-        });
     }
 }
