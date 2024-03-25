@@ -12,7 +12,6 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddAuthentication(builder.Configuration);
     builder.Services.AddAuthorization();
     builder.Services.AddRepositories();
-    //Migrate
     builder.Services.AddUnitOfWork<EstimateDbContext>();
     builder.Services.AddCaching(builder.Configuration.GetConnectionString("Redis")!);
     builder.Services.AddSwagger("Estimate");
