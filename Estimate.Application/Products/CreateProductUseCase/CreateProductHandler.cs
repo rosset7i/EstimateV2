@@ -1,7 +1,7 @@
 ﻿using Estimate.Application.Common.Repositories;
-using Estimate.Application.Common.Repositories.Base;
 using Estimate.Domain.Entities;
 using MediatR;
+using Rossetti.Common.Data.Repository;
 using Rossetti.Common.Result;
 
 namespace Estimate.Application.Products.CreateProductUseCase;

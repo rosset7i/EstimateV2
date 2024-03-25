@@ -1,11 +1,9 @@
 ﻿using System.Text;
 using Estimate.Application.Common;
 using Estimate.Application.Common.Repositories;
-using Estimate.Application.Common.Repositories.Base;
 using Estimate.Domain.Entities;
 using Estimate.Infra.AppDbContext;
 using Estimate.Infra.Repositories;
-using Estimate.Infra.Repositories.Base;
 using Estimate.Infra.TokenFactory;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -59,6 +57,5 @@ public static class StartupIoC
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IEstimateRepository, EstimateRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 }

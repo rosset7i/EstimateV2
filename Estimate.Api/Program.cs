@@ -1,8 +1,8 @@
 using Estimate.Application;
+using Estimate.Infra.AppDbContext;
 using Estimate.Infra.IoC;
 using Rossetti.Common.Configuration;
 using Rossetti.Common.Configuration.Middleware;
-using Rossetti.Common.ErrorHandler.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -13,11 +13,12 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddAuthorization();
     builder.Services.AddRepositories();
     //Migrate
+    builder.Services.AddUnitOfWork<EstimateDbContext>();
     builder.Services.AddCaching(builder.Configuration.GetConnectionString("Redis")!);
     builder.Services.AddSwagger("Estimate");
     builder.Services.AddMediator<IAssemblyMarker>();
     builder.Services.AddValidators<IAssemblyMarker>();
-    builder.Services.AddErrorWrapper();
+    builder.Services.AddErrorHandler();
 }
 
 var app = builder.Build();
@@ -27,6 +28,6 @@ var app = builder.Build();
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();
-    app.UseBusinessExceptionHandler();
+    app.UseBusinessExceptionMiddleware();
     app.Run();
 }

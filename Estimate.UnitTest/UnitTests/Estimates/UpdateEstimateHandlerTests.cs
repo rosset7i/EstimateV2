@@ -1,11 +1,11 @@
 ﻿using Estimate.Application.Common.Repositories;
-using Estimate.Application.Common.Repositories.Base;
 using Estimate.Application.Estimates.UpdateEstimateUseCase;
 using Estimate.Domain.Entities.Estimate;
 using Estimate.UnitTest.TestUtils;
 using Estimate.UnitTest.UnitTests.Estimates.TestUtils;
 using Estimate.UnitTest.UnitTests.Suppliers.TestUtils;
 using Moq;
+using Rossetti.Common.Data.Repository;
 using Rossetti.Common.ErrorHandler;
 using Rossetti.Common.Result;
 using Xunit;
