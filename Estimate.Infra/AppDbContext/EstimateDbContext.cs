@@ -2,18 +2,16 @@
 using Estimate.Domain.Entities;
 using Estimate.Domain.Entities.Estimate;
 using Estimate.Infra.Mappings;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Estimate.Infra.AppDbContext;
 
-public class EstimateDbContext : IdentityDbContext, IDatabaseContext
+public class EstimateDbContext : DbContext, IDatabaseContext
 {
     public DbSet<EstimateEn> Estimate { get; set; }
     public DbSet<Product> Product { get; set; }
     public DbSet<Supplier> Supplier { get; set; }
     public DbSet<ProductInEstimate> ProductInEstimate { get; set; }
-    public DbSet<User> User { get; set; }
 
     public EstimateDbContext(DbContextOptions option) : base(option) { }
 

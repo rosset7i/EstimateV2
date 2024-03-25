@@ -8,9 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddContext(builder.Configuration);
-    builder.Services.AddAuthentication(builder.Configuration);
-    builder.Services.AddAuthorization();
+    builder.Services.AddContext(builder.Configuration.GetConnectionString("Default")!);
     builder.Services.AddRepositories();
     builder.Services.AddUnitOfWork<EstimateDbContext>();
     builder.Services.AddCaching(builder.Configuration.GetConnectionString("Redis")!);
@@ -24,8 +22,6 @@ var app = builder.Build();
 {
     app.UseSwaggerMiddleware();
     app.UseHttpsRedirection();
-    app.UseAuthentication();
-    app.UseAuthorization();
     app.MapControllers();
     app.UseBusinessExceptionMiddleware();
     app.Run();
